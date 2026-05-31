@@ -4,127 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="دانیال شهرکی">
-    <title>🏴‍☠️ GANG VAULT | Daniyal Shahraki</title>
+    <title>🏴‍☠️ GANG VAULT | کالی لینوکس</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --pubg-orange: #f59e0b;
-            --pubg-dark: #1a1a2e;
-            --pubg-darker: #0f0f1a;
-            --pubg-panel: #16213e;
-            --hacker-green: #00ff41;
-            --hacker-purple: #b400ff;
-            --danger: #ff0040;
+            --bg: #000a00;
+            --panel: #0d1117;
+            --border: #1a3a1a;
+            --green: #00ff41;
+            --dark-green: #008f11;
+            --purple: #b400ff;
             --gold: #ffd700;
+            --red: #ff0040;
             --blue: #00d4ff;
-            --white: #e0e0e0;
-            --gray: #888;
-            --border-radius: 16px;
+            --white: #c8d6c8;
+            --gray: #5a7a5a;
+            --kali-blue: #367bf0;
+            --radius: 14px;
             --transition: all 0.3s ease;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Segoe UI', 'Vazirmatn', 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 50%, #0a0a1a 100%);
+            font-family: 'Vazirmatn', 'Cairo', 'Courier New', monospace;
+            background: var(--bg);
             color: var(--white);
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* ==================== LANGUAGE SELECTOR ==================== */
+        /* ==================== MATRIX RAIN ==================== */
+        #matrixCanvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -3;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* ==================== SCANLINES ==================== */
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -2;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+            animation: scanAnim 8s linear infinite;
+        }
+
+        @keyframes scanAnim {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        /* ==================== FLOATING SKULLS ==================== */
+        .floating-skull {
+            position: fixed;
+            pointer-events: none; z-index: -1;
+            opacity: 0.05;
+            font-size: 60px;
+            animation: skullDrift 12s ease-in-out infinite;
+        }
+
+        .floating-skull:nth-child(1) { top: 5%; left: 3%; animation-delay: 0s; }
+        .floating-skull:nth-child(2) { top: 15%; right: 8%; animation-delay: 2s; font-size: 70px; }
+        .floating-skull:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 4s; }
+        .floating-skull:nth-child(4) { top: 50%; right: 5%; animation-delay: 1s; font-size: 80px; }
+        .floating-skull:nth-child(5) { bottom: 35%; right: 15%; animation-delay: 3s; }
+        .floating-skull:nth-child(6) { top: 70%; left: 20%; animation-delay: 5s; font-size: 65px; }
+
+        @keyframes skullDrift {
+            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+            25% { transform: translateY(-30px) rotate(5deg) scale(1.1); }
+            50% { transform: translateY(10px) rotate(-3deg) scale(0.9); }
+            75% { transform: translateY(-15px) rotate(2deg) scale(1.05); }
+        }
+
+        /* ==================== GREEN PARTICLES ==================== */
+        .particle {
+            position: fixed;
+            pointer-events: none; z-index: -1;
+            background: var(--green);
+            border-radius: 50%;
+            animation: particleFloat linear infinite;
+            box-shadow: 0 0 8px var(--green), 0 0 15px var(--green);
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(105vh) scale(0); opacity: 0; }
+            5% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* ==================== LANGUAGE OVERLAY ==================== */
         .lang-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.98);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 10, 0, 0.97);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 99999;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
         }
 
-        .lang-overlay.hidden {
-            display: none;
+        .lang-overlay.hidden { display: none; }
+
+        .kali-logo-large {
+            font-size: 80px;
+            animation: kaliFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(54, 123, 240, 0.6));
+        }
+
+        @keyframes kaliFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
         }
 
         .lang-title {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: 900;
             text-align: center;
-            background: linear-gradient(45deg, var(--pubg-orange), var(--hacker-purple), var(--hacker-green));
+            background: linear-gradient(45deg, var(--green), var(--kali-blue), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: glitch 2s infinite;
+            animation: glitchText 2s infinite;
         }
 
-        @keyframes glitch {
-            0%,100%{transform:translate(0)}
-            20%{transform:translate(-3px,3px)}
-            40%{transform:translate(3px,-3px)}
-            60%{transform:translate(-3px,-3px)}
-            80%{transform:translate(3px,3px)}
+        @keyframes glitchText {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-3px, 2px); }
+            40% { transform: translate(3px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
         }
 
-        .lang-buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+        .lang-buttons { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
 
         .lang-btn {
-            padding: 20px 50px;
-            font-size: 22px;
+            padding: 18px 45px;
+            font-size: 20px;
             font-weight: 900;
             background: transparent;
-            border: 2px solid var(--hacker-purple);
-            color: #fff;
-            border-radius: 15px;
+            border: 2px solid var(--dark-green);
+            color: var(--green);
+            border-radius: 12px;
             cursor: pointer;
             transition: var(--transition);
-            letter-spacing: 2px;
-            font-family: inherit;
+            letter-spacing: 3px;
+            font-family: 'Vazirmatn', 'Courier New', monospace;
+            position: relative;
+            overflow: hidden;
         }
 
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .lang-btn:hover::before { left: 100%; }
         .lang-btn:hover {
-            border-color: var(--pubg-orange);
-            box-shadow: 0 0 40px rgba(245,158,11,0.3);
-            transform: scale(1.05);
-            background: rgba(245,158,11,0.1);
+            border-color: var(--green);
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.4);
+            transform: scale(1.08);
+            text-shadow: 0 0 20px var(--green);
         }
 
         .lang-btn.selected {
-            background: linear-gradient(135deg, var(--pubg-orange), var(--hacker-purple));
+            background: linear-gradient(135deg, var(--dark-green), var(--green));
             border-color: var(--gold);
-            box-shadow: 0 0 60px rgba(255,215,0,0.4);
-            animation: pulse 1s infinite;
+            color: #000;
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.6);
+            animation: btnPulse 1.5s infinite;
         }
 
-        @keyframes pulse {
-            0%,100%{box-shadow:0 0 30px rgba(255,215,0,0.4)}
-            50%{box-shadow:0 0 70px rgba(255,215,0,0.7)}
+        @keyframes btnPulse {
+            0%, 100% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.5); }
+            50% { box-shadow: 0 0 80px rgba(0, 255, 65, 0.9); }
         }
 
-        /* ==================== LOGIN SCREEN ==================== */
+        /* Info on Lang Page */
+        .lang-info {
+            position: absolute;
+            bottom: 30px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 11px;
+            font-family: 'Vazirmatn', 'Courier New', monospace;
+            line-height: 1.8;
+        }
+
+        .lang-info .highlight {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* ==================== LOGIN OVERLAY ==================== */
         .login-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 8, 0, 0.96);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -132,58 +221,79 @@
             flex-direction: column;
         }
 
-        .login-overlay.hidden {
-            display: none;
-        }
+        .login-overlay.hidden { display: none; }
 
         .login-box {
-            background: var(--pubg-panel);
-            border: 2px solid var(--hacker-purple);
+            background: var(--panel);
+            border: 2px solid var(--dark-green);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
             width: 420px;
             max-width: 95%;
-            box-shadow: 0 0 80px rgba(180,0,255,0.3);
+            box-shadow: 0 0 80px rgba(0, 255, 65, 0.2), inset 0 0 50px rgba(0, 255, 65, 0.03);
+            position: relative;
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 22px;
+            background: linear-gradient(45deg, var(--green), transparent, var(--green), transparent);
+            z-index: -1;
+            opacity: 0.3;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
         }
 
         .login-icon {
-            font-size: 60px;
-            animation: float 3s infinite;
+            font-size: 55px;
+            animation: skullFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px var(--green));
         }
 
-        @keyframes float {
-            0%,100%{transform:translateY(0)}
-            50%{transform:translateY(-20px)}
+        @keyframes skullFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
         }
 
         .login-title {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 900;
             color: var(--gold);
-            margin: 15px 0;
+            margin: 12px 0;
             text-shadow: 0 0 30px var(--gold);
+            letter-spacing: 4px;
         }
 
         .login-input {
             width: 100%;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 14px;
+            margin: 8px 0;
             background: #000;
-            border: 2px solid var(--hacker-purple);
-            color: var(--hacker-green);
-            font-size: 18px;
+            border: 2px solid var(--dark-green);
+            color: var(--green);
+            font-size: 16px;
             border-radius: 10px;
             outline: none;
             font-family: 'Courier New', monospace;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             transition: var(--transition);
+            caret-color: var(--green);
+            text-align: center;
         }
 
         .login-input:focus {
-            border-color: var(--pubg-orange);
-            box-shadow: 0 0 25px rgba(245,158,11,0.3);
+            border-color: var(--green);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
         }
+
+        .login-input::placeholder { color: rgba(0, 255, 65, 0.3); }
 
         .btn {
             padding: 12px 24px;
@@ -196,339 +306,260 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-family: inherit;
-            background: rgba(22,33,62,0.8);
-            color: var(--white);
-            border-color: rgba(180,0,255,0.5);
+            font-family: 'Vazirmatn', 'Courier New', monospace;
+            background: var(--panel);
+            color: var(--green);
+            border-color: var(--dark-green);
+            white-space: nowrap;
+            letter-spacing: 1px;
         }
 
         .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(180,0,255,0.3);
-            border-color: var(--hacker-green);
+            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.3);
+            border-color: var(--green);
+            text-shadow: 0 0 15px var(--green);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--pubg-orange), #d97706);
-            border-color: var(--pubg-orange);
+            background: linear-gradient(135deg, var(--dark-green), #006b0f);
+            border-color: var(--green);
             color: #000;
             font-weight: 900;
             width: 100%;
             justify-content: center;
-            padding: 15px;
-            font-size: 18px;
-            margin-top: 10px;
+            padding: 14px;
+            font-size: 16px;
+            margin-top: 8px;
         }
 
         .btn-primary:hover {
-            box-shadow: 0 10px 40px rgba(245,158,11,0.5);
-            border-color: var(--gold);
+            box-shadow: 0 8px 40px rgba(0, 255, 65, 0.5);
+            background: linear-gradient(135deg, var(--green), var(--dark-green));
         }
 
         .btn-danger {
             background: transparent;
-            border-color: var(--danger);
-            color: var(--danger);
+            border-color: var(--red);
+            color: var(--red);
         }
 
         .btn-danger:hover {
-            background: var(--danger);
+            background: var(--red);
             color: #fff;
-            box-shadow: 0 10px 40px rgba(255,0,64,0.5);
+            box-shadow: 0 8px 30px rgba(255, 0, 64, 0.5);
         }
 
-        .btn-success {
-            background: linear-gradient(135deg, #059669, #047857);
-            border-color: #10b981;
-            color: #fff;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn-success:hover {
-            box-shadow: 0 10px 40px rgba(16,185,129,0.5);
-        }
-
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 12px;
-            border-radius: 20px;
-        }
+        .btn-sm { padding: 6px 14px; font-size: 11px; border-radius: 20px; }
+        .btn-xs { padding: 5px 10px; font-size: 10px; border-radius: 12px; }
 
         .error-msg {
-            color: var(--danger);
-            margin-top: 10px;
+            color: var(--red);
+            margin-top: 8px;
             display: none;
             font-weight: bold;
+            font-size: 13px;
         }
 
         .hint-text {
-            color: #666;
+            color: var(--gray);
             margin-top: 10px;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         /* ==================== DASHBOARD ==================== */
         .dashboard {
             display: none;
-            max-width: 1400px;
+            max-width: 1450px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
         }
 
-        .dashboard.active {
-            display: block;
-        }
+        .dashboard.active { display: block; }
 
         /* Header */
         .header {
-            background: rgba(22,33,62,0.95);
-            border: 2px solid rgba(180,0,255,0.3);
-            border-radius: var(--border-radius);
-            padding: 20px 30px;
-            margin-bottom: 25px;
+            background: var(--panel);
+            border: 1px solid var(--dark-green);
+            border-radius: var(--radius);
+            padding: 15px 25px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
-            box-shadow: 0 0 20px rgba(180,0,255,0.3);
-            backdrop-filter: blur(20px);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
             gap: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+            backdrop-filter: blur(15px);
         }
 
-        .brand-logo {
-            font-size: 40px;
-            animation: pulse 2s infinite;
+        .brand { display: flex; align-items: center; gap: 12px; }
+
+        .kali-logo {
+            font-size: 35px;
+            animation: kaliFloat 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px var(--kali-blue));
         }
 
-        .brand-text h1 {
-            font-size: 24px;
+        .brand h1 {
+            font-size: 20px;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--pubg-orange), var(--hacker-purple), var(--hacker-green));
+            background: linear-gradient(45deg, var(--kali-blue), var(--green), var(--gold));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        .brand-text p {
-            font-size: 11px;
-            color: var(--gray);
             letter-spacing: 2px;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+        .brand p { font-size: 9px; color: var(--gray); letter-spacing: 2px; }
+
+        .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* Admin Link */
+        .admin-link {
+            color: var(--gold);
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: var(--transition);
+            font-family: 'Vazirmatn', monospace;
+        }
+
+        .admin-link:hover {
+            color: var(--kali-blue);
+            text-shadow: 0 0 15px var(--kali-blue);
         }
 
         /* Stats */
-        .stats-grid {
+        .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .stat-card {
-            background: rgba(22,33,62,0.9);
-            border: 1px solid rgba(180,0,255,0.2);
-            border-radius: var(--border-radius);
-            padding: 20px;
+            background: var(--panel);
+            border: 1px solid var(--dark-green);
+            border-radius: 10px;
+            padding: 14px;
             text-align: center;
             transition: var(--transition);
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(180,0,255,0.2);
-            border-color: var(--hacker-purple);
-        }
-
-        .stat-icon {
-            font-size: 30px;
-            margin-bottom: 8px;
+            border-color: var(--green);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.15);
         }
 
         .stat-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--pubg-orange), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--green);
+            text-shadow: 0 0 15px var(--green);
         }
 
-        .stat-label {
-            color: var(--gray);
-            font-size: 12px;
-            margin-top: 5px;
+        .stat-label { font-size: 9px; color: var(--gray); margin-top: 3px; letter-spacing: 1px; }
+
+        /* Upload Zone */
+        .upload-zone {
+            border: 2px dashed var(--dark-green);
+            border-radius: var(--radius);
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 15px;
+            background: rgba(0, 0, 0, 0.3);
         }
 
-        /* Main Layout */
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
+        .upload-zone:hover { border-color: var(--green); box-shadow: 0 0 30px rgba(0, 255, 65, 0.15); background: rgba(0, 0, 0, 0.5); }
+        .upload-zone.dragover { border-color: var(--gold); background: rgba(0, 255, 65, 0.03); }
 
-        @media (max-width: 1024px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-        }
+        .upload-icon { font-size: 40px; display: block; margin-bottom: 6px; }
 
-        /* Gallery Section */
-        .gallery-section {
-            background: rgba(22,33,62,0.7);
-            border: 1px solid rgba(180,0,255,0.2);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .section-header {
+        /* Gallery Header */
+        .gallery-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
-        .section-title {
-            font-size: 20px;
+        .gallery-title {
+            font-size: 16px;
             font-weight: 900;
             color: var(--gold);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .filter-tabs {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
+        .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
 
         .filter-tab {
-            padding: 8px 16px;
-            border: 1px solid rgba(180,0,255,0.3);
-            border-radius: 20px;
+            padding: 6px 13px;
+            border: 1px solid var(--dark-green);
+            border-radius: 18px;
             cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 10px;
+            font-weight: 700;
             transition: var(--transition);
             background: transparent;
-            color: var(--white);
-            font-family: inherit;
+            color: var(--green);
+            font-family: 'Vazirmatn', 'Courier New', monospace;
         }
 
-        .filter-tab:hover {
-            border-color: var(--hacker-green);
-        }
+        .filter-tab:hover { border-color: var(--green); box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
+        .filter-tab.active { background: var(--green); color: #000; border-color: var(--green); box-shadow: 0 0 25px rgba(0, 255, 65, 0.4); }
 
-        .filter-tab.active {
-            background: linear-gradient(135deg, var(--hacker-purple), #7c3aed);
-            border-color: var(--hacker-purple);
-            box-shadow: 0 0 20px rgba(180,0,255,0.4);
-        }
-
-        .search-bar {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
+        .search-bar { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
 
         .search-input {
-            flex: 1;
-            min-width: 200px;
-            padding: 12px 20px;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid rgba(180,0,255,0.3);
-            border-radius: 25px;
-            color: var(--white);
-            font-size: 14px;
-            font-family: inherit;
+            flex: 1; min-width: 180px;
+            padding: 10px 16px;
+            background: #000;
+            border: 1px solid var(--dark-green);
+            border-radius: 22px;
+            color: var(--green);
+            font-size: 13px;
+            font-family: 'Vazirmatn', 'Courier New', monospace;
             outline: none;
             transition: var(--transition);
         }
 
-        .search-input:focus {
-            border-color: var(--hacker-green);
-            box-shadow: 0 0 20px rgba(0,255,65,0.2);
-        }
+        .search-input:focus { border-color: var(--green); box-shadow: 0 0 18px rgba(0, 255, 65, 0.2); }
+        .search-input::placeholder { color: rgba(0, 255, 65, 0.3); }
 
         .sort-select {
-            padding: 12px 20px;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid rgba(180,0,255,0.3);
-            border-radius: 25px;
-            color: var(--white);
-            font-size: 13px;
-            font-family: inherit;
+            padding: 10px 16px;
+            background: #000;
+            border: 1px solid var(--dark-green);
+            border-radius: 22px;
+            color: var(--green);
+            font-size: 12px;
+            font-family: 'Vazirmatn', 'Courier New', monospace;
             outline: none;
             cursor: pointer;
             transition: var(--transition);
         }
 
-        .sort-select:focus {
-            border-color: var(--hacker-green);
-        }
-
-        /* Upload Zone */
-        .upload-zone {
-            border: 3px dashed rgba(180,0,255,0.4);
-            border-radius: var(--border-radius);
-            padding: 35px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 20px;
-            background: rgba(22,33,62,0.5);
-        }
-
-        .upload-zone:hover {
-            border-color: var(--pubg-orange);
-            box-shadow: 0 0 40px rgba(245,158,11,0.2);
-        }
-
-        .upload-zone.dragover {
-            border-color: var(--hacker-green);
-            background: rgba(0,255,65,0.05);
-            animation: shake 0.5s;
-        }
-
-        @keyframes shake {
-            0%,100%{transform:translateX(0)}
-            25%{transform:translateX(-8px)}
-            75%{transform:translateX(8px)}
-        }
-
-        .upload-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
+        .sort-select:focus { border-color: var(--green); }
 
         /* File Grid */
         .file-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 10px;
         }
 
         .file-card {
-            background: rgba(15,15,26,0.9);
-            border: 1px solid rgba(180,0,255,0.2);
-            border-radius: 12px;
+            background: #000;
+            border: 1px solid var(--dark-green);
+            border-radius: 10px;
             overflow: hidden;
             transition: var(--transition);
             cursor: pointer;
@@ -536,37 +567,42 @@
 
         .file-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(180,0,255,0.3);
-            border-color: var(--pubg-orange);
+            box-shadow: 0 12px 35px rgba(0, 255, 65, 0.2);
+            border-color: var(--green);
         }
 
-        .file-preview {
-            width: 100%;
-            height: 160px;
+        .file-thumb {
+            width: 100%; height: 120px;
             object-fit: cover;
             background: #000;
             display: block;
         }
 
-        .file-placeholder {
-            width: 100%;
-            height: 160px;
+        .file-icon-placeholder {
+            width: 100%; height: 120px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, rgba(22,33,62,1), rgba(15,15,26,1));
-            font-size: 50px;
+            background: linear-gradient(135deg, #0a1a0a, #050f05);
+            font-size: 40px;
+            flex-direction: column;
+            gap: 4px;
         }
 
-        .file-info {
-            padding: 12px;
+        .file-ext {
+            font-size: 11px;
+            color: var(--green);
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--green);
         }
+
+        .file-info { padding: 10px; }
 
         .file-name {
             font-weight: 700;
-            font-size: 13px;
+            font-size: 11px;
             color: var(--white);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             word-break: break-all;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -575,170 +611,201 @@
         }
 
         .file-meta {
-            font-size: 10px;
+            font-size: 8px;
             color: var(--gray);
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .file-actions {
-            display: flex;
-            gap: 5px;
-            margin-top: 8px;
-            flex-wrap: wrap;
-        }
-
-        .file-actions .btn {
-            flex: 1;
-            padding: 6px;
-            font-size: 10px;
-            border-radius: 8px;
-            justify-content: center;
+            gap: 3px;
         }
 
         .badge {
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 7px;
             font-weight: 700;
         }
 
-        .badge-image { background: rgba(0,212,255,0.2); color: var(--blue); }
-        .badge-video { background: rgba(255,0,64,0.2); color: var(--danger); }
-        .badge-audio { background: rgba(245,158,11,0.2); color: var(--pubg-orange); }
-        .badge-other { background: rgba(180,0,255,0.2); color: var(--hacker-purple); }
+        .badge-img { background: rgba(0, 212, 255, 0.15); color: var(--blue); }
+        .badge-vid { background: rgba(255, 0, 64, 0.15); color: var(--red); }
+        .badge-aud { background: rgba(255, 215, 0, 0.15); color: var(--gold); }
+        .badge-apk { background: rgba(0, 255, 65, 0.15); color: var(--green); }
+        .badge-zip { background: rgba(180, 0, 255, 0.15); color: var(--purple); }
+        .badge-other { background: rgba(136, 136, 136, 0.15); color: var(--gray); }
 
-        /* Admin Panel */
-        .admin-panel {
-            background: rgba(22,33,62,0.95);
-            border: 2px solid rgba(245,158,11,0.4);
-            border-radius: var(--border-radius);
+        .file-actions-row { display: flex; gap: 3px; margin-top: 5px; flex-wrap: wrap; }
+        .file-actions-row .btn { flex: 1; padding: 4px 7px; font-size: 9px; border-radius: 7px; justify-content: center; gap: 3px; }
+
+        /* ==================== ADMIN PANEL (SEPARATE PAGE) ==================== */
+        .admin-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 5, 0, 0.98);
+            display: none;
+            z-index: 99997;
+            overflow-y: auto;
+            backdrop-filter: blur(15px);
+        }
+
+        .admin-overlay.active { display: block; }
+
+        .admin-container {
+            max-width: 1000px;
+            margin: 0 auto;
             padding: 20px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 40px rgba(245,158,11,0.2);
-            height: fit-content;
-            position: sticky;
-            top: 20px;
         }
 
-        .admin-panel h3 {
-            font-size: 18px;
-            font-weight: 900;
-            color: var(--pubg-orange);
+        .admin-header {
+            background: var(--panel);
+            border: 2px solid var(--gold);
+            border-radius: var(--radius);
+            padding: 20px 30px;
+            margin-bottom: 20px;
             text-align: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid rgba(245,158,11,0.3);
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
         }
 
-        .admin-section {
-            margin-bottom: 15px;
+        .admin-header h2 {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 0 0 30px var(--gold);
+            margin-bottom: 5px;
         }
 
-        .admin-label {
-            font-size: 11px;
+        .admin-header p {
             color: var(--gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .admin-card {
+            background: var(--panel);
+            border: 1px solid var(--dark-green);
+            border-radius: var(--radius);
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .admin-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
+        }
+
+        .admin-card h4 {
+            font-size: 14px;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-table {
+            width: 100%;
+            font-size: 10px;
+        }
+
+        .info-table tr {
+            border-bottom: 1px solid rgba(0, 255, 65, 0.05);
+        }
+
+        .info-table td {
+            padding: 5px 8px;
+            color: var(--gray);
+        }
+
+        .info-table td:first-child {
             font-weight: 700;
+            color: var(--green);
+            width: 35%;
+        }
+
+        .info-table td:last-child {
+            color: var(--white);
+            word-break: break-all;
         }
 
         .admin-input {
             width: 100%;
-            padding: 10px 15px;
-            background: rgba(0,0,0,0.5);
-            border: 2px solid rgba(180,0,255,0.3);
-            border-radius: 10px;
-            color: var(--white);
-            font-size: 13px;
-            font-family: inherit;
+            padding: 10px 14px;
+            background: #000;
+            border: 1px solid var(--dark-green);
+            border-radius: 8px;
+            color: var(--green);
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
             outline: none;
             transition: var(--transition);
             margin-bottom: 8px;
+            text-align: center;
         }
 
-        .admin-input:focus {
-            border-color: var(--pubg-orange);
-            box-shadow: 0 0 15px rgba(245,158,11,0.2);
-        }
+        .admin-input:focus { border-color: var(--gold); box-shadow: 0 0 12px rgba(255, 215, 0, 0.2); }
 
-        .visitor-log {
-            max-height: 200px;
-            overflow-y: auto;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            padding: 10px;
-        }
+        .admin-btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 
-        .log-entry {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(180,0,255,0.2);
-            border-radius: 8px;
-            padding: 8px;
-            margin-bottom: 6px;
-            font-size: 10px;
+        .close-admin-btn {
+            position: fixed;
+            top: 20px; right: 20px;
+            font-size: 30px;
+            color: var(--red);
+            cursor: pointer;
+            z-index: 99998;
+            background: var(--panel);
+            border: 1px solid var(--red);
+            border-radius: 50%;
+            width: 45px; height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             transition: var(--transition);
         }
 
-        .log-entry:hover {
-            border-color: var(--pubg-orange);
-        }
-
-        .log-date {
-            color: var(--pubg-orange);
-            font-weight: 700;
-            margin-bottom: 4px;
-            font-size: 11px;
-        }
-
-        .log-detail {
-            color: var(--gray);
-            line-height: 1.5;
-        }
-
-        .log-detail span {
-            color: var(--hacker-green);
+        .close-admin-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 0 25px rgba(255, 0, 64, 0.5);
         }
 
         /* Modal */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.95);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.95);
             z-index: 10000;
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(10px);
         }
 
-        .modal.active {
-            display: flex;
-        }
+        .modal.active { display: flex; }
 
         .modal-content {
             max-width: 90%;
             max-height: 90vh;
-            background: var(--pubg-darker);
-            border: 2px solid var(--hacker-purple);
-            border-radius: var(--border-radius);
+            background: var(--panel);
+            border: 1px solid var(--green);
+            border-radius: var(--radius);
             padding: 20px;
             position: relative;
-            box-shadow: 0 0 80px rgba(180,0,255,0.5);
+            box-shadow: 0 0 60px rgba(0, 255, 65, 0.3);
         }
 
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 30px;
-            color: var(--danger);
+            top: 8px; right: 12px;
+            font-size: 26px;
+            color: var(--red);
             cursor: pointer;
             z-index: 10;
             background: none;
@@ -746,75 +813,61 @@
             transition: var(--transition);
         }
 
-        .modal-close:hover {
-            transform: scale(1.2) rotate(90deg);
-        }
-
-        .modal img, .modal video {
-            max-width: 100%;
-            max-height: 75vh;
-            border-radius: 10px;
-        }
-
-        .modal audio {
-            width: 100%;
-            max-width: 400px;
-        }
+        .modal-close:hover { transform: scale(1.2) rotate(90deg); }
+        .modal img, .modal video { max-width: 100%; max-height: 75vh; border-radius: 8px; }
+        .modal audio { width: 100%; max-width: 400px; }
 
         /* Footer */
         .footer {
-            background: rgba(22,33,62,0.95);
-            border: 2px solid rgba(180,0,255,0.3);
-            border-radius: var(--border-radius);
-            padding: 25px;
+            background: var(--panel);
+            border: 1px solid var(--dark-green);
+            border-radius: var(--radius);
+            padding: 20px;
             text-align: center;
-            margin-top: 25px;
-            box-shadow: 0 0 20px rgba(180,0,255,0.3);
+            margin-top: 15px;
         }
 
-        .footer-brand {
-            font-size: 24px;
+        .footer-name {
+            font-size: 18px;
             font-weight: 900;
-            background: linear-gradient(45deg, var(--pubg-orange), var(--hacker-purple), var(--hacker-green));
+            background: linear-gradient(45deg, var(--green), var(--gold), var(--purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-        }
-
-        .footer-phone {
-            font-size: 20px;
-            color: var(--gold);
-            font-weight: 700;
-            margin: 8px 0;
-            direction: ltr;
-            display: inline-block;
             letter-spacing: 3px;
         }
 
-        .footer-credit {
-            color: var(--gray);
-            font-size: 10px;
+        .footer-phone {
+            font-size: 16px;
+            color: var(--gold);
+            font-weight: 700;
+            margin: 5px 0;
+            direction: ltr;
+            display: inline-block;
+            letter-spacing: 4px;
         }
+
+        .footer-credit { font-size: 8px; color: var(--gray); letter-spacing: 1px; }
 
         /* Notification */
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(22,33,62,0.95);
-            border: 2px solid var(--hacker-green);
-            color: var(--hacker-green);
-            padding: 12px 20px;
-            border-radius: 12px;
+            top: 15px; right: 15px;
+            background: var(--panel);
+            border: 1px solid var(--green);
+            color: var(--green);
+            padding: 10px 18px;
+            border-radius: 10px;
             z-index: 99999;
             font-weight: 700;
-            box-shadow: 0 0 30px rgba(0,255,65,0.3);
-            max-width: 400px;
+            font-size: 12px;
+            box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
+            max-width: 350px;
             animation: slideIn 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 14px;
+            gap: 8px;
+            font-family: 'Vazirmatn', 'Courier New', monospace;
         }
 
         @keyframes slideIn {
@@ -824,78 +877,54 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-            .brand {
-                flex-direction: column;
-            }
-            .brand-text h1 {
-                font-size: 20px;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .file-grid {
-                grid-template-columns: 1fr;
-            }
-            .section-header {
-                flex-direction: column;
-            }
-            .filter-tabs {
-                justify-content: center;
-            }
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-            .admin-panel {
-                position: relative;
-                top: 0;
-            }
-            .search-bar {
-                flex-direction: column;
-            }
-            .sort-select {
-                width: 100%;
-            }
+            .header { flex-direction: column; text-align: center; }
+            .brand { flex-direction: column; }
+            .brand h1 { font-size: 17px; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .stat-value { font-size: 18px; }
+            .file-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+            .file-thumb, .file-icon-placeholder { height: 100px; }
+            .admin-grid { grid-template-columns: 1fr; }
+            .search-bar { flex-direction: column; }
+            .sort-select { width: 100%; }
+            .kali-logo-large { font-size: 50px; }
+            .lang-title { font-size: 20px; }
+            .lang-btn { padding: 14px 28px; font-size: 16px; }
         }
 
         @media (max-width: 480px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .stat-value {
-                font-size: 22px;
-            }
-            .filter-tab {
-                padding: 6px 10px;
-                font-size: 10px;
-            }
-            .upload-zone {
-                padding: 20px;
-            }
-            .upload-icon {
-                font-size: 35px;
-            }
-            .lang-title {
-                font-size: 24px;
-            }
-            .lang-btn {
-                padding: 15px 30px;
-                font-size: 16px;
-            }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .file-grid { grid-template-columns: 1fr 1fr; }
+            .filter-tabs { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ==================== MATRIX CANVAS ==================== -->
+    <canvas id="matrixCanvas"></canvas>
+
+    <!-- ==================== SCANLINES ==================== -->
+    <div class="scanlines"></div>
+
+    <!-- ==================== FLOATING SKULLS ==================== -->
+    <div class="floating-skull">💀</div>
+    <div class="floating-skull">☠️</div>
+    <div class="floating-skull">🏴‍☠️</div>
+    <div class="floating-skull">👾</div>
+    <div class="floating-skull">🖥️</div>
+    <div class="floating-skull">⚡</div>
+
+    <!-- ==================== PARTICLES CONTAINER ==================== -->
+    <div id="particlesContainer"></div>
+
     <!-- ==================== LANGUAGE SELECTOR ==================== -->
     <div class="lang-overlay" id="langSelector">
-        <div class="lang-title">🌍 SELECT LANGUAGE | انتخاب زبان</div>
-        <p style="color:var(--gray);text-align:center;">
-            Please choose your language<br>
-            <span style="font-size:12px;">لطفاً زبان مورد نظر را انتخاب کنید</span>
+        <div class="kali-logo-large">🐉</div>
+        <div class="lang-title">KALI LINUX GANG VAULT</div>
+        <p style="color:var(--gray);text-align:center;font-family:'Vazirmatn',monospace;">
+            زبان مورد نظر را انتخاب کنید<br>
+            <span style="font-size:10px;">Choose your language</span>
         </p>
         <div class="lang-buttons">
             <button class="lang-btn" onclick="selectLanguage('fa')" id="btnFa">
@@ -905,18 +934,22 @@
                 🇺🇸 ENGLISH
             </button>
         </div>
-        <div style="margin-top:30px;color:var(--hacker-purple);font-size:11px;text-align:center;">
-            ⚡ D-SECURE GANG VAULT | Daniyal Shahraki ⚡
+        <div class="lang-info">
+            <p>سازنده: <span class="highlight">دانیال شهرکی</span></p>
+            <p>تماس: <span class="highlight" style="direction:ltr;display:inline-block;">09917387803</span></p>
+            <p style="font-size:9px;opacity:0.6;">© 2024 Daniyal Shahraki | کالی لینوکس گنگ</p>
         </div>
     </div>
 
     <!-- ==================== LOGIN SCREEN ==================== -->
     <div class="login-overlay hidden" id="loginScreen">
         <div class="login-box">
-            <div class="login-icon">💀</div>
-            <div class="login-title" id="loginTitle">GANG VAULT</div>
-            <p style="color:#888;margin-bottom:15px;" id="loginDesc">لطفاً رمز عبور را وارد کنید</p>
-            <input type="password" class="login-input" id="passwordInput" placeholder="••••••••" autofocus>
+            <div class="login-icon">🐉</div>
+            <div class="login-title" id="loginTitle">ورود به والت</div>
+            <p style="color:var(--gray);margin-bottom:12px;font-family:'Vazirmatn',monospace;font-size:12px;" id="loginDesc">
+                رمز عبور را وارد کنید
+            </p>
+            <input type="password" class="login-input" id="passwordInput" placeholder="••••••••••••" autofocus>
             <button class="btn btn-primary" onclick="authenticate()">
                 🚀 <span id="loginBtnText">ورود به والت</span>
             </button>
@@ -931,15 +964,18 @@
         <!-- Header -->
         <header class="header">
             <div class="brand">
-                <div class="brand-logo">🏴‍☠️</div>
-                <div class="brand-text">
-                    <h1>GANG VAULT</h1>
-                    <p>⚡ DANIYAL SHAHRAKI | دانیال شهرکی</p>
+                <span class="kali-logo">🐉</span>
+                <div>
+                    <h1>KALI GANG VAULT</h1>
+                    <p>⚡ دانیال شهرکی | Daniyal Shahraki</p>
                 </div>
             </div>
             <div class="header-actions">
-                <button class="btn btn-primary btn-sm" onclick="document.getElementById('fileInput').click()">
-                    <i class="fas fa-cloud-upload-alt"></i> آپلود
+                <span class="admin-link" onclick="openAdminPanel()">
+                    <i class="fas fa-user-shield"></i> پنل مدیریت
+                </span>
+                <button class="btn btn-sm" onclick="document.getElementById('fileInput').click()">
+                    <i class="fas fa-upload"></i> آپلود فایل
                 </button>
                 <button class="btn btn-danger btn-sm" onclick="lockVault()">
                     <i class="fas fa-lock"></i> قفل
@@ -948,131 +984,161 @@
         </header>
 
         <!-- Stats -->
-        <div class="stats-grid">
+        <div class="stats-row">
             <div class="stat-card">
-                <div class="stat-icon">📁</div>
                 <div class="stat-value" id="totalFiles">0</div>
-                <div class="stat-label">کل فایل‌ها</div>
+                <div class="stat-label">📁 کل فایل‌ها</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">💾</div>
                 <div class="stat-value" id="totalSize">0 KB</div>
-                <div class="stat-label">حجم کل</div>
+                <div class="stat-label">💾 حجم کل</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🖼️</div>
                 <div class="stat-value" id="imageCount">0</div>
-                <div class="stat-label">عکس‌ها</div>
+                <div class="stat-label">🖼️ عکس</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🎵</div>
-                <div class="stat-value" id="audioCount">0</div>
-                <div class="stat-label">آهنگ‌ها</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🎬</div>
                 <div class="stat-value" id="videoCount">0</div>
-                <div class="stat-label">ویدیوها</div>
+                <div class="stat-label">🎬 ویدیو</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="audioCount">0</div>
+                <div class="stat-label">🎵 صدا</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="apkCount">0</div>
+                <div class="stat-label">📱 APK</div>
             </div>
         </div>
 
-        <!-- Main Layout -->
-        <div class="main-layout">
-            
-            <!-- Gallery -->
-            <div class="gallery-section">
-                
-                <!-- Upload Zone -->
-                <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-                    <div class="upload-icon">☠️</div>
-                    <h3 style="color:var(--pubg-orange);margin-bottom:5px;">فایل‌ها را اینجا رها کنید</h3>
-                    <p style="color:var(--gray);font-size:13px;">پشتیبانی از تمام فرمت‌ها | کلیک برای آپلود</p>
-                    <input type="file" id="fileInput" multiple style="display:none;" onchange="handleUpload(this.files)" accept="*/*">
-                </div>
-
-                <!-- Filter & Search -->
-                <div class="section-header">
-                    <div class="section-title">
-                        <i class="fas fa-photo-video"></i> گالری فایل‌ها
-                    </div>
-                    <div class="filter-tabs">
-                        <button class="filter-tab active" onclick="setFilter('all', this)">همه</button>
-                        <button class="filter-tab" onclick="setFilter('image/', this)">🖼️ عکس</button>
-                        <button class="filter-tab" onclick="setFilter('video/', this)">🎬 ویدیو</button>
-                        <button class="filter-tab" onclick="setFilter('audio/', this)">🎵 صدا</button>
-                        <button class="filter-tab" onclick="setFilter('other', this)">📄 سایر</button>
-                    </div>
-                </div>
-
-                <div class="search-bar">
-                    <input type="text" class="search-input" placeholder="🔍 جستجو در فایل‌ها..." id="searchInput" oninput="displayFiles()">
-                    <select class="sort-select" id="sortSelect" onchange="sortFiles(this.value)">
-                        <option value="date">📅 جدیدترین</option>
-                        <option value="date-asc">📅 قدیمی‌ترین</option>
-                        <option value="name">📋 نام (الفبا)</option>
-                        <option value="size">📊 حجم (بیشترین)</option>
-                        <option value="size-asc">📊 حجم (کمترین)</option>
-                    </select>
-                    <button class="btn btn-danger btn-sm" onclick="deleteAll()" title="حذف همه">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </div>
-
-                <!-- File Grid -->
-                <div class="file-grid" id="fileGrid"></div>
-            </div>
-
-            <!-- Admin Panel -->
-            <aside class="admin-panel" id="adminPanel">
-                <h3><i class="fas fa-shield-haltered"></i> پنل مدیریت</h3>
-                
-                <div class="admin-section">
-                    <div class="admin-label">🔑 رمز مدیریت</div>
-                    <input type="password" class="admin-input" id="adminPassInput" placeholder="رمز مدیریت را وارد کنید">
-                    <button class="btn btn-primary btn-sm" onclick="loginAdmin()" style="width:100%;margin-bottom:6px;">
-                        <i class="fas fa-sign-in-alt"></i> ورود مدیر
-                    </button>
-                    <p style="color:var(--danger);font-size:11px;display:none;" id="adminError"></p>
-                </div>
-
-                <div id="adminControls" style="display:none;">
-                    <div class="admin-section">
-                        <div class="admin-label">🔑 تغییر رمز والت</div>
-                        <input type="password" class="admin-input" id="newVaultPass" placeholder="رمز جدید والت">
-                        <input type="password" class="admin-input" id="confirmVaultPass" placeholder="تکرار رمز جدید">
-                        <button class="btn btn-success btn-sm" onclick="changeVaultPassword()" style="width:100%;">
-                            <i class="fas fa-save"></i> ذخیره
-                        </button>
-                        <p style="color:var(--danger);font-size:11px;display:none;" id="vaultPassError"></p>
-                    </div>
-
-                    <div class="admin-section">
-                        <div class="admin-label">📊 اطلاعات بازدیدکننده</div>
-                        <button class="btn btn-sm" onclick="refreshVisitorInfo()" style="width:100%;margin-bottom:8px;font-size:11px;">
-                            <i class="fas fa-sync-alt"></i> بروزرسانی
-                        </button>
-                        <div class="visitor-log" id="visitorInfo">
-                            <p style="color:var(--gray);text-align:center;font-size:11px;">در حال بارگذاری...</p>
-                        </div>
-                    </div>
-
-                    <div class="admin-section">
-                        <div class="admin-label">📋 تاریخچه بازدیدها</div>
-                        <div class="visitor-log" id="visitHistory">
-                            <p style="color:var(--gray);text-align:center;font-size:11px;">در حال بارگذاری...</p>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+        <!-- Upload -->
+        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+            <span class="upload-icon">☠️</span>
+            <strong style="color:var(--green);">فایل‌های خود را اینجا رها کنید</strong>
+            <p style="color:var(--gray);font-size:10px;margin-top:3px;">پشتیبانی از تمام فرمت‌ها: APK · ZIP · RAR · عکس · فیلم · صدا · PDF · EXE</p>
+            <input type="file" id="fileInput" multiple style="display:none;" onchange="handleUpload(this.files)" accept="*/*">
         </div>
+
+        <!-- Filter & Search -->
+        <div class="gallery-header">
+            <div class="gallery-title">
+                <i class="fas fa-folder-open"></i> گالری فایل‌ها
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="setFilter('all', this)">همه</button>
+                <button class="filter-tab" onclick="setFilter('image/', this)">عکس</button>
+                <button class="filter-tab" onclick="setFilter('video/', this)">ویدیو</button>
+                <button class="filter-tab" onclick="setFilter('audio/', this)">صدا</button>
+                <button class="filter-tab" onclick="setFilter('apk', this)">APK</button>
+                <button class="filter-tab" onclick="setFilter('archive', this)">ZIP</button>
+                <button class="filter-tab" onclick="setFilter('other', this)">سایر</button>
+            </div>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" class="search-input" placeholder="🔍 جستجو در فایل‌ها..." id="searchInput" oninput="displayFiles()">
+            <select class="sort-select" id="sortSelect" onchange="sortFiles(this.value)">
+                <option value="date">📅 جدیدترین</option>
+                <option value="date-asc">📅 قدیمی‌ترین</option>
+                <option value="name">📋 نام</option>
+                <option value="size">📊 حجم (بیشترین)</option>
+                <option value="size-asc">📊 حجم (کمترین)</option>
+            </select>
+        </div>
+
+        <!-- File Grid -->
+        <div class="file-grid" id="fileGrid"></div>
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="footer-brand">🏴‍☠️ D-SECURE GANG VAULT</div>
-            <p style="color:var(--gray);margin:5px 0;font-size:13px;">سازنده: <strong style="color:var(--pubg-orange);">دانیال شهرکی</strong></p>
+            <div class="footer-name">🏴‍☠️ KALI GANG VAULT</div>
+            <p style="color:var(--gray);font-size:10px;margin:2px 0;">سازنده: <strong style="color:var(--gold);">دانیال شهرکی</strong></p>
             <div class="footer-phone">📱 09917387803</div>
-            <div class="footer-credit">© 2024 Daniyal Shahraki | All Rights Reserved</div>
+            <div class="footer-credit">© 2024 Daniyal Shahraki | تمام حقوق محفوظ است</div>
         </footer>
+    </div>
+
+    <!-- ==================== ADMIN PANEL (SEPARATE PAGE) ==================== -->
+    <div class="admin-overlay" id="adminOverlay">
+        <span class="close-admin-btn" onclick="closeAdminPanel()">&times;</span>
+        
+        <div class="admin-container">
+            <div class="admin-header">
+                <h2>🐉 پنل مدیریت کالی</h2>
+                <p>ورود به بخش مدیریت - رمز مدیریت را وارد کنید</p>
+                <input type="password" class="admin-input" id="adminPassInput" placeholder="رمز مدیریت..." style="max-width:350px;margin:15px auto;">
+                <button class="btn btn-sm" onclick="loginAdmin()" style="color:var(--gold);border-color:var(--gold);">
+                    <i class="fas fa-key"></i> ورود به پنل
+                </button>
+                <p style="color:var(--red);font-size:10px;display:none;margin-top:5px;" id="adminError">❌ رمز اشتباه</p>
+            </div>
+
+            <div id="adminContent" style="display:none;">
+                <!-- Target Info -->
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h4><i class="fas fa-user-secret"></i> اطلاعات کاربر فعلی</h4>
+                        <table class="info-table" id="targetInfo">
+                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
+                        </table>
+                        <button class="btn btn-sm" onclick="refreshTargetInfo()" style="width:100%;margin-top:10px;">
+                            <i class="fas fa-sync-alt"></i> بروزرسانی اطلاعات
+                        </button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h4><i class="fas fa-microchip"></i> مشخصات سخت‌افزاری</h4>
+                        <table class="info-table" id="hardwareInfo">
+                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="admin-card">
+                        <h4><i class="fas fa-wifi"></i> شبکه و اتصال</h4>
+                        <table class="info-table" id="networkInfo">
+                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="admin-card">
+                        <h4><i class="fas fa-battery-full"></i> وضعیت باتری و سیستم</h4>
+                        <table class="info-table" id="batteryInfo">
+                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="admin-card">
+                        <h4><i class="fas fa-globe"></i> موقعیت مکانی</h4>
+                        <table class="info-table" id="geoInfo">
+                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="admin-card">
+                        <h4><i class="fas fa-clock"></i> تاریخچه بازدیدها</h4>
+                        <div id="visitHistory" style="max-height:250px;overflow-y:auto;font-size:9px;">
+                            <p style="color:var(--gray);text-align:center;">در حال بارگذاری...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="admin-card" style="margin-bottom:20px;">
+                    <h4><i class="fas fa-cogs"></i> عملیات مدیریت</h4>
+                    <div class="admin-btn-row">
+                        <button class="btn btn-danger btn-sm" onclick="deleteAll()">
+                            <i class="fas fa-skull"></i> حذف همه فایل‌ها
+                        </button>
+                        <button class="btn btn-sm" onclick="changePasswordPrompt()">
+                            <i class="fas fa-key"></i> تغییر رمز والت
+                        </button>
+                        <button class="btn btn-sm" onclick="logoutAdmin()">
+                            <i class="fas fa-sign-out-alt"></i> خروج از مدیریت
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- ==================== PREVIEW MODAL ==================== -->
@@ -1081,318 +1147,151 @@
         <div class="modal-content" id="previewContent"></div>
     </div>
 
-    <!-- ==================== SCRIPTS ==================== -->
     <script>
-        // ==================== LANGUAGE ====================
-        let currentLang = 'fa';
+        // ==================== MATRIX RAIN ====================
+        const matrixCanvas = document.getElementById('matrixCanvas');
+        const mctx = matrixCanvas.getContext('2d');
         
-        const translations = {
-            fa: {
-                loginTitle: 'GANG VAULT',
-                loginDesc: 'لطفاً رمز عبور را وارد کنید',
-                loginBtn: 'ورود به والت',
-                errorWrong: '❌ رمز عبور اشتباه است!',
-                errorEmpty: '❌ لطفاً رمز عبور را وارد کنید',
-                hintText: 'رمز پیش‌فرض: Danial..flah13',
-                unlocked: '✅ والت با موفقیت باز شد',
-                locked: '🔒 والت قفل شد',
-                uploaded: ' فایل با موفقیت آپلود شد',
-                deleted: '🗑️ فایل حذف شد',
-                deletedAll: '🗑️ تمام فایل‌ها حذف شدند',
-                renamed: '✅ نام فایل تغییر کرد',
-                passwordChanged: '✅ رمز والت تغییر کرد',
-                adminLoginOk: '✅ به پنل مدیریت خوش آمدید',
-                adminLoginFail: '❌ رمز مدیریت اشتباه است!',
-                infoRefreshed: '✅ اطلاعات بروزرسانی شد',
-                visitorInfo: 'اطلاعات بازدیدکننده',
-                visitHistory: 'تاریخچه بازدیدها',
-                loading: 'در حال بارگذاری...',
-                noFiles: 'هیچ فایلی یافت نشد',
-                uploadHere: 'فایل‌ها را اینجا رها کنید',
-                uploadDesc: 'پشتیبانی از تمام فرمت‌ها | کلیک برای آپلود',
-                gallery: 'گالری فایل‌ها',
-                all: 'همه',
-                images: 'عکس',
-                videos: 'ویدیو',
-                audio: 'صدا',
-                other: 'سایر',
-                search: 'جستجو در فایل‌ها...',
-                newest: 'جدیدترین',
-                oldest: 'قدیمی‌ترین',
-                sortName: 'نام (الفبا)',
-                sortSize: 'حجم (بیشترین)',
-                sortSizeAsc: 'حجم (کمترین)',
-                totalFiles: 'کل فایل‌ها',
-                totalSize: 'حجم کل',
-                imageCount: 'عکس‌ها',
-                audioCount: 'آهنگ‌ها',
-                videoCount: 'ویدیوها',
-                upload: 'آپلود',
-                lock: 'قفل',
-                adminPanel: 'پنل مدیریت',
-                adminPass: 'رمز مدیریت را وارد کنید',
-                adminLogin: 'ورود مدیر',
-                changePass: 'تغییر رمز والت',
-                newPass: 'رمز جدید والت',
-                confirmPass: 'تکرار رمز جدید',
-                save: 'ذخیره',
-                refresh: 'بروزرسانی',
-                deleteAll: 'حذف همه',
-                confirmDelete: 'آیا از حذف این فایل مطمئن هستید؟',
-                confirmDeleteAll: 'هشدار: تمام فایل‌ها حذف خواهند شد!',
-                confirmDeleteAll2: 'آخرین هشدار: این عملیات قابل بازگشت نیست!',
-                renamePrompt: 'نام جدید را وارد کنید:',
-                lockPrompt: 'رمز جدید برای قفل کردن وارد کنید:',
-                lockCancel: 'برای انصراف Cancel بزنید',
-                noFilesToDelete: 'هیچ فایلی برای حذف وجود ندارد',
-                fileTooBig: 'فایل بزرگتر از حد مجاز است',
-                fillAllFields: 'لطفاً تمام فیلدها را پر کنید',
-                passNotMatch: 'رمزها مطابقت ندارند',
-                preview: 'پیش‌نمایش',
-                download: 'دانلود',
-                rename: 'تغییر نام',
-                delete: 'حذف',
-                encrypted: 'رمزنگاری شده',
-                ip: 'IP',
-                location: 'موقعیت',
-                isp: 'ISP',
-                device: 'دستگاه',
-                screen: 'صفحه',
-                language: 'زبان',
-                online: 'آنلاین',
-                offline: 'آفلاین',
-                battery: 'باتری',
-                network: 'شبکه',
-                charging: 'در حال شارژ',
-                notCharging: 'باتری',
-                yes: 'بله',
-                no: 'خیر',
-                vpnActive: 'VPN فعال',
-                vpnInactive: 'VPN غیرفعال',
-                notDetectable: 'قابل تشخیص نیست',
-                phoneNumber: 'شماره تلفن',
-                cpu: 'هسته‌های CPU',
-                ram: 'رم دستگاه',
-                colorDepth: 'عمق رنگ',
-                pixelRatio: 'نسبت پیکسل',
-                viewport: 'نمای صفحه',
-                pageLoadTime: 'زمان بارگذاری',
-                cookies: 'کوکی فعال',
-                doNotTrack: 'Do Not Track',
-                date: 'تاریخ',
-                time: 'ساعت',
-            },
-            en: {
-                loginTitle: 'GANG VAULT',
-                loginDesc: 'Please enter password',
-                loginBtn: 'Enter Vault',
-                errorWrong: '❌ Wrong password!',
-                errorEmpty: '❌ Please enter password',
-                hintText: 'Default password: Danial..flah13',
-                unlocked: '✅ Vault unlocked successfully',
-                locked: '🔒 Vault locked',
-                uploaded: ' file(s) uploaded successfully',
-                deleted: '🗑️ File deleted',
-                deletedAll: '🗑️ All files deleted',
-                renamed: '✅ File renamed',
-                passwordChanged: '✅ Vault password changed',
-                adminLoginOk: '✅ Welcome to Admin Panel',
-                adminLoginFail: '❌ Wrong admin password!',
-                infoRefreshed: '✅ Info refreshed',
-                visitorInfo: 'Visitor Information',
-                visitHistory: 'Visit History',
-                loading: 'Loading...',
-                noFiles: 'No files found',
-                uploadHere: 'Drop files here',
-                uploadDesc: 'All formats supported | Click to upload',
-                gallery: 'File Gallery',
-                all: 'All',
-                images: 'Images',
-                videos: 'Videos',
-                audio: 'Audio',
-                other: 'Other',
-                search: 'Search files...',
-                newest: 'Newest',
-                oldest: 'Oldest',
-                sortName: 'Name (A-Z)',
-                sortSize: 'Size (Largest)',
-                sortSizeAsc: 'Size (Smallest)',
-                totalFiles: 'Total Files',
-                totalSize: 'Total Size',
-                imageCount: 'Images',
-                audioCount: 'Audio',
-                videoCount: 'Videos',
-                upload: 'Upload',
-                lock: 'Lock',
-                adminPanel: 'Admin Panel',
-                adminPass: 'Enter admin password',
-                adminLogin: 'Admin Login',
-                changePass: 'Change Vault Password',
-                newPass: 'New vault password',
-                confirmPass: 'Confirm new password',
-                save: 'Save',
-                refresh: 'Refresh',
-                deleteAll: 'Delete All',
-                confirmDelete: 'Are you sure you want to delete this file?',
-                confirmDeleteAll: 'Warning: All files will be deleted!',
-                confirmDeleteAll2: 'Final warning: This action is irreversible!',
-                renamePrompt: 'Enter new name:',
-                lockPrompt: 'Enter new password to lock:',
-                lockCancel: 'Cancel to abort',
-                noFilesToDelete: 'No files to delete',
-                fileTooBig: 'File is too large',
-                fillAllFields: 'Please fill all fields',
-                passNotMatch: 'Passwords do not match',
-                preview: 'Preview',
-                download: 'Download',
-                rename: 'Rename',
-                delete: 'Delete',
-                encrypted: 'Encrypted',
-                ip: 'IP',
-                location: 'Location',
-                isp: 'ISP',
-                device: 'Device',
-                screen: 'Screen',
-                language: 'Language',
-                online: 'Online',
-                offline: 'Offline',
-                battery: 'Battery',
-                network: 'Network',
-                charging: 'Charging',
-                notCharging: 'Battery',
-                yes: 'Yes',
-                no: 'No',
-                vpnActive: 'VPN Active',
-                vpnInactive: 'VPN Inactive',
-                notDetectable: 'Not detectable',
-                phoneNumber: 'Phone Number',
-                cpu: 'CPU Cores',
-                ram: 'Device RAM',
-                colorDepth: 'Color Depth',
-                pixelRatio: 'Pixel Ratio',
-                viewport: 'Viewport',
-                pageLoadTime: 'Page Load Time',
-                cookies: 'Cookies Enabled',
-                doNotTrack: 'Do Not Track',
-                date: 'Date',
-                time: 'Time',
-            }
-        };
-
-        function t(key) {
-            return translations[currentLang]?.[key] || translations['fa'][key] || key;
+        function resizeMatrix() {
+            matrixCanvas.width = window.innerWidth;
+            matrixCanvas.height = window.innerHeight;
         }
+        resizeMatrix();
+        window.addEventListener('resize', resizeMatrix);
 
+        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF@#$%&*()_+-=[]{}|;:,./<>?';
+        const fontSize = 12;
+        let columns = Math.floor(matrixCanvas.width / fontSize);
+        let drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            mctx.fillStyle = 'rgba(0, 5, 0, 0.06)';
+            mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+            mctx.fillStyle = '#00ff41';
+            mctx.font = fontSize + 'px monospace';
+            
+            columns = Math.floor(matrixCanvas.width / fontSize);
+            if (drops.length !== columns) drops = Array(columns).fill(1);
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+                mctx.fillText(text, x, y);
+                mctx.fillStyle = '#00ff4180';
+                mctx.fillText(text, x + 1, y + 1);
+                mctx.fillStyle = '#00ff41';
+                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 45);
+
+        // ==================== PARTICLES ====================
+        function createParticles() {
+            const container = document.getElementById('particlesContainer');
+            for (let i = 0; i < 35; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 3 + 1;
+                p.style.cssText = `
+                    width: ${size}px; height: ${size}px;
+                    left: ${Math.random() * 100}%;
+                    animation-duration: ${Math.random() * 12 + 8}s;
+                    animation-delay: ${Math.random() * 6}s;
+                    opacity: ${Math.random() * 0.5 + 0.2};
+                `;
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // ==================== CONSTANTS ====================
+        const PASS_KEY = 'kv_pass_v9';
+        const FILES_KEY = 'kv_files_v9';
+        const LOG_KEY = 'kv_logs_v9';
+        const DEFAULT_PASS = 'Danial..flah13';
+        const ADMIN_PASS = '#0.0.0.0.0.0.0.0...HACKING...0.1';
+
+        let files = [];
+        let currentFilter = 'all';
+        let currentSort = 'date';
+        let isAdmin = false;
+        let currentLang = 'fa';
+
+        // ==================== LANGUAGE ====================
         function selectLanguage(lang) {
             currentLang = lang;
             document.getElementById('btnFa').classList.remove('selected');
             document.getElementById('btnEn').classList.remove('selected');
             document.getElementById(lang === 'fa' ? 'btnFa' : 'btnEn').classList.add('selected');
-            
             setTimeout(() => {
                 document.getElementById('langSelector').classList.add('hidden');
                 document.getElementById('loginScreen').classList.remove('hidden');
                 updateLoginUI();
                 document.getElementById('passwordInput').focus();
-            }, 400);
+            }, 350);
         }
 
         function updateLoginUI() {
-            document.getElementById('loginTitle').textContent = t('loginTitle');
-            document.getElementById('loginDesc').textContent = t('loginDesc');
-            document.getElementById('loginBtnText').textContent = t('loginBtn');
-            document.getElementById('errorMsg').textContent = t('errorWrong');
-            document.getElementById('hintText').textContent = t('hintText');
+            if (currentLang === 'fa') {
+                document.getElementById('loginTitle').textContent = 'ورود به والت';
+                document.getElementById('loginDesc').textContent = 'رمز عبور را وارد کنید';
+                document.getElementById('loginBtnText').textContent = 'ورود به والت';
+                document.getElementById('errorMsg').textContent = '❌ رمز عبور اشتباه است!';
+                document.getElementById('hintText').textContent = 'رمز پیش‌فرض: Danial..flah13';
+            } else {
+                document.getElementById('loginTitle').textContent = 'GANG VAULT';
+                document.getElementById('loginDesc').textContent = 'Enter Password';
+                document.getElementById('loginBtnText').textContent = 'ACCESS VAULT';
+                document.getElementById('errorMsg').textContent = '❌ ACCESS DENIED';
+                document.getElementById('hintText').textContent = 'Default: Danial..flah13';
+            }
         }
 
-        // ==================== CONSTANTS ====================
-        const VAULT_KEY = 'gang_vault_password_v6';
-        const FILES_KEY = 'gang_vault_files_v6';
-        const VISIT_LOG_KEY = 'gang_visit_log_v6';
-        const DEFAULT_PASSWORD = 'Danial..flah13';
-        const ADMIN_PASSWORD = '#0.0.0.0.0.0.0.0...HACKING...0.1';
-
-        // ==================== STATE ====================
-        let files = [];
-        let currentFilter = 'all';
-        let currentSort = 'date';
-        let isAdminLoggedIn = false;
-
-        // ==================== PASSWORD HASH ====================
-        async function hashPassword(password) {
-            const encoder = new TextEncoder();
-            const data = encoder.encode(password + 'DANIYAL_SHAHRAKI_SALT_V6_GANG');
-            const hash = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        // ==================== HASH ====================
+        async function hash(str) {
+            const data = new TextEncoder().encode(str + '_KALI_GANG_SALT_V9');
+            const h = await crypto.subtle.digest('SHA-256', data);
+            return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('');
         }
 
-        // ==================== AUTHENTICATION ====================
+        // ==================== AUTH ====================
         async function authenticate() {
-            const password = document.getElementById('passwordInput').value;
-            const errorMsg = document.getElementById('errorMsg');
-
-            if (!password) {
-                errorMsg.textContent = t('errorEmpty');
-                errorMsg.style.display = 'block';
-                return;
-            }
-
-            const storedHash = localStorage.getItem(VAULT_KEY);
-            let targetHash;
-
-            if (!storedHash) {
-                // First time - use default password
-                targetHash = await hashPassword(DEFAULT_PASSWORD);
-                localStorage.setItem(VAULT_KEY, targetHash);
+            const pw = document.getElementById('passwordInput').value;
+            const err = document.getElementById('errorMsg');
+            if (!pw) { err.textContent = currentLang === 'fa' ? '❌ لطفاً رمز عبور را وارد کنید' : '❌ ENTER PASSWORD'; err.style.display = 'block'; return; }
+            
+            const stored = localStorage.getItem(PASS_KEY);
+            let target;
+            if (!stored) { target = await hash(DEFAULT_PASS); localStorage.setItem(PASS_KEY, target); }
+            else target = stored;
+            
+            if (await hash(pw) === target || pw === DEFAULT_PASS) {
+                if (!stored) localStorage.setItem(PASS_KEY, await hash(pw));
+                unlock();
             } else {
-                targetHash = storedHash;
-            }
-
-            const inputHash = await hashPassword(password);
-
-            if (inputHash === targetHash || password === DEFAULT_PASSWORD) {
-                // Check if default password, update to hashed version
-                if (!storedHash) {
-                    localStorage.setItem(VAULT_KEY, await hashPassword(password));
-                }
-                unlockVault();
-            } else {
-                errorMsg.textContent = t('errorWrong');
-                errorMsg.style.display = 'block';
+                err.textContent = currentLang === 'fa' ? '❌ رمز عبور اشتباه است!' : '❌ ACCESS DENIED';
+                err.style.display = 'block';
                 document.getElementById('passwordInput').value = '';
-                // Shake effect
-                const loginBox = document.querySelector('.login-box');
-                loginBox.style.animation = 'shake 0.5s';
-                setTimeout(() => loginBox.style.animation = '', 500);
             }
         }
 
-        function unlockVault() {
+        function unlock() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('dashboard').classList.add('active');
             document.getElementById('passwordInput').value = '';
             document.getElementById('errorMsg').style.display = 'none';
-            loadFiles();
-            displayFiles();
-            updateStats();
-            logVisit();
-            displayVisitHistory();
-            gatherVisitorInfo();
-            showNotification(t('unlocked'));
+            loadFiles(); displayFiles(); updateStats(); logVisit();
+            notify(currentLang === 'fa' ? '✅ والت با موفقیت باز شد' : '✅ VAULT UNLOCKED');
         }
 
         function lockVault() {
-            const password = prompt(t('lockPrompt') + '\n' + t('lockCancel'));
-            if (password === null) return;
-            
-            if (password === '') {
-                showNotification('❌ ' + (currentLang === 'fa' ? 'رمز نمی‌تواند خالی باشد' : 'Password cannot be empty'));
-                return;
-            }
-
-            hashPassword(password).then(hash => {
-                localStorage.setItem(VAULT_KEY, hash);
-                showNotification(t('locked'));
+            const p = prompt(currentLang === 'fa' ? 'رمز جدید برای قفل:\n(لغو = Cancel)' : 'Enter new password to lock:\n(Cancel to abort)');
+            if (!p) return;
+            hash(p).then(h => {
+                localStorage.setItem(PASS_KEY, h);
+                notify(currentLang === 'fa' ? '🔒 والت قفل شد' : '🔒 VAULT LOCKED');
                 document.getElementById('dashboard').classList.remove('active');
                 document.getElementById('loginScreen').classList.remove('hidden');
                 updateLoginUI();
@@ -1400,133 +1299,87 @@
             });
         }
 
-        // ==================== ADMIN LOGIN ====================
+        // ==================== ADMIN ====================
+        function openAdminPanel() {
+            document.getElementById('adminOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
         function loginAdmin() {
-            const adminPass = document.getElementById('adminPassInput').value;
-            const errorEl = document.getElementById('adminError');
-            
-            if (adminPass === ADMIN_PASSWORD) {
-                isAdminLoggedIn = true;
-                document.getElementById('adminControls').style.display = 'block';
+            if (document.getElementById('adminPassInput').value === ADMIN_PASS) {
+                isAdmin = true;
+                document.getElementById('adminContent').style.display = 'block';
                 document.getElementById('adminPassInput').value = '';
-                errorEl.style.display = 'none';
-                refreshVisitorInfo();
-                displayVisitHistory();
-                showNotification(t('adminLoginOk'));
+                document.getElementById('adminError').style.display = 'none';
+                gatherAllInfo();
+                displayHistory();
+                displayFiles();
+                notify(currentLang === 'fa' ? '✅ به پنل مدیریت خوش آمدید' : '✅ ADMIN ACCESS GRANTED');
             } else {
-                errorEl.textContent = t('adminLoginFail');
-                errorEl.style.display = 'block';
-                document.getElementById('adminPassInput').value = '';
+                document.getElementById('adminError').textContent = currentLang === 'fa' ? '❌ رمز مدیریت اشتباه است!' : '❌ INVALID ADMIN KEY';
+                document.getElementById('adminError').style.display = 'block';
             }
         }
 
-        // ==================== CHANGE VAULT PASSWORD ====================
-        async function changeVaultPassword() {
-            const newPass = document.getElementById('newVaultPass').value;
-            const confirmPass = document.getElementById('confirmVaultPass').value;
-            const errorEl = document.getElementById('vaultPassError');
-
-            if (!newPass || !confirmPass) {
-                errorEl.textContent = t('fillAllFields');
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (newPass !== confirmPass) {
-                errorEl.textContent = t('passNotMatch');
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const newHash = await hashPassword(newPass);
-            localStorage.setItem(VAULT_KEY, newHash);
-            
-            document.getElementById('newVaultPass').value = '';
-            document.getElementById('confirmVaultPass').value = '';
-            errorEl.style.display = 'none';
-            showNotification(t('passwordChanged'));
+        function logoutAdmin() {
+            isAdmin = false;
+            document.getElementById('adminContent').style.display = 'none';
+            document.getElementById('adminPassInput').value = '';
+            displayFiles();
+            notify(currentLang === 'fa' ? '👋 خروج از مدیریت' : '👋 LOGGED OUT');
         }
 
-        // ==================== FILE MANAGEMENT ====================
-        function loadFiles() {
-            const stored = localStorage.getItem(FILES_KEY);
-            if (stored) {
-                try {
-                    files = JSON.parse(stored);
-                } catch(e) {
-                    files = [];
-                }
-            }
+        function changePasswordPrompt() {
+            const np = prompt(currentLang === 'fa' ? 'رمز جدید والت:' : 'New vault password:');
+            if (!np) return;
+            const cp = prompt(currentLang === 'fa' ? 'تکرار رمز جدید:' : 'Confirm new password:');
+            if (np !== cp) { notify(currentLang === 'fa' ? '❌ رمزها مطابقت ندارند' : '❌ PASSWORDS DO NOT MATCH'); return; }
+            hash(np).then(h => {
+                localStorage.setItem(PASS_KEY, h);
+                notify(currentLang === 'fa' ? '✅ رمز والت تغییر کرد' : '✅ PASSWORD CHANGED');
+            });
         }
 
-        function saveFiles() {
-            localStorage.setItem(FILES_KEY, JSON.stringify(files));
-            updateStats();
-        }
+        // ==================== FILES ====================
+        function loadFiles() { try { files = JSON.parse(localStorage.getItem(FILES_KEY) || '[]'); } catch(e) { files = []; } }
+        function saveFiles() { localStorage.setItem(FILES_KEY, JSON.stringify(files)); updateStats(); }
 
         async function handleUpload(fileList) {
             let count = 0;
-            const maxSize = 100 * 1024 * 1024;
-            
             for (const file of fileList) {
-                if (file.size > maxSize) {
-                    showNotification(`⚠️ ${t('fileTooBig')}: ${file.name}`);
-                    continue;
-                }
-
+                if (file.size > 150 * 1024 * 1024) { notify(`⚠️ فایل بزرگ: ${file.name}`); continue; }
                 const reader = new FileReader();
-                await new Promise((resolve) => {
-                    reader.onload = function(e) {
-                        files.push({
-                            id: Date.now() + Math.random().toString(36).substr(2, 9),
-                            name: file.name,
-                            type: file.type || 'application/octet-stream',
-                            size: file.size,
-                            data: e.target.result,
-                            date: new Date().toISOString(),
-                        });
-                        count++;
-                        resolve();
+                await new Promise(resolve => {
+                    reader.onload = e => {
+                        files.push({ id: Date.now() + Math.random().toString(36).substr(2), name: file.name, type: file.type || 'application/octet-stream', size: file.size, data: e.target.result, date: new Date().toISOString() });
+                        count++; resolve();
                     };
-                    reader.onerror = function() {
-                        resolve();
-                    };
+                    reader.onerror = () => resolve();
                     reader.readAsDataURL(file);
                 });
             }
-            
-            if (count > 0) {
-                saveFiles();
-                displayFiles();
-                showNotification(`✅ ${count} ${t('uploaded')}`);
-            }
-            
+            if (count > 0) { saveFiles(); displayFiles(); notify(`✅ ${count} فایل آپلود شد`); }
             document.getElementById('fileInput').value = '';
         }
 
         function displayFiles() {
             const grid = document.getElementById('fileGrid');
-            const searchTerm = document.getElementById('searchInput')?.value?.toLowerCase() || '';
-            
+            const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
             let filtered = [...files];
 
-            if (currentFilter === 'image/') {
-                filtered = filtered.filter(f => f.type.startsWith('image/'));
-            } else if (currentFilter === 'video/') {
-                filtered = filtered.filter(f => f.type.startsWith('video/'));
-            } else if (currentFilter === 'audio/') {
-                filtered = filtered.filter(f => f.type.startsWith('audio/'));
-            } else if (currentFilter === 'other') {
-                filtered = filtered.filter(f => 
-                    !f.type.startsWith('image/') && 
-                    !f.type.startsWith('video/') && 
-                    !f.type.startsWith('audio/')
-                );
-            }
+            if (currentFilter === 'image/') filtered = filtered.filter(f => f.type.startsWith('image/'));
+            else if (currentFilter === 'video/') filtered = filtered.filter(f => f.type.startsWith('video/'));
+            else if (currentFilter === 'audio/') filtered = filtered.filter(f => f.type.startsWith('audio/'));
+            else if (currentFilter === 'apk') filtered = filtered.filter(f => f.name.toLowerCase().endsWith('.apk'));
+            else if (currentFilter === 'archive') filtered = filtered.filter(f => { const n = f.name.toLowerCase(); return n.endsWith('.zip') || n.endsWith('.rar') || n.endsWith('.7z') || n.endsWith('.tar') || n.endsWith('.gz'); });
+            else if (currentFilter === 'other') filtered = filtered.filter(f => { const n = f.name.toLowerCase(); return !f.type.startsWith('image/') && !f.type.startsWith('video/') && !f.type.startsWith('audio/') && !n.endsWith('.apk') && !n.endsWith('.zip') && !n.endsWith('.rar') && !n.endsWith('.7z'); });
 
-            if (searchTerm) {
-                filtered = filtered.filter(f => f.name.toLowerCase().includes(searchTerm));
-            }
+            if (search) filtered = filtered.filter(f => f.name.toLowerCase().includes(search));
 
             filtered.sort((a, b) => {
                 switch(currentSort) {
@@ -1534,82 +1387,43 @@
                     case 'size': return b.size - a.size;
                     case 'size-asc': return a.size - b.size;
                     case 'date-asc': return new Date(a.date) - new Date(b.date);
-                    case 'date':
                     default: return new Date(b.date) - new Date(a.date);
                 }
             });
 
             grid.innerHTML = '';
-
             if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column:1/-1;text-align:center;padding:50px;color:var(--gray);">
-                        <div style="font-size:60px;margin-bottom:10px;">📂</div>
-                        <p style="font-size:16px;">${t('noFiles')}</p>
-                        <p style="font-size:12px;margin-top:5px;">${t('uploadDesc')}</p>
-                    </div>`;
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:45px;color:var(--gray);"><div style="font-size:45px;">📂</div><p style="margin-top:8px;">هیچ فایلی یافت نشد</p></div>`;
                 return;
             }
 
             filtered.forEach(file => {
                 const card = document.createElement('div');
                 card.className = 'file-card';
+                let thumb = '', badgeClass = 'badge-other', typeLabel = 'سایر';
+                const ext = file.name.split('.').pop()?.toLowerCase();
 
-                let preview = '';
-                let badgeClass = 'badge-other';
-                let typeLabel = currentLang === 'fa' ? 'فایل' : 'File';
-                
-                if (file.type.startsWith('image/')) {
-                    preview = `<img src="${file.data}" class="file-preview" alt="${file.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">`;
-                    badgeClass = 'badge-image';
-                    typeLabel = currentLang === 'fa' ? 'عکس' : 'Image';
-                } else if (file.type.startsWith('video/')) {
-                    preview = `<video src="${file.data}" class="file-preview" preload="metadata" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"></video>`;
-                    badgeClass = 'badge-video';
-                    typeLabel = currentLang === 'fa' ? 'ویدیو' : 'Video';
-                } else if (file.type.startsWith('audio/')) {
-                    preview = `<div class="file-placeholder">🎵</div>`;
-                    badgeClass = 'badge-audio';
-                    typeLabel = currentLang === 'fa' ? 'صدا' : 'Audio';
-                } else {
-                    const ext = file.name.split('.').pop()?.toUpperCase() || 'FILE';
-                    preview = `<div class="file-placeholder">📄<br><small style="font-size:12px;">${ext}</small></div>`;
-                }
+                if (file.type.startsWith('image/')) { thumb = `<img src="${file.data}" class="file-thumb" alt="${file.name}" loading="lazy">`; badgeClass = 'badge-img'; typeLabel = 'عکس'; }
+                else if (file.type.startsWith('video/')) { thumb = `<video src="${file.data}" class="file-thumb" preload="metadata"></video>`; badgeClass = 'badge-vid'; typeLabel = 'ویدیو'; }
+                else if (file.type.startsWith('audio/')) { thumb = `<div class="file-icon-placeholder">🎵</div>`; badgeClass = 'badge-aud'; typeLabel = 'صدا'; }
+                else if (ext === 'apk') { thumb = `<div class="file-icon-placeholder">📱<span class="file-ext">APK</span></div>`; badgeClass = 'badge-apk'; typeLabel = 'APK'; }
+                else if (['zip','rar','7z','tar','gz'].includes(ext)) { thumb = `<div class="file-icon-placeholder">📦<span class="file-ext">${ext.toUpperCase()}</span></div>`; badgeClass = 'badge-zip'; typeLabel = 'فشرده'; }
+                else { thumb = `<div class="file-icon-placeholder">📄<span class="file-ext">${ext?.toUpperCase() || 'FILE'}</span></div>`; }
 
                 const size = formatSize(file.size);
-                const date = new Date(file.date).toLocaleDateString(currentLang === 'fa' ? 'fa-IR' : 'en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+                const date = new Date(file.date).toLocaleDateString('fa-IR', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
 
                 card.innerHTML = `
-                    ${preview}
+                    ${thumb}
                     <div class="file-info">
-                        <div class="file-name">${escapeHTML(file.name)}</div>
-                        <div class="file-meta">
-                            <span>📅 ${date}</span>
-                            <span>💾 ${size}</span>
-                        </div>
-                        <div class="file-meta" style="margin-top:3px;">
-                            <span class="badge ${badgeClass}">${typeLabel}</span>
-                            <span style="font-size:9px;color:var(--hacker-green);">🛡️ ${t('encrypted')}</span>
-                        </div>
-                        <div class="file-actions">
-                            <button class="btn btn-sm" onclick="previewFile('${file.id}')" title="${t('preview')}">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="btn btn-sm" onclick="downloadFile('${file.id}')" title="${t('download')}">
-                                <i class="fas fa-download"></i>
-                            </button>
-                            <button class="btn btn-sm" onclick="renameFile('${file.id}')" title="${t('rename')}">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteFile('${file.id}')" title="${t('delete')}">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                        <div class="file-name">${esc(file.name)}</div>
+                        <div class="file-meta"><span>📅 ${date}</span><span>💾 ${size}</span></div>
+                        <div class="file-meta" style="margin-top:2px;"><span class="badge ${badgeClass}">${typeLabel}</span></div>
+                        <div class="file-actions-row">
+                            <button class="btn btn-xs" onclick="previewFile('${file.id}')"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-xs" onclick="downloadFile('${file.id}')"><i class="fas fa-download"></i></button>
+                            <button class="btn btn-xs" onclick="renameFile('${file.id}')"><i class="fas fa-pen"></i></button>
+                            ${isAdmin ? `<button class="btn btn-xs btn-danger" onclick="deleteFile('${file.id}')"><i class="fas fa-trash"></i></button>` : ''}
                         </div>
                     </div>
                 `;
@@ -1618,418 +1432,181 @@
         }
 
         function previewFile(id) {
-            const file = files.find(f => f.id == id);
-            if (!file) return;
-
-            const modal = document.getElementById('previewModal');
-            const content = document.getElementById('previewContent');
-
-            if (file.type.startsWith('image/')) {
-                content.innerHTML = `<img src="${file.data}" alt="${file.name}" style="max-width:100%;max-height:80vh;border-radius:10px;">`;
-            } else if (file.type.startsWith('video/')) {
-                content.innerHTML = `<video src="${file.data}" controls style="max-width:100%;max-height:80vh;border-radius:10px;"></video>`;
-            } else if (file.type.startsWith('audio/')) {
-                content.innerHTML = `
-                    <div style="text-align:center;padding:30px;">
-                        <div style="font-size:50px;margin-bottom:15px;">🎵</div>
-                        <h3 style="color:var(--pubg-orange);margin-bottom:15px;">${escapeHTML(file.name)}</h3>
-                        <audio src="${file.data}" controls style="width:100%;max-width:500px;"></audio>
-                    </div>`;
-            } else {
-                content.innerHTML = `
-                    <div style="text-align:center;padding:40px;">
-                        <div style="font-size:70px;">📄</div>
-                        <h3 style="color:var(--pubg-orange);margin:15px 0;">${escapeHTML(file.name)}</h3>
-                        <button class="btn btn-primary" onclick="downloadFile('${file.id}')">
-                            <i class="fas fa-download"></i> ${t('download')}
-                        </button>
-                    </div>`;
-            }
-
+            const file = files.find(f => f.id == id); if (!file) return;
+            const modal = document.getElementById('previewModal'), content = document.getElementById('previewContent');
+            if (file.type.startsWith('image/')) content.innerHTML = `<img src="${file.data}" alt="${file.name}">`;
+            else if (file.type.startsWith('video/')) content.innerHTML = `<video src="${file.data}" controls></video>`;
+            else if (file.type.startsWith('audio/')) content.innerHTML = `<div style="text-align:center;padding:20px;"><div style="font-size:45px;">🎵</div><h3 style="color:var(--gold);">${esc(file.name)}</h3><audio src="${file.data}" controls style="width:100%;max-width:400px;"></audio></div>`;
+            else content.innerHTML = `<div style="text-align:center;padding:25px;"><div style="font-size:55px;">📄</div><h3 style="color:var(--gold);">${esc(file.name)}</h3><p style="color:var(--gray);">${formatSize(file.size)}</p><button class="btn btn-sm" onclick="downloadFile('${file.id}')"><i class="fas fa-download"></i> دانلود</button></div>`;
             modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
         }
 
-        function closePreview() {
-            document.getElementById('previewModal').classList.remove('active');
-            document.getElementById('previewContent').innerHTML = '';
-            document.body.style.overflow = '';
-        }
-
-        function downloadFile(id) {
-            const file = files.find(f => f.id == id);
-            if (!file) return;
-            
-            const link = document.createElement('a');
-            link.href = file.data;
-            link.download = file.name;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function renameFile(id) {
-            const file = files.find(f => f.id == id);
-            if (!file) return;
-            
-            const newName = prompt(t('renamePrompt'), file.name);
-            if (newName && newName.trim() && newName.trim() !== file.name) {
-                file.name = newName.trim();
-                saveFiles();
-                displayFiles();
-                showNotification(t('renamed'));
-            }
-        }
-
-        function deleteFile(id) {
-            const file = files.find(f => f.id == id);
-            if (!file) return;
-            
-            if (confirm(`${t('confirmDelete')}\n"${file.name}"`)) {
-                files = files.filter(f => f.id != id);
-                saveFiles();
-                displayFiles();
-                showNotification(t('deleted'));
-            }
-        }
-
-        function deleteAll() {
-            if (files.length === 0) {
-                showNotification('ℹ️ ' + t('noFilesToDelete'));
-                return;
-            }
-            
-            if (confirm(t('confirmDeleteAll'))) {
-                if (confirm(t('confirmDeleteAll2'))) {
-                    files = [];
-                    saveFiles();
-                    displayFiles();
-                    showNotification(t('deletedAll'));
-                }
-            }
-        }
-
-        function setFilter(filter, btn) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            displayFiles();
-        }
-
-        function sortFiles(sortType) {
-            currentSort = sortType;
-            displayFiles();
-        }
-
+        function closePreview() { document.getElementById('previewModal').classList.remove('active'); document.getElementById('previewContent').innerHTML = ''; }
+        function downloadFile(id) { const f = files.find(x => x.id == id); if (!f) return; const a = document.createElement('a'); a.href = f.data; a.download = f.name; document.body.appendChild(a); a.click(); document.body.removeChild(a); }
+        function renameFile(id) { const f = files.find(x => x.id == id); if (!f) return; const nn = prompt('نام جدید:', f.name); if (nn && nn.trim() && nn.trim() !== f.name) { f.name = nn.trim(); saveFiles(); displayFiles(); notify('✅ نام فایل تغییر کرد'); } }
+        function deleteFile(id) { if (!isAdmin) return; const f = files.find(x => x.id == id); if (!f) return; if (confirm(`حذف "${f.name}"؟`)) { files = files.filter(x => x.id != id); saveFiles(); displayFiles(); notify('🗑️ فایل حذف شد'); } }
+        function deleteAll() { if (!isAdmin) return; if (files.length === 0) { notify('ℹ️ فایلی نیست'); return; } if (confirm('⚠️ همه فایل‌ها حذف شوند؟')) { if (confirm('⚠️ غیرقابل بازگشت!')) { files = []; saveFiles(); displayFiles(); notify('🗑️ همه حذف شدند'); } } }
+        function setFilter(f, btn) { currentFilter = f; document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); displayFiles(); }
+        function sortFiles(type) { currentSort = type; displayFiles(); }
         function updateStats() {
             document.getElementById('totalFiles').textContent = files.length;
-            
-            const totalSize = files.reduce((sum, f) => sum + f.size, 0);
-            document.getElementById('totalSize').textContent = formatSize(totalSize);
-            
+            document.getElementById('totalSize').textContent = formatSize(files.reduce((s, f) => s + f.size, 0));
             document.getElementById('imageCount').textContent = files.filter(f => f.type.startsWith('image/')).length;
-            document.getElementById('audioCount').textContent = files.filter(f => f.type.startsWith('audio/')).length;
             document.getElementById('videoCount').textContent = files.filter(f => f.type.startsWith('video/')).length;
+            document.getElementById('audioCount').textContent = files.filter(f => f.type.startsWith('audio/')).length;
+            document.getElementById('apkCount').textContent = files.filter(f => f.name.toLowerCase().endsWith('.apk')).length;
         }
+        function formatSize(b) { if (b === 0) return '0 B'; if (b > 1073741824) return (b/1073741824).toFixed(2) + ' GB'; if (b > 1048576) return (b/1048576).toFixed(2) + ' MB'; if (b > 1024) return (b/1024).toFixed(2) + ' KB'; return b + ' B'; }
+        function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-        function formatSize(bytes) {
-            if (bytes === 0) return '0 B';
-            if (bytes > 1024 * 1024 * 1024) return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
-            if (bytes > 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
-            if (bytes > 1024) return (bytes / 1024).toFixed(2) + ' KB';
-            return bytes + ' B';
-        }
-
-        function escapeHTML(str) {
-            const div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        // ==================== VISITOR INFO ====================
-        async function gatherVisitorInfo() {
-            const container = document.getElementById('visitorInfo');
-            if (!container) return;
-
+        // ==================== GATHER ALL INFO ====================
+        async function gatherAllInfo() {
             const now = new Date();
-            const persianDate = new Intl.DateTimeFormat('fa-IR', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            }).format(now);
+            const pDate = new Intl.DateTimeFormat('fa-IR', { year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false }).format(now);
 
-            const gregorianDate = new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            }).format(now);
+            // Target Info
+            document.getElementById('targetInfo').innerHTML = `
+                <tr><td>📅 تاریخ</td><td>${pDate}</td></tr>
+                <tr><td>🕐 UTC</td><td>${now.toISOString()}</td></tr>
+                <tr><td>🌐 زبان</td><td>${navigator.language} (${navigator.languages?.join(', ') || 'N/A'})</td></tr>
+                <tr><td>🍪 کوکی</td><td>${navigator.cookieEnabled ? '✅ فعال' : '❌ غیرفعال'}</td></tr>
+                <tr><td>🚫 DNT</td><td>${navigator.doNotTrack || 'N/A'}</td></tr>
+                <tr><td>⏱️ زمان بارگذاری</td><td>${performance.timing ? (performance.timing.loadEventEnd - performance.timing.navigationStart) + ' ms' : 'N/A'}</td></tr>
+                <tr><td>🆔 User Agent</td><td style="font-size:7px;">${navigator.userAgent}</td></tr>
+            `;
 
-            let ip = 'Loading...';
-            let location = 'Loading...';
-            let isp = 'Loading...';
-            let vpnStatus = 'Checking...';
-            
-            const device = navigator.platform || 'N/A';
-            const userAgent = navigator.userAgent;
-            const screenInfo = `${screen.width}x${screen.height} @ ${window.devicePixelRatio}x`;
-            const viewportInfo = `${window.innerWidth}x${window.innerHeight}`;
-            const language = navigator.language || 'N/A';
-            const languages = navigator.languages?.join(', ') || 'N/A';
-            const online = navigator.onLine;
-            const cookieEnabled = navigator.cookieEnabled;
-            const doNotTrack = navigator.doNotTrack || 'N/A';
-            const hardwareConcurrency = navigator.hardwareConcurrency || 'N/A';
-            const deviceMemory = navigator.deviceMemory || 'N/A';
-            const colorDepth = screen.colorDepth || 'N/A';
-            const pixelDepth = screen.pixelDepth || 'N/A';
-            const pageLoadTime = performance.timing ? 
-                (performance.timing.loadEventEnd - performance.timing.navigationStart) + ' ms' : 'N/A';
-
-            let battery = 'N/A';
-            let batteryCharging = 'N/A';
-            let connectionType = 'N/A';
-            let connectionSpeed = 'N/A';
+            // Hardware
+            document.getElementById('hardwareInfo').innerHTML = `
+                <tr><td>💻 پلتفرم</td><td>${navigator.platform || 'N/A'}</td></tr>
+                <tr><td>🖥 صفحه</td><td>${screen.width}x${screen.height} @${window.devicePixelRatio}x</td></tr>
+                <tr><td>🪟 Viewport</td><td>${window.innerWidth}x${window.innerHeight}</td></tr>
+                <tr><td>🎨 عمق رنگ</td><td>${screen.colorDepth}-bit / ${screen.pixelDepth}-bit</td></tr>
+                <tr><td>⚡ CPU</td><td>${navigator.hardwareConcurrency || 'N/A'} هسته</td></tr>
+                <tr><td>🧠 RAM</td><td>${navigator.deviceMemory || 'N/A'} GB</td></tr>
+                <tr><td>💻 حافظه</td><td>${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'N/A'}</td></tr>
+            `;
 
             // Battery
+            let battTxt = 'N/A', chargingTxt = 'N/A';
             if ('getBattery' in navigator) {
                 try {
-                    const bat = await navigator.getBattery();
-                    battery = Math.round(bat.level * 100) + '%';
-                    batteryCharging = bat.charging;
+                    const b = await navigator.getBattery();
+                    battTxt = Math.round(b.level * 100) + '%';
+                    chargingTxt = b.charging ? '🔌 در حال شارژ' : '🔋 باتری';
                 } catch(e) {}
             }
+            document.getElementById('batteryInfo').innerHTML = `
+                <tr><td>🔋 درصد باتری</td><td>${battTxt}</td></tr>
+                <tr><td>⚡ وضعیت</td><td>${chargingTxt}</td></tr>
+                <tr><td>📶 آنلاین</td><td>${navigator.onLine ? '✅ بله' : '❌ خیر'}</td></tr>
+            `;
 
-            // Connection
+            // Network
+            let connType = 'N/A', connSpeed = 'N/A';
             if ('connection' in navigator) {
-                const conn = navigator.connection;
-                connectionType = conn.effectiveType || conn.type || 'N/A';
-                connectionSpeed = conn.downlink ? conn.downlink + ' Mbps' : 'N/A';
+                const c = navigator.connection;
+                connType = c.effectiveType || c.type || 'N/A';
+                connSpeed = c.downlink ? c.downlink + ' Mbps' : 'N/A';
             }
+            document.getElementById('networkInfo').innerHTML = `
+                <tr><td>📡 نوع اتصال</td><td>${connType}</td></tr>
+                <tr><td>🚀 سرعت</td><td>${connSpeed}</td></tr>
+            `;
 
-            // IP & Location
+            // Geo
+            let ip = '...', loc = '...', isp = '...';
             try {
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipRes.json();
-                ip = ipData.ip;
-
-                // Multiple geo APIs for accuracy
+                const r = await fetch('https://api.ipify.org?format=json');
+                const d = await r.json();
+                ip = d.ip;
                 try {
-                    const geoRes = await fetch(`https://ipapi.co/${ip}/json/`);
-                    const geoData = await geoRes.json();
-                    location = `${geoData.city || 'N/A'}, ${geoData.region || 'N/A'}, ${geoData.country_name || 'N/A'}`;
-                    isp = geoData.org || geoData.isp || 'N/A';
-                } catch(e) {
-                    try {
-                        const geoRes2 = await fetch(`https://ipinfo.io/${ip}/json`);
-                        const geoData2 = await geoRes2.json();
-                        location = `${geoData2.city || 'N/A'}, ${geoData2.region || 'N/A'}, ${geoData2.country || 'N/A'}`;
-                        isp = geoData2.org || 'N/A';
-                    } catch(e2) {}
-                }
-            } catch(e) {
-                ip = 'Unable to fetch';
-                location = 'Unable to fetch';
-            }
-
-            // VPN Detection
-            try {
-                const vpnRes = await fetch(`https://vpnapi.io/api/${ip}`);
-                if (vpnRes.ok) {
-                    const vpnData = await vpnRes.json();
-                    vpnStatus = vpnData.security?.vpn ? t('vpnActive') : t('vpnInactive');
-                }
-            } catch(e) {
-                vpnStatus = t('notDetectable');
-            }
-
-            container.innerHTML = `
-                <div class="log-entry">
-                    <div class="log-date">📅 ${currentLang === 'fa' ? persianDate : gregorianDate}</div>
-                    <div class="log-detail">
-                        <div>🌍 IP: <span>${ip}</span></div>
-                        <div>📍 ${t('location')}: <span>${location}</span></div>
-                        <div>📡 ${t('isp')}: <span>${isp}</span></div>
-                        <div>🛡️ VPN: <span>${vpnStatus}</span></div>
-                        <div>💻 ${t('device')}: <span>${device}</span></div>
-                        <div>🖥️ ${t('screen')}: <span>${screenInfo}</span></div>
-                        <div>🪟 ${t('viewport')}: <span>${viewportInfo}</span></div>
-                        <div>🎨 ${t('colorDepth')}: <span>${colorDepth}-bit / ${pixelDepth}-bit</span></div>
-                        <div>🔍 ${t('pixelRatio')}: <span>${window.devicePixelRatio}x</span></div>
-                        <div>🌐 ${t('language')}: <span>${language} (${languages})</span></div>
-                        <div>📶 ${t('online')}: <span>${online ? '✅ ' + t('online') : '❌ ' + t('offline')}</span></div>
-                        <div>🍪 ${t('cookies')}: <span>${cookieEnabled ? '✅ ' + t('yes') : '❌ ' + t('no')}</span></div>
-                        <div>🚫 ${t('doNotTrack')}: <span>${doNotTrack}</span></div>
-                        <div>🔋 ${t('battery')}: <span>${battery} (${batteryCharging ? '🔌 ' + t('charging') : '🔋 ' + t('notCharging')})</span></div>
-                        <div>⚡ ${t('cpu')}: <span>${hardwareConcurrency}</span></div>
-                        <div>🧠 ${t('ram')}: <span>${deviceMemory} GB</span></div>
-                        <div>📡 ${t('network')}: <span>${connectionType} | ${connectionSpeed}</span></div>
-                        <div>⏱️ ${t('pageLoadTime')}: <span>${pageLoadTime}</span></div>
-                        <div>🆔 User Agent: <span style="font-size:8px;">${userAgent.substring(0, 150)}...</span></div>
-                    </div>
-                </div>
+                    const g = await fetch(`https://ipapi.co/${ip}/json/`);
+                    const gd = await g.json();
+                    loc = `${gd.city || '?'}, ${gd.region || '?'}, ${gd.country_name || '?'}`;
+                    isp = gd.org || gd.isp || '?';
+                } catch(e) {}
+            } catch(e) {}
+            document.getElementById('geoInfo').innerHTML = `
+                <tr><td>🌍 IP</td><td>${ip}</td></tr>
+                <tr><td>📍 موقعیت</td><td>${loc}</td></tr>
+                <tr><td>📡 ISP</td><td>${isp}</td></tr>
             `;
         }
 
-        async function refreshVisitorInfo() {
-            document.getElementById('visitorInfo').innerHTML = `<p style="color:var(--gray);text-align:center;font-size:11px;">${t('loading')}</p>`;
-            await gatherVisitorInfo();
-            showNotification(t('infoRefreshed'));
+        async function refreshTargetInfo() {
+            document.getElementById('targetInfo').innerHTML = '<tr><td colspan="2" style="text-align:center;">در حال بروزرسانی...</td></tr>';
+            await gatherAllInfo();
+            notify('✅ اطلاعات بروزرسانی شد');
         }
 
         function logVisit() {
-            const now = new Date();
             const log = {
-                persianDate: new Intl.DateTimeFormat('fa-IR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                }).format(now),
-                gregorianDate: now.toISOString(),
-                timestamp: now.toISOString(),
-                device: navigator.platform || 'N/A',
-                userAgent: navigator.userAgent.substring(0, 150),
-                screenSize: `${screen.width}x${screen.height}`,
-                language: navigator.language || 'N/A',
+                date: new Intl.DateTimeFormat('fa-IR', { year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit' }).format(new Date()),
+                time: new Date().toISOString(),
+                device: navigator.platform || '?',
+                ua: navigator.userAgent.substring(0, 100)
             };
-
-            fetch('https://api.ipify.org?format=json')
-                .then(r => r.json())
-                .then(data => {
-                    log.ip = data.ip;
-                    return fetch(`https://ipapi.co/${data.ip}/json/`);
-                })
-                .then(r => r.json())
-                .then(data => {
-                    log.city = data.city || 'N/A';
-                    log.region = data.region || 'N/A';
-                    log.country = data.country_name || 'N/A';
-                    log.isp = data.org || 'N/A';
-                })
-                .catch(() => {
-                    log.ip = 'N/A';
-                    log.city = 'N/A';
-                    log.country = 'N/A';
-                })
-                .finally(() => {
-                    const logs = JSON.parse(localStorage.getItem(VISIT_LOG_KEY) || '[]');
-                    logs.push(log);
-                    if (logs.length > 100) logs.shift();
-                    localStorage.setItem(VISIT_LOG_KEY, JSON.stringify(logs));
-                    displayVisitHistory();
-                });
+            fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>{
+                log.ip = d.ip;
+                return fetch(`https://ipapi.co/${d.ip}/json/`);
+            }).then(r=>r.json()).then(d=>{
+                log.city = d.city||'?';
+                log.country = d.country_name||'?';
+            }).catch(()=>{}).finally(()=>{
+                const logs = JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
+                logs.push(log);
+                if(logs.length > 50) logs.shift();
+                localStorage.setItem(LOG_KEY, JSON.stringify(logs));
+                if (isAdmin) displayHistory();
+            });
         }
 
-        function displayVisitHistory() {
-            const container = document.getElementById('visitHistory');
-            if (!container) return;
-
-            const logs = JSON.parse(localStorage.getItem(VISIT_LOG_KEY) || '[]');
-            
-            if (logs.length === 0) {
-                container.innerHTML = `<p style="color:var(--gray);text-align:center;font-size:11px;">${t('noFiles')}</p>`;
-                return;
-            }
-
-            container.innerHTML = logs.reverse().slice(0, 20).map(log => `
-                <div class="log-entry">
-                    <div class="log-date">📅 ${currentLang === 'fa' ? log.persianDate : log.gregorianDate}</div>
-                    <div class="log-detail">
-                        <div>🌍 IP: <span>${log.ip || 'N/A'}</span></div>
-                        <div>📍 ${log.city || 'N/A'}, ${log.region || ''}, ${log.country || 'N/A'}</div>
-                        <div>💻 ${log.device}</div>
-                        <div>📡 ${log.isp || 'N/A'}</div>
-                    </div>
+        function displayHistory() {
+            const box = document.getElementById('visitHistory');
+            if (!box) return;
+            const logs = JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
+            if(logs.length===0) { box.innerHTML = '<p style="color:var(--gray);text-align:center;">بدون بازدید</p>'; return; }
+            box.innerHTML = logs.reverse().slice(0,15).map(l=>`
+                <div style="background:#000;border:1px solid var(--dark-green);border-radius:6px;padding:6px 8px;margin-bottom:4px;font-size:9px;">
+                    <div style="color:var(--gold);font-weight:700;">📅 ${l.date}</div>
+                    <div style="color:var(--gray);">🌍 ${l.ip||'?'} | 📍 ${l.city||'?'}, ${l.country||'?'}</div>
+                    <div style="color:var(--gray);">💻 ${l.device}</div>
                 </div>
             `).join('');
         }
 
         // ==================== DRAG & DROP ====================
-        const uploadZone = document.getElementById('uploadZone');
-        if (uploadZone) {
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                uploadZone.addEventListener(eventName, (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                });
-            });
-
-            ['dragenter', 'dragover'].forEach(eventName => {
-                uploadZone.addEventListener(eventName, () => {
-                    uploadZone.classList.add('dragover');
-                });
-            });
-
-            ['dragleave', 'drop'].forEach(eventName => {
-                uploadZone.addEventListener(eventName, () => {
-                    uploadZone.classList.remove('dragover');
-                });
-            });
-
-            uploadZone.addEventListener('drop', (e) => {
-                if (e.dataTransfer.files.length > 0) {
-                    handleUpload(e.dataTransfer.files);
-                }
-            });
+        const uz = document.getElementById('uploadZone');
+        if (uz) {
+            ['dragenter','dragover','dragleave','drop'].forEach(ev=>{ uz.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); }); });
+            ['dragenter','dragover'].forEach(ev=> uz.addEventListener(ev, ()=> uz.classList.add('dragover')));
+            ['dragleave','drop'].forEach(ev=> uz.addEventListener(ev, ()=> uz.classList.remove('dragover')));
+            uz.addEventListener('drop', e=>{ if(e.dataTransfer.files.length) handleUpload(e.dataTransfer.files); });
         }
 
         // ==================== NOTIFICATIONS ====================
-        function showNotification(message) {
-            const notification = document.createElement('div');
-            notification.className = 'notification';
-            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                notification.style.transform = 'translateX(120%)';
-                notification.style.transition = 'all 0.3s ease';
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+        function notify(msg) {
+            const n = document.createElement('div');
+            n.className = 'notification';
+            n.innerHTML = `<i class="fas fa-terminal"></i> ${msg}`;
+            document.body.appendChild(n);
+            setTimeout(()=>{ n.style.opacity='0'; n.style.transform='translateX(120%)'; n.style.transition='0.3s'; setTimeout(()=>n.remove(),300); }, 2800);
         }
 
-        // ==================== KEYBOARD SHORTCUTS ====================
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closePreview();
-            }
-            if (e.ctrlKey && e.key === 'u') {
-                e.preventDefault();
-                document.getElementById('fileInput')?.click();
-            }
-            if (e.ctrlKey && e.key === 'f') {
-                e.preventDefault();
-                document.getElementById('searchInput')?.focus();
-            }
+        // ==================== KEYBOARD ====================
+        document.addEventListener('keydown', e=>{
+            if(e.key==='Escape') { closePreview(); closeAdminPanel(); }
+            if(e.ctrlKey&&e.key==='u'){ e.preventDefault(); document.getElementById('fileInput')?.click(); }
         });
 
-        // ==================== CLOSE MODAL ON OUTSIDE CLICK ====================
-        document.getElementById('previewModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePreview();
-            }
-        });
+        document.getElementById('previewModal').addEventListener('click', function(e){ if(e.target===this) closePreview(); });
 
         // ==================== INIT ====================
-        function init() {
-            // Check if password is set, if not, set default
-            if (!localStorage.getItem(VAULT_KEY)) {
-                hashPassword(DEFAULT_PASSWORD).then(hash => {
-                    localStorage.setItem(VAULT_KEY, hash);
-                });
+        async function init() {
+            if (!localStorage.getItem(PASS_KEY)) {
+                localStorage.setItem(PASS_KEY, await hash(DEFAULT_PASS));
             }
         }
-
         init();
     </script>
 </body>
