@@ -4,1609 +4,240 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="دانیال شهرکی">
-    <title>🏴‍☠️ GANG VAULT | کالی لینوکس</title>
+    <title>🦁 آزادی نیوز | AZADI NEWS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         :root {
-            --bg: #000a00;
-            --panel: #0d1117;
-            --border: #1a3a1a;
-            --green: #00ff41;
-            --dark-green: #008f11;
-            --purple: #b400ff;
-            --gold: #ffd700;
-            --red: #ff0040;
-            --blue: #00d4ff;
-            --white: #c8d6c8;
-            --gray: #5a7a5a;
-            --kali-blue: #367bf0;
-            --radius: 14px;
-            --transition: all 0.3s ease;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Vazirmatn', 'Cairo', 'Courier New', monospace;
-            background: var(--bg);
-            color: var(--white);
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* ==================== MATRIX RAIN ==================== */
-        #matrixCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -3;
-            opacity: 0.15;
-            pointer-events: none;
-        }
-
-        /* ==================== SCANLINES ==================== */
-        .scanlines {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: -2;
-            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
-            animation: scanAnim 8s linear infinite;
-        }
-
-        @keyframes scanAnim {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        /* ==================== FLOATING SKULLS ==================== */
-        .floating-skull {
-            position: fixed;
-            pointer-events: none; z-index: -1;
-            opacity: 0.05;
-            font-size: 60px;
-            animation: skullDrift 12s ease-in-out infinite;
-        }
-
-        .floating-skull:nth-child(1) { top: 5%; left: 3%; animation-delay: 0s; }
-        .floating-skull:nth-child(2) { top: 15%; right: 8%; animation-delay: 2s; font-size: 70px; }
-        .floating-skull:nth-child(3) { bottom: 20%; left: 10%; animation-delay: 4s; }
-        .floating-skull:nth-child(4) { top: 50%; right: 5%; animation-delay: 1s; font-size: 80px; }
-        .floating-skull:nth-child(5) { bottom: 35%; right: 15%; animation-delay: 3s; }
-        .floating-skull:nth-child(6) { top: 70%; left: 20%; animation-delay: 5s; font-size: 65px; }
-
-        @keyframes skullDrift {
-            0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-            25% { transform: translateY(-30px) rotate(5deg) scale(1.1); }
-            50% { transform: translateY(10px) rotate(-3deg) scale(0.9); }
-            75% { transform: translateY(-15px) rotate(2deg) scale(1.05); }
-        }
-
-        /* ==================== GREEN PARTICLES ==================== */
-        .particle {
-            position: fixed;
-            pointer-events: none; z-index: -1;
-            background: var(--green);
-            border-radius: 50%;
-            animation: particleFloat linear infinite;
-            box-shadow: 0 0 8px var(--green), 0 0 15px var(--green);
-        }
-
-        @keyframes particleFloat {
-            0% { transform: translateY(105vh) scale(0); opacity: 0; }
-            5% { opacity: 0.7; }
-            90% { opacity: 0.7; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-        }
-
-        /* ==================== LANGUAGE OVERLAY ==================== */
-        .lang-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 10, 0, 0.97);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 99999;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .lang-overlay.hidden { display: none; }
-
-        .kali-logo-large {
-            font-size: 80px;
-            animation: kaliFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px rgba(54, 123, 240, 0.6));
-        }
-
-        @keyframes kaliFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-15px) rotate(5deg); }
-        }
-
-        .lang-title {
-            font-size: 28px;
-            font-weight: 900;
-            text-align: center;
-            background: linear-gradient(45deg, var(--green), var(--kali-blue), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: glitchText 2s infinite;
-        }
-
-        @keyframes glitchText {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-3px, 2px); }
-            40% { transform: translate(3px, -2px); }
-            60% { transform: translate(-2px, -2px); }
-            80% { transform: translate(2px, 2px); }
-        }
-
-        .lang-buttons { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
-
-        .lang-btn {
-            padding: 18px 45px;
-            font-size: 20px;
-            font-weight: 900;
-            background: transparent;
-            border: 2px solid var(--dark-green);
-            color: var(--green);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            letter-spacing: 3px;
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .lang-btn:hover::before { left: 100%; }
-        .lang-btn:hover {
-            border-color: var(--green);
-            box-shadow: 0 0 50px rgba(0, 255, 65, 0.4);
-            transform: scale(1.08);
-            text-shadow: 0 0 20px var(--green);
-        }
-
-        .lang-btn.selected {
-            background: linear-gradient(135deg, var(--dark-green), var(--green));
-            border-color: var(--gold);
-            color: #000;
-            box-shadow: 0 0 60px rgba(0, 255, 65, 0.6);
-            animation: btnPulse 1.5s infinite;
-        }
-
-        @keyframes btnPulse {
-            0%, 100% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.5); }
-            50% { box-shadow: 0 0 80px rgba(0, 255, 65, 0.9); }
-        }
-
-        /* Info on Lang Page */
-        .lang-info {
-            position: absolute;
-            bottom: 30px;
-            text-align: center;
-            color: var(--gray);
-            font-size: 11px;
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-            line-height: 1.8;
-        }
-
-        .lang-info .highlight {
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        /* ==================== LOGIN OVERLAY ==================== */
-        .login-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 8, 0, 0.96);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9998;
-            flex-direction: column;
-        }
-
-        .login-overlay.hidden { display: none; }
-
-        .login-box {
-            background: var(--panel);
-            border: 2px solid var(--dark-green);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            width: 420px;
-            max-width: 95%;
-            box-shadow: 0 0 80px rgba(0, 255, 65, 0.2), inset 0 0 50px rgba(0, 255, 65, 0.03);
-            position: relative;
-        }
-
-        .login-box::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            border-radius: 22px;
-            background: linear-gradient(45deg, var(--green), transparent, var(--green), transparent);
-            z-index: -1;
-            opacity: 0.3;
-            animation: borderGlow 3s linear infinite;
-        }
-
-        @keyframes borderGlow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-        }
-
-        .login-icon {
-            font-size: 55px;
-            animation: skullFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 25px var(--green));
-        }
-
-        @keyframes skullFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-18px); }
-        }
-
-        .login-title {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--gold);
-            margin: 12px 0;
-            text-shadow: 0 0 30px var(--gold);
-            letter-spacing: 4px;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 14px;
-            margin: 8px 0;
-            background: #000;
-            border: 2px solid var(--dark-green);
-            color: var(--green);
-            font-size: 16px;
-            border-radius: 10px;
-            outline: none;
-            font-family: 'Courier New', monospace;
-            letter-spacing: 4px;
-            transition: var(--transition);
-            caret-color: var(--green);
-            text-align: center;
-        }
-
-        .login-input:focus {
-            border-color: var(--green);
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
-        }
-
-        .login-input::placeholder { color: rgba(0, 255, 65, 0.3); }
-
-        .btn {
-            padding: 12px 24px;
-            border: 2px solid transparent;
-            border-radius: 25px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-            background: var(--panel);
-            color: var(--green);
-            border-color: var(--dark-green);
-            white-space: nowrap;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 255, 65, 0.3);
-            border-color: var(--green);
-            text-shadow: 0 0 15px var(--green);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--dark-green), #006b0f);
-            border-color: var(--green);
-            color: #000;
-            font-weight: 900;
-            width: 100%;
-            justify-content: center;
-            padding: 14px;
-            font-size: 16px;
-            margin-top: 8px;
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 40px rgba(0, 255, 65, 0.5);
-            background: linear-gradient(135deg, var(--green), var(--dark-green));
-        }
-
-        .btn-danger {
-            background: transparent;
-            border-color: var(--red);
-            color: var(--red);
-        }
-
-        .btn-danger:hover {
-            background: var(--red);
-            color: #fff;
-            box-shadow: 0 8px 30px rgba(255, 0, 64, 0.5);
-        }
-
-        .btn-sm { padding: 6px 14px; font-size: 11px; border-radius: 20px; }
-        .btn-xs { padding: 5px 10px; font-size: 10px; border-radius: 12px; }
-
-        .error-msg {
-            color: var(--red);
-            margin-top: 8px;
-            display: none;
-            font-weight: bold;
-            font-size: 13px;
-        }
-
-        .hint-text {
-            color: var(--gray);
-            margin-top: 10px;
-            font-size: 11px;
-        }
-
-        /* ==================== DASHBOARD ==================== */
-        .dashboard {
-            display: none;
-            max-width: 1450px;
-            margin: 0 auto;
-            padding: 15px;
-        }
-
-        .dashboard.active { display: block; }
-
-        /* Header */
-        .header {
-            background: var(--panel);
-            border: 1px solid var(--dark-green);
-            border-radius: var(--radius);
-            padding: 15px 25px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
-            backdrop-filter: blur(15px);
-        }
-
-        .brand { display: flex; align-items: center; gap: 12px; }
-
-        .kali-logo {
-            font-size: 35px;
-            animation: kaliFloat 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 20px var(--kali-blue));
-        }
-
-        .brand h1 {
-            font-size: 20px;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--kali-blue), var(--green), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-        }
-
-        .brand p { font-size: 9px; color: var(--gray); letter-spacing: 2px; }
-
-        .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-        /* Admin Link */
-        .admin-link {
-            color: var(--gold);
-            font-size: 11px;
-            cursor: pointer;
-            text-decoration: underline;
-            transition: var(--transition);
-            font-family: 'Vazirmatn', monospace;
-        }
-
-        .admin-link:hover {
-            color: var(--kali-blue);
-            text-shadow: 0 0 15px var(--kali-blue);
-        }
-
-        /* Stats */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .stat-card {
-            background: var(--panel);
-            border: 1px solid var(--dark-green);
-            border-radius: 10px;
-            padding: 14px;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            border-color: var(--green);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.15);
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--green);
-            text-shadow: 0 0 15px var(--green);
-        }
-
-        .stat-label { font-size: 9px; color: var(--gray); margin-top: 3px; letter-spacing: 1px; }
-
-        /* Upload Zone */
-        .upload-zone {
-            border: 2px dashed var(--dark-green);
-            border-radius: var(--radius);
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 15px;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .upload-zone:hover { border-color: var(--green); box-shadow: 0 0 30px rgba(0, 255, 65, 0.15); background: rgba(0, 0, 0, 0.5); }
-        .upload-zone.dragover { border-color: var(--gold); background: rgba(0, 255, 65, 0.03); }
-
-        .upload-icon { font-size: 40px; display: block; margin-bottom: 6px; }
-
-        /* Gallery Header */
-        .gallery-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .gallery-title {
-            font-size: 16px;
-            font-weight: 900;
-            color: var(--gold);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .filter-tabs { display: flex; gap: 6px; flex-wrap: wrap; }
-
-        .filter-tab {
-            padding: 6px 13px;
-            border: 1px solid var(--dark-green);
-            border-radius: 18px;
-            cursor: pointer;
-            font-size: 10px;
-            font-weight: 700;
-            transition: var(--transition);
-            background: transparent;
-            color: var(--green);
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-        }
-
-        .filter-tab:hover { border-color: var(--green); box-shadow: 0 0 15px rgba(0, 255, 65, 0.2); }
-        .filter-tab.active { background: var(--green); color: #000; border-color: var(--green); box-shadow: 0 0 25px rgba(0, 255, 65, 0.4); }
-
-        .search-bar { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-
-        .search-input {
-            flex: 1; min-width: 180px;
-            padding: 10px 16px;
-            background: #000;
-            border: 1px solid var(--dark-green);
-            border-radius: 22px;
-            color: var(--green);
-            font-size: 13px;
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .search-input:focus { border-color: var(--green); box-shadow: 0 0 18px rgba(0, 255, 65, 0.2); }
-        .search-input::placeholder { color: rgba(0, 255, 65, 0.3); }
-
-        .sort-select {
-            padding: 10px 16px;
-            background: #000;
-            border: 1px solid var(--dark-green);
-            border-radius: 22px;
-            color: var(--green);
-            font-size: 12px;
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-            outline: none;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .sort-select:focus { border-color: var(--green); }
-
-        /* File Grid */
-        .file-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 10px;
-        }
-
-        .file-card {
-            background: #000;
-            border: 1px solid var(--dark-green);
-            border-radius: 10px;
-            overflow: hidden;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .file-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 35px rgba(0, 255, 65, 0.2);
-            border-color: var(--green);
-        }
-
-        .file-thumb {
-            width: 100%; height: 120px;
-            object-fit: cover;
-            background: #000;
-            display: block;
-        }
-
-        .file-icon-placeholder {
-            width: 100%; height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #0a1a0a, #050f05);
-            font-size: 40px;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .file-ext {
-            font-size: 11px;
-            color: var(--green);
-            font-weight: 700;
-            text-shadow: 0 0 10px var(--green);
-        }
-
-        .file-info { padding: 10px; }
-
-        .file-name {
-            font-weight: 700;
-            font-size: 11px;
-            color: var(--white);
-            margin-bottom: 3px;
-            word-break: break-all;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .file-meta {
-            font-size: 8px;
-            color: var(--gray);
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 3px;
-        }
-
-        .badge {
-            padding: 2px 6px;
-            border-radius: 8px;
-            font-size: 7px;
-            font-weight: 700;
-        }
-
-        .badge-img { background: rgba(0, 212, 255, 0.15); color: var(--blue); }
-        .badge-vid { background: rgba(255, 0, 64, 0.15); color: var(--red); }
-        .badge-aud { background: rgba(255, 215, 0, 0.15); color: var(--gold); }
-        .badge-apk { background: rgba(0, 255, 65, 0.15); color: var(--green); }
-        .badge-zip { background: rgba(180, 0, 255, 0.15); color: var(--purple); }
-        .badge-other { background: rgba(136, 136, 136, 0.15); color: var(--gray); }
-
-        .file-actions-row { display: flex; gap: 3px; margin-top: 5px; flex-wrap: wrap; }
-        .file-actions-row .btn { flex: 1; padding: 4px 7px; font-size: 9px; border-radius: 7px; justify-content: center; gap: 3px; }
-
-        /* ==================== ADMIN PANEL (SEPARATE PAGE) ==================== */
-        .admin-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 5, 0, 0.98);
-            display: none;
-            z-index: 99997;
-            overflow-y: auto;
-            backdrop-filter: blur(15px);
-        }
-
-        .admin-overlay.active { display: block; }
-
-        .admin-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .admin-header {
-            background: var(--panel);
-            border: 2px solid var(--gold);
-            border-radius: var(--radius);
-            padding: 20px 30px;
-            margin-bottom: 20px;
-            text-align: center;
-            box-shadow: 0 0 50px rgba(255, 215, 0, 0.2);
-        }
-
-        .admin-header h2 {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--gold);
-            text-shadow: 0 0 30px var(--gold);
-            margin-bottom: 5px;
-        }
-
-        .admin-header p {
-            color: var(--gray);
-            font-size: 12px;
-        }
-
-        .admin-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .admin-card {
-            background: var(--panel);
-            border: 1px solid var(--dark-green);
-            border-radius: var(--radius);
-            padding: 20px;
-            transition: var(--transition);
-        }
-
-        .admin-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.1);
-        }
-
-        .admin-card h4 {
-            font-size: 14px;
-            font-weight: 900;
-            color: var(--gold);
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-table {
-            width: 100%;
-            font-size: 10px;
-        }
-
-        .info-table tr {
-            border-bottom: 1px solid rgba(0, 255, 65, 0.05);
-        }
-
-        .info-table td {
-            padding: 5px 8px;
-            color: var(--gray);
-        }
-
-        .info-table td:first-child {
-            font-weight: 700;
-            color: var(--green);
-            width: 35%;
-        }
-
-        .info-table td:last-child {
-            color: var(--white);
-            word-break: break-all;
-        }
-
-        .admin-input {
-            width: 100%;
-            padding: 10px 14px;
-            background: #000;
-            border: 1px solid var(--dark-green);
-            border-radius: 8px;
-            color: var(--green);
-            font-size: 12px;
-            font-family: 'Courier New', monospace;
-            outline: none;
-            transition: var(--transition);
-            margin-bottom: 8px;
-            text-align: center;
-        }
-
-        .admin-input:focus { border-color: var(--gold); box-shadow: 0 0 12px rgba(255, 215, 0, 0.2); }
-
-        .admin-btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-
-        .close-admin-btn {
-            position: fixed;
-            top: 20px; right: 20px;
-            font-size: 30px;
-            color: var(--red);
-            cursor: pointer;
-            z-index: 99998;
-            background: var(--panel);
-            border: 1px solid var(--red);
-            border-radius: 50%;
-            width: 45px; height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .close-admin-btn:hover {
-            transform: scale(1.1) rotate(90deg);
-            box-shadow: 0 0 25px rgba(255, 0, 64, 0.5);
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .modal.active { display: flex; }
-
-        .modal-content {
-            max-width: 90%;
-            max-height: 90vh;
-            background: var(--panel);
-            border: 1px solid var(--green);
-            border-radius: var(--radius);
-            padding: 20px;
-            position: relative;
-            box-shadow: 0 0 60px rgba(0, 255, 65, 0.3);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 8px; right: 12px;
-            font-size: 26px;
-            color: var(--red);
-            cursor: pointer;
-            z-index: 10;
-            background: none;
-            border: none;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover { transform: scale(1.2) rotate(90deg); }
-        .modal img, .modal video { max-width: 100%; max-height: 75vh; border-radius: 8px; }
-        .modal audio { width: 100%; max-width: 400px; }
-
-        /* Footer */
-        .footer {
-            background: var(--panel);
-            border: 1px solid var(--dark-green);
-            border-radius: var(--radius);
-            padding: 20px;
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .footer-name {
-            font-size: 18px;
-            font-weight: 900;
-            background: linear-gradient(45deg, var(--green), var(--gold), var(--purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 3px;
-        }
-
-        .footer-phone {
-            font-size: 16px;
-            color: var(--gold);
-            font-weight: 700;
-            margin: 5px 0;
-            direction: ltr;
-            display: inline-block;
-            letter-spacing: 4px;
-        }
-
-        .footer-credit { font-size: 8px; color: var(--gray); letter-spacing: 1px; }
-
-        /* Notification */
-        .notification {
-            position: fixed;
-            top: 15px; right: 15px;
-            background: var(--panel);
-            border: 1px solid var(--green);
-            color: var(--green);
-            padding: 10px 18px;
-            border-radius: 10px;
-            z-index: 99999;
-            font-weight: 700;
-            font-size: 12px;
-            box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
-            max-width: 350px;
-            animation: slideIn 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Vazirmatn', 'Courier New', monospace;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(120%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header { flex-direction: column; text-align: center; }
-            .brand { flex-direction: column; }
-            .brand h1 { font-size: 17px; }
-            .stats-row { grid-template-columns: repeat(3, 1fr); }
-            .stat-value { font-size: 18px; }
-            .file-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
-            .file-thumb, .file-icon-placeholder { height: 100px; }
-            .admin-grid { grid-template-columns: 1fr; }
-            .search-bar { flex-direction: column; }
-            .sort-select { width: 100%; }
-            .kali-logo-large { font-size: 50px; }
-            .lang-title { font-size: 20px; }
-            .lang-btn { padding: 14px 28px; font-size: 16px; }
-        }
-
-        @media (max-width: 480px) {
-            .stats-row { grid-template-columns: repeat(2, 1fr); }
-            .file-grid { grid-template-columns: 1fr 1fr; }
-            .filter-tabs { justify-content: center; }
-        }
+            --bg: #0a0a0a; --panel: #111; --text: #ccc; --gold: #ffd700; --green: #00ff41;
+            --red: #ff0040; --blue: #00d4ff; --purple: #b400ff; --orange: #ff6600;
+            --radius: 14px; --transition: all 0.3s ease;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Vazirmatn','Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+        #matrixCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:.08;pointer-events:none}
+        .flag-container{text-align:center;padding:20px;animation:flagWave 4s ease-in-out infinite}
+        .flag-lion{font-size:80px;filter:drop-shadow(0 0 30px rgba(255,215,0,.6))}
+        @keyframes flagWave{0%,100%{transform:rotate(0)scale(1)}25%{transform:rotate(2deg)scale(1.03)}75%{transform:rotate(-2deg)scale(.97)}}
+        .container{max-width:1400px;margin:0 auto;padding:15px}
+        .header{background:var(--panel);border:1px solid rgba(255,215,0,.3);border-radius:var(--radius);padding:20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;box-shadow:0 0 30px rgba(255,215,0,.1)}
+        .brand{display:flex;align-items:center;gap:12px}
+        .brand h1{font-size:28px;font-weight:900;color:var(--gold);text-shadow:0 0 20px var(--gold)}
+        .brand p{font-size:10px;color:#888;letter-spacing:2px}
+        .btn{padding:10px 20px;border:1px solid rgba(255,215,0,.5);border-radius:25px;cursor:pointer;font-size:13px;font-weight:700;transition:var(--transition);background:0 0;color:var(--gold);font-family:inherit;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+        .btn:hover{background:var(--gold);color:#000;box-shadow:0 0 30px rgba(255,215,0,.4);transform:translateY(-2px)}
+        .btn-danger{border-color:var(--red);color:var(--red)}.btn-danger:hover{background:var(--red);color:#fff}
+        .btn-sm{padding:6px 14px;font-size:11px}.btn-xs{padding:4px 10px;font-size:10px;border-radius:15px}
+        .main-grid{display:grid;grid-template-columns:1fr 320px;gap:20px;margin-bottom:20px}
+        @media(max-width:1100px){.main-grid{grid-template-columns:1fr}}
+        .section-panel{background:var(--panel);border:1px solid rgba(255,215,0,.2);border-radius:var(--radius);padding:20px;margin-bottom:20px}
+        .section-title{font-size:20px;font-weight:900;color:var(--gold);margin-bottom:15px;display:flex;align-items:center;gap:10px}
+        .news-card{background:#000;border:1px solid rgba(255,215,0,.1);border-radius:12px;padding:18px;margin-bottom:12px;transition:var(--transition);cursor:pointer}
+        .news-card:hover{border-color:var(--gold);box-shadow:0 0 25px rgba(255,215,0,.15);transform:translateY(-3px)}
+        .news-date{font-size:10px;color:#888;margin-bottom:6px}
+        .news-title{font-size:16px;font-weight:900;color:var(--gold);margin-bottom:8px}
+        .news-body{font-size:13px;color:#aaa;line-height:1.8}
+        .news-image{width:100%;max-height:300px;object-fit:cover;border-radius:10px;margin:10px 0}
+        .news-expiry{font-size:9px;color:var(--red);margin-top:8px}
+        .category-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+        .category-tab{padding:8px 16px;border:1px solid rgba(255,215,0,.3);border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;transition:var(--transition);background:0 0;color:var(--text);font-family:inherit}
+        .category-tab:hover{border-color:var(--gold)}.category-tab.active{background:var(--gold);color:#000}
+        .file-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        .file-card{background:#000;border:1px solid rgba(255,215,0,.15);border-radius:10px;overflow:hidden;transition:var(--transition);cursor:pointer}
+        .file-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 10px 25px rgba(255,215,0,.2)}
+        .file-preview{width:100%;height:130px;object-fit:cover;background:#000}
+        .file-icon-placeholder{width:100%;height:130px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a1a1a,#0a0a0a);font-size:45px;flex-direction:column;gap:5px}
+        .file-ext{font-size:12px;color:var(--gold);font-weight:700}
+        .file-info{padding:10px}
+        .file-name{font-weight:700;font-size:11px;color:#fff;margin-bottom:4px;word-break:break-all;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;display:-webkit-box}
+        .file-meta{font-size:9px;color:#888;display:flex;justify-content:space-between;flex-wrap:wrap}
+        .expiry-badge{padding:2px 8px;border-radius:10px;font-size:8px;font-weight:700}
+        .expiry-active{background:rgba(0,255,65,.15);color:var(--green)}
+        .expiry-expired{background:rgba(255,0,64,.15);color:var(--red)}
+        .file-actions{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+        .file-actions .btn{flex:1;padding:5px 8px;font-size:9px;border-radius:8px;justify-content:center}
+        .admin-panel{background:var(--panel);border:1px solid rgba(255,215,0,.3);border-radius:var(--radius);padding:20px;position:sticky;top:20px;max-height:85vh;overflow-y:auto}
+        .admin-panel h3{font-size:16px;font-weight:900;color:var(--gold);text-align:center;margin-bottom:15px;padding-bottom:10px;border-bottom:1px solid rgba(255,215,0,.2)}
+        .admin-section{margin-bottom:15px}
+        .admin-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;font-weight:700}
+        .admin-input,.admin-textarea,.admin-select{width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,215,0,.3);border-radius:10px;color:#fff;font-size:12px;font-family:inherit;outline:0;margin-bottom:8px;transition:var(--transition)}
+        .admin-textarea{min-height:80px;resize:vertical}
+        .admin-input:focus,.admin-textarea:focus,.admin-select:focus{border-color:var(--gold);box-shadow:0 0 15px rgba(255,215,0,.2)}
+        .admin-select{cursor:pointer}.admin-select option{background:#111;color:#fff}
+        .info-box{background:#000;border:1px solid rgba(255,215,0,.1);border-radius:10px;padding:10px;max-height:200px;overflow-y:auto;font-size:10px}
+        .info-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.03);color:#888}
+        .info-row span{color:var(--green);font-weight:600}
+        .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+        .theme-btn{padding:10px;border-radius:10px;cursor:pointer;text-align:center;font-size:9px;font-weight:700;border:2px solid transparent;transition:var(--transition);color:#fff}
+        .theme-btn:hover{border-color:#fff}.theme-btn.active{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,.3)}
+        .social-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+        .social-link{padding:8px 14px;border-radius:20px;font-size:10px;font-weight:700;text-decoration:none;color:#fff;transition:var(--transition);display:flex;align-items:center;gap:5px}
+        .social-link:hover{transform:scale(1.05)}
+        .social-telegram{background:#0088cc}.social-bale{background:#2ecc71}.social-instagram{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}
+        .social-eitaa{background:#ff8c00}.social-rubika{background:#ffd700;color:#000}.social-shad{background:#00bfa5}
+        .footer-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--panel);border-top:1px solid rgba(255,215,0,.3);display:flex;justify-content:space-around;padding:10px 0;z-index:999}
+        .footer-bar .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#888;cursor:pointer;transition:var(--transition);font-size:10px}
+        .footer-bar .nav-item:hover,.footer-bar .nav-item.active{color:var(--gold)}
+        .footer-bar .nav-item i{font-size:20px}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:10000;justify-content:center;align-items:center}
+        .modal.active{display:flex}
+        .modal-content{background:var(--panel);border:1px solid var(--gold);border-radius:var(--radius);padding:25px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto}
+        .modal-content h3{color:var(--gold);text-align:center;margin-bottom:15px}
+        .modal-close{float:left;font-size:24px;color:var(--red);cursor:pointer}
+        .notification{position:fixed;top:15px;right:15px;background:var(--panel);border:1px solid var(--green);color:var(--green);padding:10px 20px;border-radius:12px;z-index:99999;font-weight:700;font-size:12px;animation:slideIn .3s ease}
+        @keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+        .pulse-dot{display:inline-block;width:10px;height:10px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite}
+        @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(0,255,65,.4)}50%{box-shadow:0 0 0 15px rgba(0,255,65,0)}}
+        .counter-badge{background:var(--red);color:#fff;border-radius:50%;padding:2px 6px;font-size:9px;position:absolute;top:-5px;right:-5px}
+        @media(max-width:768px){.header{flex-direction:column;text-align:center}.brand{flex-direction:column}.brand h1{font-size:20px}.file-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}.theme-grid{grid-template-columns:repeat(2,1fr)}.footer-bar .nav-item{font-size:8px}.footer-bar .nav-item i{font-size:16px}}
     </style>
 </head>
 <body>
-
-    <!-- ==================== MATRIX CANVAS ==================== -->
     <canvas id="matrixCanvas"></canvas>
-
-    <!-- ==================== SCANLINES ==================== -->
-    <div class="scanlines"></div>
-
-    <!-- ==================== FLOATING SKULLS ==================== -->
-    <div class="floating-skull">💀</div>
-    <div class="floating-skull">☠️</div>
-    <div class="floating-skull">🏴‍☠️</div>
-    <div class="floating-skull">👾</div>
-    <div class="floating-skull">🖥️</div>
-    <div class="floating-skull">⚡</div>
-
-    <!-- ==================== PARTICLES CONTAINER ==================== -->
-    <div id="particlesContainer"></div>
-
-    <!-- ==================== LANGUAGE SELECTOR ==================== -->
-    <div class="lang-overlay" id="langSelector">
-        <div class="kali-logo-large">🐉</div>
-        <div class="lang-title">KALI LINUX GANG VAULT</div>
-        <p style="color:var(--gray);text-align:center;font-family:'Vazirmatn',monospace;">
-            زبان مورد نظر را انتخاب کنید<br>
-            <span style="font-size:10px;">Choose your language</span>
-        </p>
-        <div class="lang-buttons">
-            <button class="lang-btn" onclick="selectLanguage('fa')" id="btnFa">
-                🇮🇷 فارسی
-            </button>
-            <button class="lang-btn" onclick="selectLanguage('en')" id="btnEn">
-                🇺🇸 ENGLISH
-            </button>
-        </div>
-        <div class="lang-info">
-            <p>سازنده: <span class="highlight">دانیال شهرکی</span></p>
-            <p>تماس: <span class="highlight" style="direction:ltr;display:inline-block;">09917387803</span></p>
-            <p style="font-size:9px;opacity:0.6;">© 2024 Daniyal Shahraki | کالی لینوکس گنگ</p>
-        </div>
-    </div>
-
-    <!-- ==================== LOGIN SCREEN ==================== -->
-    <div class="login-overlay hidden" id="loginScreen">
-        <div class="login-box">
-            <div class="login-icon">🐉</div>
-            <div class="login-title" id="loginTitle">ورود به والت</div>
-            <p style="color:var(--gray);margin-bottom:12px;font-family:'Vazirmatn',monospace;font-size:12px;" id="loginDesc">
-                رمز عبور را وارد کنید
-            </p>
-            <input type="password" class="login-input" id="passwordInput" placeholder="••••••••••••" autofocus>
-            <button class="btn btn-primary" onclick="authenticate()">
-                🚀 <span id="loginBtnText">ورود به والت</span>
-            </button>
-            <p class="error-msg" id="errorMsg">❌ رمز عبور اشتباه است!</p>
-            <p class="hint-text" id="hintText">رمز پیش‌فرض: Danial..flah13</p>
-        </div>
-    </div>
-
-    <!-- ==================== DASHBOARD ==================== -->
-    <div class="dashboard" id="dashboard">
-        
-        <!-- Header -->
+    <div class="container">
+        <div class="flag-container"><div class="flag-lion">🦁☀️⚔️</div><h2 style="color:var(--gold);text-shadow:0 0 20px var(--gold);" id="siteName">آزادی نیوز</h2><p style="color:#888;" id="siteSlogan">بازار سیاه دیجیتال | شیر و خورشید جاوید شاه</p></div>
         <header class="header">
-            <div class="brand">
-                <span class="kali-logo">🐉</span>
-                <div>
-                    <h1>KALI GANG VAULT</h1>
-                    <p>⚡ دانیال شهرکی | Daniyal Shahraki</p>
-                </div>
-            </div>
-            <div class="header-actions">
-                <span class="admin-link" onclick="openAdminPanel()">
-                    <i class="fas fa-user-shield"></i> پنل مدیریت
-                </span>
-                <button class="btn btn-sm" onclick="document.getElementById('fileInput').click()">
-                    <i class="fas fa-upload"></i> آپلود فایل
-                </button>
-                <button class="btn btn-danger btn-sm" onclick="lockVault()">
-                    <i class="fas fa-lock"></i> قفل
-                </button>
+            <div class="brand"><span style="font-size:40px;">🦁</span><div><h1 id="headerTitle">آزادی نیوز</h1><p>⚡ AZADI NEWS</p></div></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <button class="btn btn-sm" onclick="showUploadModal()"><i class="fas fa-upload"></i> آپلود</button>
+                <button class="btn btn-sm" id="adminPanelBtn" onclick="toggleAdminPanel()"><i class="fas fa-user-shield"></i> پنل مدیریت</button>
             </div>
         </header>
-
-        <!-- Stats -->
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-value" id="totalFiles">0</div>
-                <div class="stat-label">📁 کل فایل‌ها</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="totalSize">0 KB</div>
-                <div class="stat-label">💾 حجم کل</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="imageCount">0</div>
-                <div class="stat-label">🖼️ عکس</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="videoCount">0</div>
-                <div class="stat-label">🎬 ویدیو</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="audioCount">0</div>
-                <div class="stat-label">🎵 صدا</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="apkCount">0</div>
-                <div class="stat-label">📱 APK</div>
-            </div>
-        </div>
-
-        <!-- Upload -->
-        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-            <span class="upload-icon">☠️</span>
-            <strong style="color:var(--green);">فایل‌های خود را اینجا رها کنید</strong>
-            <p style="color:var(--gray);font-size:10px;margin-top:3px;">پشتیبانی از تمام فرمت‌ها: APK · ZIP · RAR · عکس · فیلم · صدا · PDF · EXE</p>
-            <input type="file" id="fileInput" multiple style="display:none;" onchange="handleUpload(this.files)" accept="*/*">
-        </div>
-
-        <!-- Filter & Search -->
-        <div class="gallery-header">
-            <div class="gallery-title">
-                <i class="fas fa-folder-open"></i> گالری فایل‌ها
-            </div>
-            <div class="filter-tabs">
-                <button class="filter-tab active" onclick="setFilter('all', this)">همه</button>
-                <button class="filter-tab" onclick="setFilter('image/', this)">عکس</button>
-                <button class="filter-tab" onclick="setFilter('video/', this)">ویدیو</button>
-                <button class="filter-tab" onclick="setFilter('audio/', this)">صدا</button>
-                <button class="filter-tab" onclick="setFilter('apk', this)">APK</button>
-                <button class="filter-tab" onclick="setFilter('archive', this)">ZIP</button>
-                <button class="filter-tab" onclick="setFilter('other', this)">سایر</button>
-            </div>
-        </div>
-
-        <div class="search-bar">
-            <input type="text" class="search-input" placeholder="🔍 جستجو در فایل‌ها..." id="searchInput" oninput="displayFiles()">
-            <select class="sort-select" id="sortSelect" onchange="sortFiles(this.value)">
-                <option value="date">📅 جدیدترین</option>
-                <option value="date-asc">📅 قدیمی‌ترین</option>
-                <option value="name">📋 نام</option>
-                <option value="size">📊 حجم (بیشترین)</option>
-                <option value="size-asc">📊 حجم (کمترین)</option>
-            </select>
-        </div>
-
-        <!-- File Grid -->
-        <div class="file-grid" id="fileGrid"></div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-name">🏴‍☠️ KALI GANG VAULT</div>
-            <p style="color:var(--gray);font-size:10px;margin:2px 0;">سازنده: <strong style="color:var(--gold);">دانیال شهرکی</strong></p>
-            <div class="footer-phone">📱 09917387803</div>
-            <div class="footer-credit">© 2024 Daniyal Shahraki | تمام حقوق محفوظ است</div>
-        </footer>
-    </div>
-
-    <!-- ==================== ADMIN PANEL (SEPARATE PAGE) ==================== -->
-    <div class="admin-overlay" id="adminOverlay">
-        <span class="close-admin-btn" onclick="closeAdminPanel()">&times;</span>
-        
-        <div class="admin-container">
-            <div class="admin-header">
-                <h2>🐉 پنل مدیریت کالی</h2>
-                <p>ورود به بخش مدیریت - رمز مدیریت را وارد کنید</p>
-                <input type="password" class="admin-input" id="adminPassInput" placeholder="رمز مدیریت..." style="max-width:350px;margin:15px auto;">
-                <button class="btn btn-sm" onclick="loginAdmin()" style="color:var(--gold);border-color:var(--gold);">
-                    <i class="fas fa-key"></i> ورود به پنل
-                </button>
-                <p style="color:var(--red);font-size:10px;display:none;margin-top:5px;" id="adminError">❌ رمز اشتباه</p>
-            </div>
-
-            <div id="adminContent" style="display:none;">
-                <!-- Target Info -->
-                <div class="admin-grid">
-                    <div class="admin-card">
-                        <h4><i class="fas fa-user-secret"></i> اطلاعات کاربر فعلی</h4>
-                        <table class="info-table" id="targetInfo">
-                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
-                        </table>
-                        <button class="btn btn-sm" onclick="refreshTargetInfo()" style="width:100%;margin-top:10px;">
-                            <i class="fas fa-sync-alt"></i> بروزرسانی اطلاعات
-                        </button>
+        <div class="main-grid">
+            <div>
+                <div class="section-panel"><div class="section-title"><i class="fas fa-newspaper"></i> آخرین اخبار</div><div id="newsContainer"><p style="color:#888;text-align:center;">در حال بارگذاری...</p></div></div>
+                <div class="section-panel">
+                    <div class="section-title"><i class="fas fa-folder-open"></i> فایل‌ها</div>
+                    <div class="category-tabs" id="categoryTabs">
+                        <button class="category-tab active" onclick="filterFiles('all',this)">همه</button>
+                        <button class="category-tab" onclick="filterFiles('music',this)">🎵 آهنگ</button>
+                        <button class="category-tab" onclick="filterFiles('video',this)">🎬 ویدیو</button>
+                        <button class="category-tab" onclick="filterFiles('image',this)">🖼️ عکس</button>
+                        <button class="category-tab" onclick="filterFiles('app',this)">📱 برنامه</button>
+                        <button class="category-tab" onclick="filterFiles('doc',this)">📄 ورد</button>
+                        <button class="category-tab" onclick="filterFiles('pdf',this)">📕 PDF</button>
+                        <button class="category-tab" onclick="filterFiles('zip',this)">📦 ZIP</button>
+                        <button class="category-tab" onclick="filterFiles('exe',this)">💻 EXE</button>
+                        <button class="category-tab" onclick="filterFiles('apk',this)">📱 APK</button>
                     </div>
-
-                    <div class="admin-card">
-                        <h4><i class="fas fa-microchip"></i> مشخصات سخت‌افزاری</h4>
-                        <table class="info-table" id="hardwareInfo">
-                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="admin-card">
-                        <h4><i class="fas fa-wifi"></i> شبکه و اتصال</h4>
-                        <table class="info-table" id="networkInfo">
-                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="admin-card">
-                        <h4><i class="fas fa-battery-full"></i> وضعیت باتری و سیستم</h4>
-                        <table class="info-table" id="batteryInfo">
-                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="admin-card">
-                        <h4><i class="fas fa-globe"></i> موقعیت مکانی</h4>
-                        <table class="info-table" id="geoInfo">
-                            <tr><td colspan="2" style="text-align:center;color:var(--gray);">در حال بارگذاری...</td></tr>
-                        </table>
-                    </div>
-
-                    <div class="admin-card">
-                        <h4><i class="fas fa-clock"></i> تاریخچه بازدیدها</h4>
-                        <div id="visitHistory" style="max-height:250px;overflow-y:auto;font-size:9px;">
-                            <p style="color:var(--gray);text-align:center;">در حال بارگذاری...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Actions -->
-                <div class="admin-card" style="margin-bottom:20px;">
-                    <h4><i class="fas fa-cogs"></i> عملیات مدیریت</h4>
-                    <div class="admin-btn-row">
-                        <button class="btn btn-danger btn-sm" onclick="deleteAll()">
-                            <i class="fas fa-skull"></i> حذف همه فایل‌ها
-                        </button>
-                        <button class="btn btn-sm" onclick="changePasswordPrompt()">
-                            <i class="fas fa-key"></i> تغییر رمز والت
-                        </button>
-                        <button class="btn btn-sm" onclick="logoutAdmin()">
-                            <i class="fas fa-sign-out-alt"></i> خروج از مدیریت
-                        </button>
-                    </div>
+                    <input type="text" class="admin-input" placeholder="🔍 جستجو در فایل‌ها..." id="searchInput" oninput="displayFiles()" style="margin-bottom:15px;">
+                    <div class="file-grid" id="fileGrid"><p style="color:#888;text-align:center;grid-column:1/-1;">در حال بارگذاری...</p></div>
                 </div>
             </div>
+            <aside class="admin-panel" id="adminSidebar">
+                <h3>🛡️ پنل مدیریت</h3>
+                <div id="adminLoginSection">
+                    <div class="admin-label">🔑 رمز مدیریت</div>
+                    <input type="password" class="admin-input" id="adminPassInput" placeholder="رمز مدیریت...">
+                    <button class="btn btn-sm" onclick="adminLogin()" style="width:100%;"><i class="fas fa-key"></i> ورود</button>
+                    <p style="color:var(--red);font-size:10px;display:none;margin-top:5px;" id="adminLoginError">❌ رمز اشتباه</p>
+                </div>
+                <div id="adminContent" style="display:none;">
+                    <div class="admin-section"><div class="admin-label">🎨 تم</div><div class="theme-grid" id="themeGrid"></div></div>
+                    <div class="admin-section"><div class="admin-label">⚙️ تنظیمات سایت</div>
+                        <input type="text" class="admin-input" id="setSiteName" placeholder="نام سایت">
+                        <input type="text" class="admin-input" id="setSlogan" placeholder="شعار سایت">
+                        <input type="password" class="admin-input" id="setSitePass" placeholder="رمز ورود (خالی = بدون رمز)">
+                        <input type="password" class="admin-input" id="setAdminPass" placeholder="رمز پنل مدیریت">
+                    </div>
+                    <div class="admin-section"><div class="admin-label">🔗 راه‌های ارتباطی</div>
+                        <input type="text" class="admin-input" id="setTelegram" placeholder="تلگرام">
+                        <input type="text" class="admin-input" id="setBale" placeholder="بله">
+                        <input type="text" class="admin-input" id="setInstagram" placeholder="اینستاگرام">
+                        <input type="text" class="admin-input" id="setEitaa" placeholder="ایتا">
+                        <input type="text" class="admin-input" id="setRubika" placeholder="روبیکا">
+                        <input type="text" class="admin-input" id="setShad" placeholder="شاد">
+                        <input type="text" class="admin-input" id="setPhone" placeholder="شماره تماس">
+                    </div>
+                    <button class="btn btn-sm" onclick="saveSettings()" style="width:100%;margin-bottom:10px;background:var(--green);color:#000;"><i class="fas fa-save"></i> ذخیره تنظیمات</button>
+                    <div class="admin-section"><div class="admin-label">📊 اطلاعات کاربر فعلی</div><div class="info-box" id="userInfoBox"><p style="color:#888;">در حال جمع‌آوری...</p></div></div>
+                    <div class="admin-section"><div class="admin-label">📋 آخرین بازدیدها</div><div class="info-box" id="visitLogBox"><p style="color:#888;">در حال بارگذاری...</p></div></div>
+                    <div class="admin-section"><div class="admin-label">🗑️ عملیات</div><button class="btn btn-danger btn-sm" onclick="deleteAllFiles()" style="width:100%;"><i class="fas fa-skull"></i> حذف همه فایل‌ها</button></div>
+                    <button class="btn btn-sm" onclick="adminLogout()" style="width:100%;margin-top:8px;">🚪 خروج</button>
+                </div>
+            </aside>
+        </div>
+        <div style="text-align:center;padding:20px;margin-top:20px;">
+            <div class="social-links" id="socialLinksContainer" style="justify-content:center;"></div>
+            <p style="color:#888;font-size:10px;margin-top:15px;" id="footerText">© 2025 آزادی نیوز | تمام حقوق محفوظ | سازنده: دانیال شهرکی | 09917387803</p>
         </div>
     </div>
-
-    <!-- ==================== PREVIEW MODAL ==================== -->
-    <div class="modal" id="previewModal">
-        <button class="modal-close" onclick="closePreview()">&times;</button>
-        <div class="modal-content" id="previewContent"></div>
+    <div class="footer-bar">
+        <div class="nav-item active" onclick="scrollToSection('news')"><i class="fas fa-newspaper"></i><span>اخبار</span></div>
+        <div class="nav-item" onclick="scrollToSection('files')"><i class="fas fa-folder"></i><span>فایل‌ها</span></div>
+        <div class="nav-item" onclick="showUploadModal()"><i class="fas fa-plus-circle"></i><span>آپلود</span></div>
+        <div class="nav-item" onclick="scrollToSection('social')"><i class="fas fa-share-alt"></i><span>ارتباط</span></div>
+        <div class="nav-item" onclick="toggleAdminPanel()"><i class="fas fa-cog"></i><span>تنظیمات</span></div>
     </div>
-
+    <div class="modal" id="uploadModal">
+        <div class="modal-content"><span class="modal-close" onclick="closeUploadModal()">&times;</span>
+            <h3>📤 آپلود فایل</h3>
+            <input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileSelect(this.files)" accept="*/*">
+            <div class="upload-zone" onclick="document.getElementById('fileInput').click()" style="border:2px dashed rgba(255,215,0,.3);border-radius:var(--radius);padding:30px;text-align:center;cursor:pointer;margin-bottom:15px;"><div style="font-size:50px;">☠️</div><p style="color:#888;">کلیک کنید</p></div>
+            <div id="selectedFilesList" style="margin:10px 0;font-size:11px;color:#888;"></div>
+            <div class="admin-label">⏱️ انقضا</div>
+            <select class="admin-select" id="expirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="90">۳ ماه</option><option value="0" selected>دائمی</option></select>
+            <button class="btn" onclick="uploadFiles()" style="width:100%;margin-top:10px;background:var(--gold);color:#000;"><i class="fas fa-cloud-upload-alt"></i> آپلود</button>
+        </div>
+    </div>
+    <div class="modal" id="newsModal">
+        <div class="modal-content"><span class="modal-close" onclick="closeNewsModal()">&times;</span>
+            <h3>📰 خبر جدید</h3>
+            <input type="text" class="admin-input" id="newsTitleInput" placeholder="عنوان">
+            <textarea class="admin-textarea" id="newsBodyInput" placeholder="متن خبر..."></textarea>
+            <input type="text" class="admin-input" id="newsImageInput" placeholder="لینک تصویر (اختیاری)">
+            <select class="admin-select" id="newsExpirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0" selected>دائمی</option></select>
+            <button class="btn" onclick="addNews()" style="width:100%;margin-top:10px;background:var(--gold);color:#000;"><i class="fas fa-plus"></i> انتشار</button>
+        </div>
+    </div>
     <script>
-        // ==================== MATRIX RAIN ====================
-        const matrixCanvas = document.getElementById('matrixCanvas');
-        const mctx = matrixCanvas.getContext('2d');
-        
-        function resizeMatrix() {
-            matrixCanvas.width = window.innerWidth;
-            matrixCanvas.height = window.innerHeight;
-        }
-        resizeMatrix();
-        window.addEventListener('resize', resizeMatrix);
-
-        const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF@#$%&*()_+-=[]{}|;:,./<>?';
-        const fontSize = 12;
-        let columns = Math.floor(matrixCanvas.width / fontSize);
-        let drops = Array(columns).fill(1);
-
-        function drawMatrix() {
-            mctx.fillStyle = 'rgba(0, 5, 0, 0.06)';
-            mctx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-            mctx.fillStyle = '#00ff41';
-            mctx.font = fontSize + 'px monospace';
-            
-            columns = Math.floor(matrixCanvas.width / fontSize);
-            if (drops.length !== columns) drops = Array(columns).fill(1);
-            
-            for (let i = 0; i < drops.length; i++) {
-                const text = chars[Math.floor(Math.random() * chars.length)];
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
-                mctx.fillText(text, x, y);
-                mctx.fillStyle = '#00ff4180';
-                mctx.fillText(text, x + 1, y + 1);
-                mctx.fillStyle = '#00ff41';
-                if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(drawMatrix, 45);
-
-        // ==================== PARTICLES ====================
-        function createParticles() {
-            const container = document.getElementById('particlesContainer');
-            for (let i = 0; i < 35; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                const size = Math.random() * 3 + 1;
-                p.style.cssText = `
-                    width: ${size}px; height: ${size}px;
-                    left: ${Math.random() * 100}%;
-                    animation-duration: ${Math.random() * 12 + 8}s;
-                    animation-delay: ${Math.random() * 6}s;
-                    opacity: ${Math.random() * 0.5 + 0.2};
-                `;
-                container.appendChild(p);
-            }
-        }
-        createParticles();
-
-        // ==================== CONSTANTS ====================
-        const PASS_KEY = 'kv_pass_v9';
-        const FILES_KEY = 'kv_files_v9';
-        const LOG_KEY = 'kv_logs_v9';
-        const DEFAULT_PASS = 'Danial..flah13';
-        const ADMIN_PASS = '#0.0.0.0.0.0.0.0...HACKING...0.1';
-
-        let files = [];
-        let currentFilter = 'all';
-        let currentSort = 'date';
-        let isAdmin = false;
-        let currentLang = 'fa';
-
-        // ==================== LANGUAGE ====================
-        function selectLanguage(lang) {
-            currentLang = lang;
-            document.getElementById('btnFa').classList.remove('selected');
-            document.getElementById('btnEn').classList.remove('selected');
-            document.getElementById(lang === 'fa' ? 'btnFa' : 'btnEn').classList.add('selected');
-            setTimeout(() => {
-                document.getElementById('langSelector').classList.add('hidden');
-                document.getElementById('loginScreen').classList.remove('hidden');
-                updateLoginUI();
-                document.getElementById('passwordInput').focus();
-            }, 350);
-        }
-
-        function updateLoginUI() {
-            if (currentLang === 'fa') {
-                document.getElementById('loginTitle').textContent = 'ورود به والت';
-                document.getElementById('loginDesc').textContent = 'رمز عبور را وارد کنید';
-                document.getElementById('loginBtnText').textContent = 'ورود به والت';
-                document.getElementById('errorMsg').textContent = '❌ رمز عبور اشتباه است!';
-                document.getElementById('hintText').textContent = 'رمز پیش‌فرض: Danial..flah13';
-            } else {
-                document.getElementById('loginTitle').textContent = 'GANG VAULT';
-                document.getElementById('loginDesc').textContent = 'Enter Password';
-                document.getElementById('loginBtnText').textContent = 'ACCESS VAULT';
-                document.getElementById('errorMsg').textContent = '❌ ACCESS DENIED';
-                document.getElementById('hintText').textContent = 'Default: Danial..flah13';
-            }
-        }
-
-        // ==================== HASH ====================
-        async function hash(str) {
-            const data = new TextEncoder().encode(str + '_KALI_GANG_SALT_V9');
-            const h = await crypto.subtle.digest('SHA-256', data);
-            return Array.from(new Uint8Array(h)).map(b => b.toString(16).padStart(2, '0')).join('');
-        }
-
-        // ==================== AUTH ====================
-        async function authenticate() {
-            const pw = document.getElementById('passwordInput').value;
-            const err = document.getElementById('errorMsg');
-            if (!pw) { err.textContent = currentLang === 'fa' ? '❌ لطفاً رمز عبور را وارد کنید' : '❌ ENTER PASSWORD'; err.style.display = 'block'; return; }
-            
-            const stored = localStorage.getItem(PASS_KEY);
-            let target;
-            if (!stored) { target = await hash(DEFAULT_PASS); localStorage.setItem(PASS_KEY, target); }
-            else target = stored;
-            
-            if (await hash(pw) === target || pw === DEFAULT_PASS) {
-                if (!stored) localStorage.setItem(PASS_KEY, await hash(pw));
-                unlock();
-            } else {
-                err.textContent = currentLang === 'fa' ? '❌ رمز عبور اشتباه است!' : '❌ ACCESS DENIED';
-                err.style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-            }
-        }
-
-        function unlock() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('dashboard').classList.add('active');
-            document.getElementById('passwordInput').value = '';
-            document.getElementById('errorMsg').style.display = 'none';
-            loadFiles(); displayFiles(); updateStats(); logVisit();
-            notify(currentLang === 'fa' ? '✅ والت با موفقیت باز شد' : '✅ VAULT UNLOCKED');
-        }
-
-        function lockVault() {
-            const p = prompt(currentLang === 'fa' ? 'رمز جدید برای قفل:\n(لغو = Cancel)' : 'Enter new password to lock:\n(Cancel to abort)');
-            if (!p) return;
-            hash(p).then(h => {
-                localStorage.setItem(PASS_KEY, h);
-                notify(currentLang === 'fa' ? '🔒 والت قفل شد' : '🔒 VAULT LOCKED');
-                document.getElementById('dashboard').classList.remove('active');
-                document.getElementById('loginScreen').classList.remove('hidden');
-                updateLoginUI();
-                document.getElementById('passwordInput').focus();
-            });
-        }
-
-        // ==================== ADMIN ====================
-        function openAdminPanel() {
-            document.getElementById('adminOverlay').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeAdminPanel() {
-            document.getElementById('adminOverlay').classList.remove('active');
-            document.body.style.overflow = '';
-        }
-
-        function loginAdmin() {
-            if (document.getElementById('adminPassInput').value === ADMIN_PASS) {
-                isAdmin = true;
-                document.getElementById('adminContent').style.display = 'block';
-                document.getElementById('adminPassInput').value = '';
-                document.getElementById('adminError').style.display = 'none';
-                gatherAllInfo();
-                displayHistory();
-                displayFiles();
-                notify(currentLang === 'fa' ? '✅ به پنل مدیریت خوش آمدید' : '✅ ADMIN ACCESS GRANTED');
-            } else {
-                document.getElementById('adminError').textContent = currentLang === 'fa' ? '❌ رمز مدیریت اشتباه است!' : '❌ INVALID ADMIN KEY';
-                document.getElementById('adminError').style.display = 'block';
-            }
-        }
-
-        function logoutAdmin() {
-            isAdmin = false;
-            document.getElementById('adminContent').style.display = 'none';
-            document.getElementById('adminPassInput').value = '';
-            displayFiles();
-            notify(currentLang === 'fa' ? '👋 خروج از مدیریت' : '👋 LOGGED OUT');
-        }
-
-        function changePasswordPrompt() {
-            const np = prompt(currentLang === 'fa' ? 'رمز جدید والت:' : 'New vault password:');
-            if (!np) return;
-            const cp = prompt(currentLang === 'fa' ? 'تکرار رمز جدید:' : 'Confirm new password:');
-            if (np !== cp) { notify(currentLang === 'fa' ? '❌ رمزها مطابقت ندارند' : '❌ PASSWORDS DO NOT MATCH'); return; }
-            hash(np).then(h => {
-                localStorage.setItem(PASS_KEY, h);
-                notify(currentLang === 'fa' ? '✅ رمز والت تغییر کرد' : '✅ PASSWORD CHANGED');
-            });
-        }
-
-        // ==================== FILES ====================
-        function loadFiles() { try { files = JSON.parse(localStorage.getItem(FILES_KEY) || '[]'); } catch(e) { files = []; } }
-        function saveFiles() { localStorage.setItem(FILES_KEY, JSON.stringify(files)); updateStats(); }
-
-        async function handleUpload(fileList) {
-            let count = 0;
-            for (const file of fileList) {
-                if (file.size > 150 * 1024 * 1024) { notify(`⚠️ فایل بزرگ: ${file.name}`); continue; }
-                const reader = new FileReader();
-                await new Promise(resolve => {
-                    reader.onload = e => {
-                        files.push({ id: Date.now() + Math.random().toString(36).substr(2), name: file.name, type: file.type || 'application/octet-stream', size: file.size, data: e.target.result, date: new Date().toISOString() });
-                        count++; resolve();
-                    };
-                    reader.onerror = () => resolve();
-                    reader.readAsDataURL(file);
-                });
-            }
-            if (count > 0) { saveFiles(); displayFiles(); notify(`✅ ${count} فایل آپلود شد`); }
-            document.getElementById('fileInput').value = '';
-        }
-
-        function displayFiles() {
-            const grid = document.getElementById('fileGrid');
-            const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
-            let filtered = [...files];
-
-            if (currentFilter === 'image/') filtered = filtered.filter(f => f.type.startsWith('image/'));
-            else if (currentFilter === 'video/') filtered = filtered.filter(f => f.type.startsWith('video/'));
-            else if (currentFilter === 'audio/') filtered = filtered.filter(f => f.type.startsWith('audio/'));
-            else if (currentFilter === 'apk') filtered = filtered.filter(f => f.name.toLowerCase().endsWith('.apk'));
-            else if (currentFilter === 'archive') filtered = filtered.filter(f => { const n = f.name.toLowerCase(); return n.endsWith('.zip') || n.endsWith('.rar') || n.endsWith('.7z') || n.endsWith('.tar') || n.endsWith('.gz'); });
-            else if (currentFilter === 'other') filtered = filtered.filter(f => { const n = f.name.toLowerCase(); return !f.type.startsWith('image/') && !f.type.startsWith('video/') && !f.type.startsWith('audio/') && !n.endsWith('.apk') && !n.endsWith('.zip') && !n.endsWith('.rar') && !n.endsWith('.7z'); });
-
-            if (search) filtered = filtered.filter(f => f.name.toLowerCase().includes(search));
-
-            filtered.sort((a, b) => {
-                switch(currentSort) {
-                    case 'name': return a.name.localeCompare(b.name);
-                    case 'size': return b.size - a.size;
-                    case 'size-asc': return a.size - b.size;
-                    case 'date-asc': return new Date(a.date) - new Date(b.date);
-                    default: return new Date(b.date) - new Date(a.date);
-                }
-            });
-
-            grid.innerHTML = '';
-            if (filtered.length === 0) {
-                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:45px;color:var(--gray);"><div style="font-size:45px;">📂</div><p style="margin-top:8px;">هیچ فایلی یافت نشد</p></div>`;
-                return;
-            }
-
-            filtered.forEach(file => {
-                const card = document.createElement('div');
-                card.className = 'file-card';
-                let thumb = '', badgeClass = 'badge-other', typeLabel = 'سایر';
-                const ext = file.name.split('.').pop()?.toLowerCase();
-
-                if (file.type.startsWith('image/')) { thumb = `<img src="${file.data}" class="file-thumb" alt="${file.name}" loading="lazy">`; badgeClass = 'badge-img'; typeLabel = 'عکس'; }
-                else if (file.type.startsWith('video/')) { thumb = `<video src="${file.data}" class="file-thumb" preload="metadata"></video>`; badgeClass = 'badge-vid'; typeLabel = 'ویدیو'; }
-                else if (file.type.startsWith('audio/')) { thumb = `<div class="file-icon-placeholder">🎵</div>`; badgeClass = 'badge-aud'; typeLabel = 'صدا'; }
-                else if (ext === 'apk') { thumb = `<div class="file-icon-placeholder">📱<span class="file-ext">APK</span></div>`; badgeClass = 'badge-apk'; typeLabel = 'APK'; }
-                else if (['zip','rar','7z','tar','gz'].includes(ext)) { thumb = `<div class="file-icon-placeholder">📦<span class="file-ext">${ext.toUpperCase()}</span></div>`; badgeClass = 'badge-zip'; typeLabel = 'فشرده'; }
-                else { thumb = `<div class="file-icon-placeholder">📄<span class="file-ext">${ext?.toUpperCase() || 'FILE'}</span></div>`; }
-
-                const size = formatSize(file.size);
-                const date = new Date(file.date).toLocaleDateString('fa-IR', { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
-
-                card.innerHTML = `
-                    ${thumb}
-                    <div class="file-info">
-                        <div class="file-name">${esc(file.name)}</div>
-                        <div class="file-meta"><span>📅 ${date}</span><span>💾 ${size}</span></div>
-                        <div class="file-meta" style="margin-top:2px;"><span class="badge ${badgeClass}">${typeLabel}</span></div>
-                        <div class="file-actions-row">
-                            <button class="btn btn-xs" onclick="previewFile('${file.id}')"><i class="fas fa-eye"></i></button>
-                            <button class="btn btn-xs" onclick="downloadFile('${file.id}')"><i class="fas fa-download"></i></button>
-                            <button class="btn btn-xs" onclick="renameFile('${file.id}')"><i class="fas fa-pen"></i></button>
-                            ${isAdmin ? `<button class="btn btn-xs btn-danger" onclick="deleteFile('${file.id}')"><i class="fas fa-trash"></i></button>` : ''}
-                        </div>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function previewFile(id) {
-            const file = files.find(f => f.id == id); if (!file) return;
-            const modal = document.getElementById('previewModal'), content = document.getElementById('previewContent');
-            if (file.type.startsWith('image/')) content.innerHTML = `<img src="${file.data}" alt="${file.name}">`;
-            else if (file.type.startsWith('video/')) content.innerHTML = `<video src="${file.data}" controls></video>`;
-            else if (file.type.startsWith('audio/')) content.innerHTML = `<div style="text-align:center;padding:20px;"><div style="font-size:45px;">🎵</div><h3 style="color:var(--gold);">${esc(file.name)}</h3><audio src="${file.data}" controls style="width:100%;max-width:400px;"></audio></div>`;
-            else content.innerHTML = `<div style="text-align:center;padding:25px;"><div style="font-size:55px;">📄</div><h3 style="color:var(--gold);">${esc(file.name)}</h3><p style="color:var(--gray);">${formatSize(file.size)}</p><button class="btn btn-sm" onclick="downloadFile('${file.id}')"><i class="fas fa-download"></i> دانلود</button></div>`;
-            modal.classList.add('active');
-        }
-
-        function closePreview() { document.getElementById('previewModal').classList.remove('active'); document.getElementById('previewContent').innerHTML = ''; }
-        function downloadFile(id) { const f = files.find(x => x.id == id); if (!f) return; const a = document.createElement('a'); a.href = f.data; a.download = f.name; document.body.appendChild(a); a.click(); document.body.removeChild(a); }
-        function renameFile(id) { const f = files.find(x => x.id == id); if (!f) return; const nn = prompt('نام جدید:', f.name); if (nn && nn.trim() && nn.trim() !== f.name) { f.name = nn.trim(); saveFiles(); displayFiles(); notify('✅ نام فایل تغییر کرد'); } }
-        function deleteFile(id) { if (!isAdmin) return; const f = files.find(x => x.id == id); if (!f) return; if (confirm(`حذف "${f.name}"؟`)) { files = files.filter(x => x.id != id); saveFiles(); displayFiles(); notify('🗑️ فایل حذف شد'); } }
-        function deleteAll() { if (!isAdmin) return; if (files.length === 0) { notify('ℹ️ فایلی نیست'); return; } if (confirm('⚠️ همه فایل‌ها حذف شوند؟')) { if (confirm('⚠️ غیرقابل بازگشت!')) { files = []; saveFiles(); displayFiles(); notify('🗑️ همه حذف شدند'); } } }
-        function setFilter(f, btn) { currentFilter = f; document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); displayFiles(); }
-        function sortFiles(type) { currentSort = type; displayFiles(); }
-        function updateStats() {
-            document.getElementById('totalFiles').textContent = files.length;
-            document.getElementById('totalSize').textContent = formatSize(files.reduce((s, f) => s + f.size, 0));
-            document.getElementById('imageCount').textContent = files.filter(f => f.type.startsWith('image/')).length;
-            document.getElementById('videoCount').textContent = files.filter(f => f.type.startsWith('video/')).length;
-            document.getElementById('audioCount').textContent = files.filter(f => f.type.startsWith('audio/')).length;
-            document.getElementById('apkCount').textContent = files.filter(f => f.name.toLowerCase().endsWith('.apk')).length;
-        }
-        function formatSize(b) { if (b === 0) return '0 B'; if (b > 1073741824) return (b/1073741824).toFixed(2) + ' GB'; if (b > 1048576) return (b/1048576).toFixed(2) + ' MB'; if (b > 1024) return (b/1024).toFixed(2) + ' KB'; return b + ' B'; }
-        function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-
-        // ==================== GATHER ALL INFO ====================
-        async function gatherAllInfo() {
-            const now = new Date();
-            const pDate = new Intl.DateTimeFormat('fa-IR', { year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false }).format(now);
-
-            // Target Info
-            document.getElementById('targetInfo').innerHTML = `
-                <tr><td>📅 تاریخ</td><td>${pDate}</td></tr>
-                <tr><td>🕐 UTC</td><td>${now.toISOString()}</td></tr>
-                <tr><td>🌐 زبان</td><td>${navigator.language} (${navigator.languages?.join(', ') || 'N/A'})</td></tr>
-                <tr><td>🍪 کوکی</td><td>${navigator.cookieEnabled ? '✅ فعال' : '❌ غیرفعال'}</td></tr>
-                <tr><td>🚫 DNT</td><td>${navigator.doNotTrack || 'N/A'}</td></tr>
-                <tr><td>⏱️ زمان بارگذاری</td><td>${performance.timing ? (performance.timing.loadEventEnd - performance.timing.navigationStart) + ' ms' : 'N/A'}</td></tr>
-                <tr><td>🆔 User Agent</td><td style="font-size:7px;">${navigator.userAgent}</td></tr>
-            `;
-
-            // Hardware
-            document.getElementById('hardwareInfo').innerHTML = `
-                <tr><td>💻 پلتفرم</td><td>${navigator.platform || 'N/A'}</td></tr>
-                <tr><td>🖥 صفحه</td><td>${screen.width}x${screen.height} @${window.devicePixelRatio}x</td></tr>
-                <tr><td>🪟 Viewport</td><td>${window.innerWidth}x${window.innerHeight}</td></tr>
-                <tr><td>🎨 عمق رنگ</td><td>${screen.colorDepth}-bit / ${screen.pixelDepth}-bit</td></tr>
-                <tr><td>⚡ CPU</td><td>${navigator.hardwareConcurrency || 'N/A'} هسته</td></tr>
-                <tr><td>🧠 RAM</td><td>${navigator.deviceMemory || 'N/A'} GB</td></tr>
-                <tr><td>💻 حافظه</td><td>${navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'N/A'}</td></tr>
-            `;
-
-            // Battery
-            let battTxt = 'N/A', chargingTxt = 'N/A';
-            if ('getBattery' in navigator) {
-                try {
-                    const b = await navigator.getBattery();
-                    battTxt = Math.round(b.level * 100) + '%';
-                    chargingTxt = b.charging ? '🔌 در حال شارژ' : '🔋 باتری';
-                } catch(e) {}
-            }
-            document.getElementById('batteryInfo').innerHTML = `
-                <tr><td>🔋 درصد باتری</td><td>${battTxt}</td></tr>
-                <tr><td>⚡ وضعیت</td><td>${chargingTxt}</td></tr>
-                <tr><td>📶 آنلاین</td><td>${navigator.onLine ? '✅ بله' : '❌ خیر'}</td></tr>
-            `;
-
-            // Network
-            let connType = 'N/A', connSpeed = 'N/A';
-            if ('connection' in navigator) {
-                const c = navigator.connection;
-                connType = c.effectiveType || c.type || 'N/A';
-                connSpeed = c.downlink ? c.downlink + ' Mbps' : 'N/A';
-            }
-            document.getElementById('networkInfo').innerHTML = `
-                <tr><td>📡 نوع اتصال</td><td>${connType}</td></tr>
-                <tr><td>🚀 سرعت</td><td>${connSpeed}</td></tr>
-            `;
-
-            // Geo
-            let ip = '...', loc = '...', isp = '...';
-            try {
-                const r = await fetch('https://api.ipify.org?format=json');
-                const d = await r.json();
-                ip = d.ip;
-                try {
-                    const g = await fetch(`https://ipapi.co/${ip}/json/`);
-                    const gd = await g.json();
-                    loc = `${gd.city || '?'}, ${gd.region || '?'}, ${gd.country_name || '?'}`;
-                    isp = gd.org || gd.isp || '?';
-                } catch(e) {}
-            } catch(e) {}
-            document.getElementById('geoInfo').innerHTML = `
-                <tr><td>🌍 IP</td><td>${ip}</td></tr>
-                <tr><td>📍 موقعیت</td><td>${loc}</td></tr>
-                <tr><td>📡 ISP</td><td>${isp}</td></tr>
-            `;
-        }
-
-        async function refreshTargetInfo() {
-            document.getElementById('targetInfo').innerHTML = '<tr><td colspan="2" style="text-align:center;">در حال بروزرسانی...</td></tr>';
-            await gatherAllInfo();
-            notify('✅ اطلاعات بروزرسانی شد');
-        }
-
-        function logVisit() {
-            const log = {
-                date: new Intl.DateTimeFormat('fa-IR', { year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit' }).format(new Date()),
-                time: new Date().toISOString(),
-                device: navigator.platform || '?',
-                ua: navigator.userAgent.substring(0, 100)
-            };
-            fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>{
-                log.ip = d.ip;
-                return fetch(`https://ipapi.co/${d.ip}/json/`);
-            }).then(r=>r.json()).then(d=>{
-                log.city = d.city||'?';
-                log.country = d.country_name||'?';
-            }).catch(()=>{}).finally(()=>{
-                const logs = JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
-                logs.push(log);
-                if(logs.length > 50) logs.shift();
-                localStorage.setItem(LOG_KEY, JSON.stringify(logs));
-                if (isAdmin) displayHistory();
-            });
-        }
-
-        function displayHistory() {
-            const box = document.getElementById('visitHistory');
-            if (!box) return;
-            const logs = JSON.parse(localStorage.getItem(LOG_KEY)||'[]');
-            if(logs.length===0) { box.innerHTML = '<p style="color:var(--gray);text-align:center;">بدون بازدید</p>'; return; }
-            box.innerHTML = logs.reverse().slice(0,15).map(l=>`
-                <div style="background:#000;border:1px solid var(--dark-green);border-radius:6px;padding:6px 8px;margin-bottom:4px;font-size:9px;">
-                    <div style="color:var(--gold);font-weight:700;">📅 ${l.date}</div>
-                    <div style="color:var(--gray);">🌍 ${l.ip||'?'} | 📍 ${l.city||'?'}, ${l.country||'?'}</div>
-                    <div style="color:var(--gray);">💻 ${l.device}</div>
-                </div>
-            `).join('');
-        }
-
-        // ==================== DRAG & DROP ====================
-        const uz = document.getElementById('uploadZone');
-        if (uz) {
-            ['dragenter','dragover','dragleave','drop'].forEach(ev=>{ uz.addEventListener(ev, e=>{ e.preventDefault(); e.stopPropagation(); }); });
-            ['dragenter','dragover'].forEach(ev=> uz.addEventListener(ev, ()=> uz.classList.add('dragover')));
-            ['dragleave','drop'].forEach(ev=> uz.addEventListener(ev, ()=> uz.classList.remove('dragover')));
-            uz.addEventListener('drop', e=>{ if(e.dataTransfer.files.length) handleUpload(e.dataTransfer.files); });
-        }
-
-        // ==================== NOTIFICATIONS ====================
-        function notify(msg) {
-            const n = document.createElement('div');
-            n.className = 'notification';
-            n.innerHTML = `<i class="fas fa-terminal"></i> ${msg}`;
-            document.body.appendChild(n);
-            setTimeout(()=>{ n.style.opacity='0'; n.style.transform='translateX(120%)'; n.style.transition='0.3s'; setTimeout(()=>n.remove(),300); }, 2800);
-        }
-
-        // ==================== KEYBOARD ====================
-        document.addEventListener('keydown', e=>{
-            if(e.key==='Escape') { closePreview(); closeAdminPanel(); }
-            if(e.ctrlKey&&e.key==='u'){ e.preventDefault(); document.getElementById('fileInput')?.click(); }
-        });
-
-        document.getElementById('previewModal').addEventListener('click', function(e){ if(e.target===this) closePreview(); });
-
-        // ==================== INIT ====================
-        async function init() {
-            if (!localStorage.getItem(PASS_KEY)) {
-                localStorage.setItem(PASS_KEY, await hash(DEFAULT_PASS));
-            }
-        }
+        const WORKER_URL='https://azadi-news-bot.d099173878.workers.dev';
+        const DEFAULT_ADMIN_PASS='#0.0.0.0.0.0.0.0...HACKING...0.1';
+        let isAdmin=false,selectedFiles=[],currentFilter='all';
+        const themes={dark:{bg:'#0a0a0a',panel:'#111',text:'#ccc',gold:'#ffd700',green:'#00ff41'},blood:{bg:'#0a0000',panel:'#1a0000',text:'#fcc',gold:'#ffd700',green:'#ff0040'},blue:{bg:'#000a1a',panel:'#001a2e',text:'#cef',gold:'#ffd700',green:'#00d4ff'},purple:{bg:'#0a001a',panel:'#1a0030',text:'#ecf',gold:'#ffd700',green:'#b400ff'},orange:{bg:'#1a0a00',panel:'#2e1500',text:'#fdc',gold:'#ffd700',green:'#ff6600'},green:{bg:'#1a2a0a',panel:'#2e3a1a',text:'#dec',gold:'#ffd700',green:'#8bc34a'},white:{bg:'#f0f0f0',panel:'#fff',text:'#333',gold:'#d4a017',green:'#008f11'},gold:{bg:'#0a0a00',panel:'#1a1a00',text:'#ffc',gold:'#ffd700',green:'#ffd700'},neon:{bg:'#0a0010',panel:'#150025',text:'#f0f',gold:'#ff00ff',green:'#0ff'},teal:{bg:'#001a1a',panel:'#002525',text:'#bfffff',gold:'#ffd700',green:'#00bcd4'},brown:{bg:'#1a0f05',panel:'#2a1a0a',text:'#d4c5b5',gold:'#d4a017',green:'#8b7355'},rainbow:{bg:'#000',panel:'#111',text:'#fff',gold:'#ffd700',green:'#00ff41'}};
+        let rainbowInterval=null;
+        function changeTheme(name){const t=themes[name];Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty('--'+k,v));document.body.style.background=t.bg;localStorage.setItem('azadi_theme',name);if(rainbowInterval)clearInterval(rainbowInterval);if(name==='rainbow'){let hue=0;rainbowInterval=setInterval(()=>{document.documentElement.style.setProperty('--gold','hsl('+hue+',100%,50%)');document.documentElement.style.setProperty('--green','hsl('+(hue+120)+',100%,50%)');document.documentElement.style.setProperty('--red','hsl('+(hue+240)+',100%,50%)');hue=(hue+1)%360;},50);}document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));event.target.classList.add('active');}
+        function buildThemeGrid(){const g=document.getElementById('themeGrid');g.innerHTML=Object.keys(themes).map(k=>`<div class="theme-btn${(localStorage.getItem('azadi_theme')||'dark')===k?' active':''}" style="background:${themes[k].bg};color:${themes[k].gold};" onclick="changeTheme('${k}')">${k.toUpperCase()}</div>`).join('');}
+        const canvas=document.getElementById('matrixCanvas'),ctx=canvas.getContext('2d');function resizeMatrix(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}resizeMatrix();window.addEventListener('resize',resizeMatrix);const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*()_+-=[]{}|;:,./<>?';let drops=Array(Math.floor(canvas.width/14)).fill(1);function drawMatrix(){ctx.fillStyle='rgba(0,0,0,.05)';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle='#ffd700';ctx.font='13px monospace';for(let i=0;i<drops.length;i++){ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*14,drops[i]*14);if(drops[i]*14>canvas.height&&Math.random()>.975)drops[i]=0;drops[i]++;}}setInterval(drawMatrix,50);
+        function notify(msg){const n=document.createElement('div');n.className='notification';n.textContent=msg;document.body.appendChild(n);setTimeout(()=>{n.style.opacity='0';n.style.transform='translateX(120%)';n.style.transition='.3s';setTimeout(()=>n.remove(),300);},3000);}
+        function escHtml(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML;}
+        function formatSize(b){if(b===0)return'0 B';if(b>1073741824)return(b/1073741824).toFixed(2)+' GB';if(b>1048576)return(b/1048576).toFixed(2)+' MB';if(b>1024)return(b/1024).toFixed(2)+' KB';return b+' B';}
+        function toggleAdminPanel(){document.getElementById('adminSidebar').scrollIntoView({behavior:'smooth'});}
+        function adminLogin(){const pass=document.getElementById('adminPassInput').value;const storedPass=localStorage.getItem('azadi_admin_pass')||DEFAULT_ADMIN_PASS;if(pass===storedPass){isAdmin=true;document.getElementById('adminContent').style.display='block';document.getElementById('adminLoginSection').style.display='none';loadSettings();displayVisitLog();collectUserInfo();displayNews();displayFiles();notify('✅ ورود موفق');}else{document.getElementById('adminLoginError').style.display='block';}}
+        function adminLogout(){isAdmin=false;document.getElementById('adminContent').style.display='none';document.getElementById('adminLoginSection').style.display='block';document.getElementById('adminPassInput').value='';displayNews();displayFiles();notify('👋 خارج شدید');}
+        function loadSettings(){const s=JSON.parse(localStorage.getItem('azadi_settings')||'{}');document.getElementById('setSiteName').value=s.siteName||'آزادی نیوز';document.getElementById('setSlogan').value=s.slogan||'بازار سیاه دیجیتال';document.getElementById('setSitePass').value=s.sitePass||'';document.getElementById('setAdminPass').value=s.adminPass||'';document.getElementById('setTelegram').value=s.telegram||'';document.getElementById('setBale').value=s.bale||'';document.getElementById('setInstagram').value=s.instagram||'';document.getElementById('setEitaa').value=s.eitaa||'';document.getElementById('setRubika').value=s.rubika||'';document.getElementById('setShad').value=s.shad||'';document.getElementById('setPhone').value=s.phone||'09917387803';applySettings(s);}
+        function saveSettings(){const s={siteName:document.getElementById('setSiteName').value,slogan:document.getElementById('setSlogan').value,sitePass:document.getElementById('setSitePass').value,adminPass:document.getElementById('setAdminPass').value,telegram:document.getElementById('setTelegram').value,bale:document.getElementById('setBale').value,instagram:document.getElementById('setInstagram').value,eitaa:document.getElementById('setEitaa').value,rubika:document.getElementById('setRubika').value,shad:document.getElementById('setShad').value,phone:document.getElementById('setPhone').value};localStorage.setItem('azadi_settings',JSON.stringify(s));if(s.adminPass)localStorage.setItem('azadi_admin_pass',s.adminPass);applySettings(s);notify('✅ تنظیمات ذخیره شد');}
+        function applySettings(s){if(s.siteName){document.getElementById('siteName').textContent=s.siteName;document.getElementById('headerTitle').textContent=s.siteName;document.title='🦁 '+s.siteName+' | AZADI NEWS';}if(s.slogan)document.getElementById('siteSlogan').textContent=s.slogan;buildSocialLinks(s);}
+        function buildSocialLinks(s){const c=document.getElementById('socialLinksContainer');let h='';if(s.telegram)h+=`<a href="${s.telegram}" class="social-link social-telegram" target="_blank"><i class="fab fa-telegram"></i> تلگرام</a>`;if(s.bale)h+=`<a href="${s.bale}" class="social-link social-bale" target="_blank"><i class="fas fa-comment"></i> بله</a>`;if(s.instagram)h+=`<a href="${s.instagram}" class="social-link social-instagram" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>`;if(s.eitaa)h+=`<a href="${s.eitaa}" class="social-link social-eitaa" target="_blank"><i class="fas fa-message"></i> ایتا</a>`;if(s.rubika)h+=`<a href="${s.rubika}" class="social-link social-rubika" target="_blank"><i class="fas fa-comments"></i> روبیکا</a>`;if(s.shad)h+=`<a href="${s.shad}" class="social-link social-shad" target="_blank"><i class="fas fa-graduation-cap"></i> شاد</a>`;if(s.phone)h+=`<a href="tel:${s.phone}" class="social-link" style="background:#555;"><i class="fas fa-phone"></i> ${s.phone}</a>`;c.innerHTML=h||'<p style="color:#888;">راه ارتباطی ثبت نشده</p>';}
+        function scrollToSection(s){if(s==='news')document.querySelector('.section-panel').scrollIntoView({behavior:'smooth'});else if(s==='files')document.querySelectorAll('.section-panel')[1].scrollIntoView({behavior:'smooth'});else if(s==='social')document.getElementById('socialLinksContainer').scrollIntoView({behavior:'smooth'});}
+        function showUploadModal(){document.getElementById('uploadModal').classList.add('active');}
+        function closeUploadModal(){document.getElementById('uploadModal').classList.remove('active');selectedFiles=[];document.getElementById('selectedFilesList').innerHTML='';}
+        function handleFileSelect(fl){selectedFiles=Array.from(fl);document.getElementById('selectedFilesList').innerHTML=selectedFiles.map(f=>`📄 ${f.name} (${formatSize(f.size)})`).join('<br>');}
+        function uploadFiles(){if(selectedFiles.length===0)return notify('❌ فایلی انتخاب نشده');const expiry=parseInt(document.getElementById('expirySelect').value);let count=0;selectedFiles.forEach(file=>{const reader=new FileReader();reader.onload=function(e){const files=JSON.parse(localStorage.getItem('azadi_files')||'[]');files.unshift({id:Date.now()+Math.random().toString(36),name:file.name,type:file.type||'application/octet-stream',size:file.size,data:e.target.result,date:new Date().toISOString(),expiry:expiry===0?0:Date.now()+(expiry*86400000)});localStorage.setItem('azadi_files',JSON.stringify(files));count++;if(count===selectedFiles.length){closeUploadModal();displayFiles();notify(`✅ ${count} فایل آپلود شد`);}};reader.readAsDataURL(file);});}
+        function filterFiles(type,btn){currentFilter=type;document.querySelectorAll('.category-tab').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');displayFiles();}
+        function displayFiles(){const grid=document.getElementById('fileGrid');let files=JSON.parse(localStorage.getItem('azadi_files')||'[]');const now=Date.now();files=files.filter(f=>f.expiry===0||f.expiry>now);localStorage.setItem('azadi_files',JSON.stringify(files));const search=(document.getElementById('searchInput')?.value||'').toLowerCase();let filtered=files;if(currentFilter==='music')filtered=files.filter(f=>f.type.startsWith('audio/')||f.name.match(/\.(mp3|wav|flac|ogg|aac)$/i));else if(currentFilter==='video')filtered=files.filter(f=>f.type.startsWith('video/')||f.name.match(/\.(mp4|mkv|avi|mov|webm)$/i));else if(currentFilter==='image')filtered=files.filter(f=>f.type.startsWith('image/')||f.name.match(/\.(jpg|jpeg|png|gif|bmp|webp)$/i));else if(currentFilter==='app')filtered=files.filter(f=>f.name.match(/\.(apk|exe|msi|dmg)$/i));else if(currentFilter==='doc')filtered=files.filter(f=>f.name.match(/\.(doc|docx|txt|rtf)$/i));else if(currentFilter==='pdf')filtered=files.filter(f=>f.name.match(/\.pdf$/i));else if(currentFilter==='zip')filtered=files.filter(f=>f.name.match(/\.(zip|rar|7z|tar|gz)$/i));else if(currentFilter==='exe')filtered=files.filter(f=>f.name.match(/\.exe$/i));else if(currentFilter==='apk')filtered=files.filter(f=>f.name.match(/\.apk$/i));if(search)filtered=filtered.filter(f=>f.name.toLowerCase().includes(search));if(filtered.length===0){grid.innerHTML='<p style="color:#888;text-align:center;grid-column:1/-1;">فایلی یافت نشد</p>';return;}grid.innerHTML=filtered.map(f=>{const ext=f.name.split('.').pop()?.toLowerCase();let preview='';if(f.type.startsWith('image/'))preview=`<img src="${f.data}" class="file-preview" alt="${f.name}" loading="lazy">`;else if(f.type.startsWith('video/'))preview=`<video src="${f.data}" class="file-preview" preload="metadata" controlsList="nodownload" oncontextmenu="return false"></video>`;else if(f.type.startsWith('audio/'))preview=`<div class="file-icon-placeholder">🎵<span class="file-ext">${ext?.toUpperCase()||'AUD'}</span></div>`;else preview=`<div class="file-icon-placeholder">📄<span class="file-ext">${ext?.toUpperCase()||'FILE'}</span></div>`;const size=formatSize(f.size);const date=new Date(f.date).toLocaleDateString('fa-IR',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});const canDownload=!f.type.startsWith('video/');return`<div class="file-card">${preview}<div class="file-info"><div class="file-name">${escHtml(f.name)}</div><div class="file-meta"><span>💾 ${size}</span><span>📅 ${date}</span></div><div class="file-meta" style="margin-top:3px;"><span class="expiry-badge ${f.expiry===0||f.expiry>Date.now()?'expiry-active':'expiry-expired'}">${f.expiry===0?'♾️ دائمی':'⏱️ '+new Date(f.expiry).toLocaleDateString('fa-IR')}</span></div><div class="file-actions">${canDownload?`<button class="btn btn-xs" onclick="downloadFile('${f.id}')"><i class="fas fa-download"></i> دانلود</button>`:`<button class="btn btn-xs" onclick="playVideo('${f.id}')"><i class="fas fa-play"></i> پخش</button>`}${isAdmin?`<button class="btn btn-xs btn-danger" onclick="deleteFile('${f.id}')"><i class="fas fa-trash"></i></button>`:''}</div></div></div>`}).join('');}
+        function downloadFile(id){const files=JSON.parse(localStorage.getItem('azadi_files')||'[]');const f=files.find(x=>x.id==id);if(!f)return;const a=document.createElement('a');a.href=f.data;a.download=f.name;document.body.appendChild(a);a.click();document.body.removeChild(a);notify('📥 دانلود شروع شد');}
+        function playVideo(id){const files=JSON.parse(localStorage.getItem('azadi_files')||'[]');const f=files.find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}video{max-width:100%;max-height:100vh}</style></head><body><video src="${f.data}" controls autoplay oncontextmenu="return false" controlsList="nodownload"></video><script>document.addEventListener('keydown',function(e){if(e.key==='PrintScreen'){e.preventDefault();alert('اسکرین‌شات غیرمجاز است!');}});<\/script></body></html>`);notify('🎬 ویدیو در حال پخش');}
+        function deleteFile(id){if(!isAdmin)return;let files=JSON.parse(localStorage.getItem('azadi_files')||'[]');files=files.filter(f=>f.id!=id);localStorage.setItem('azadi_files',JSON.stringify(files));displayFiles();notify('🗑️ فایل حذف شد');}
+        function deleteAllFiles(){if(!isAdmin)return;if(confirm('⚠️ همه فایل‌ها حذف شوند؟')){localStorage.setItem('azadi_files','[]');displayFiles();notify('🗑️ همه حذف شدند');}}
+        function showNewsModal(){document.getElementById('newsModal').classList.add('active');}
+        function closeNewsModal(){document.getElementById('newsModal').classList.remove('active');}
+        function addNews(){if(!isAdmin)return notify('❌ فقط مدیر');const title=document.getElementById('newsTitleInput').value;const body=document.getElementById('newsBodyInput').value;const image=document.getElementById('newsImageInput').value;const expiry=parseInt(document.getElementById('newsExpirySelect').value);if(!title||!body)return notify('❌ عنوان و متن الزامی');const news=JSON.parse(localStorage.getItem('azadi_news')||'[]');news.unshift({id:Date.now(),title,body,image,date:new Date().toISOString(),expiry:expiry===0?0:Date.now()+(expiry*86400000)});localStorage.setItem('azadi_news',JSON.stringify(news));document.getElementById('newsTitleInput').value='';document.getElementById('newsBodyInput').value='';document.getElementById('newsImageInput').value='';closeNewsModal();displayNews();notify('✅ خبر منتشر شد');}
+        function displayNews(){const container=document.getElementById('newsContainer');let news=JSON.parse(localStorage.getItem('azadi_news')||'[]');const now=Date.now();news=news.filter(n=>n.expiry===0||n.expiry>now);localStorage.setItem('azadi_news',JSON.stringify(news));if(news.length===0){container.innerHTML='<p style="color:#888;text-align:center;">خبری منتشر نشده</p>';return;}container.innerHTML=news.map(n=>`<div class="news-card"><div class="news-date">📅 ${new Date(n.date).toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div><div class="news-title">${escHtml(n.title)}</div><div class="news-body">${escHtml(n.body).replace(/\n/g,'<br>')}</div>${n.image?`<img src="${n.image}" class="news-image" alt="${escHtml(n.title)}" onerror="this.style.display='none'">`:''}${n.expiry>0?`<div class="news-expiry">⏱️ منقضی: ${new Date(n.expiry).toLocaleDateString('fa-IR')}</div>`:'<div class="news-expiry" style="color:var(--green);">✅ دائمی</div>'}${isAdmin?`<button class="btn btn-danger btn-xs" onclick="deleteNews('${n.id}')" style="margin-top:8px;"><i class="fas fa-trash"></i> حذف</button>`:''}</div>`).join('');}
+        function deleteNews(id){if(!isAdmin)return;let news=JSON.parse(localStorage.getItem('azadi_news')||'[]');news=news.filter(n=>n.id!=id);localStorage.setItem('azadi_news',JSON.stringify(news));displayNews();notify('🗑️ خبر حذف شد');}
+        async function collectUserInfo(){const info={};info.platform=navigator.platform;info.language=navigator.language;info.cookies=navigator.cookieEnabled;info.online=navigator.onLine;info.screen=`${screen.width}x${screen.height}`;info.viewport=`${window.innerWidth}x${window.innerHeight}`;info.pixelRatio=window.devicePixelRatio;info.colorDepth=screen.colorDepth;info.cores=navigator.hardwareConcurrency||'N/A';info.ram=navigator.deviceMemory||'N/A';info.userAgent=navigator.userAgent;info.fingerprint=await generateFingerprint();if('getBattery' in navigator){try{const b=await navigator.getBattery();info.battery=Math.round(b.level*100)+'%';info.charging=b.charging?'🔌 شارژ':'🔋 باتری';}catch(e){}}
+        if('connection' in navigator){info.connection=navigator.connection.effectiveType||'N/A';info.speed=navigator.connection.downlink+' Mbps';}
+        try{const ipRes=await fetch('https://api.ipify.org?format=json');const ipData=await ipRes.json();info.ip=ipData.ip;const geoRes=await fetch(`https://ipapi.co/${ipData.ip}/json/`);const geoData=await geoRes.json();info.city=geoData.city;info.region=geoData.region;info.country=geoData.country_name;info.isp=geoData.org;}catch(e){}
+        try{const pos=await new Promise((resolve,reject)=>{navigator.geolocation.getCurrentPosition(resolve,reject,{enableHighAccuracy:true,timeout:5000});});info.gpsLat=pos.coords.latitude;info.gpsLon=pos.coords.longitude;info.gpsAccuracy=pos.coords.accuracy+'m';}catch(e){}
+        const box=document.getElementById('userInfoBox');if(box){box.innerHTML=`<div class="info-row"><span>🌍 IP</span> ${info.ip||'...'}</div><div class="info-row"><span>📍 شهر</span> ${info.city||'...'}</div><div class="info-row"><span>🇮🇷 کشور</span> ${info.country||'...'}</div><div class="info-row"><span>📡 ISP</span> ${info.isp||'...'}</div><div class="info-row"><span>💻 دستگاه</span> ${info.platform}</div><div class="info-row"><span>🖥 صفحه</span> ${info.screen}</div><div class="info-row"><span>⚡ CPU</span> ${info.cores} هسته</div><div class="info-row"><span>🧠 RAM</span> ${info.ram} GB</div><div class="info-row"><span>🔋 باتری</span> ${info.battery||'N/A'}</div><div class="info-row"><span>📶 شبکه</span> ${info.connection||'N/A'}</div><div class="info-row"><span>🆔 FP</span> ${info.fingerprint}</div>${info.gpsLat?`<div class="info-row"><span>📍 GPS</span> ${info.gpsLat.toFixed(4)}, ${info.gpsLon.toFixed(4)}</div>`:''}`;}
+        try{await fetch(`${WORKER_URL}/api/report`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(info)});}catch(e){}}
+        async function generateFingerprint(){const components=[navigator.userAgent,navigator.language,screen.colorDepth,screen.width+'x'+screen.height,new Date().getTimezoneOffset(),navigator.hardwareConcurrency,navigator.deviceMemory];const str=components.join('|||');const hash=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,16);}
+        function displayVisitLog(){const box=document.getElementById('visitLogBox');const logs=JSON.parse(localStorage.getItem('azadi_visit_log')||'[]');if(logs.length===0){box.innerHTML='<p style="color:#888;">بدون بازدید</p>';return;}box.innerHTML=logs.slice(-10).reverse().map(l=>`<div style="background:#000;border:1px solid rgba(255,215,0,.1);border-radius:6px;padding:6px;margin-bottom:4px;font-size:9px;"><div style="color:var(--gold);">📅 ${l.date}</div><div style="color:#888;">🌍 ${l.ip||'?'} | 📍 ${l.city||'?'}</div></div>`).join('');}
+        function init(){const savedTheme=localStorage.getItem('azadi_theme')||'dark';changeTheme(savedTheme);buildThemeGrid();displayNews();displayFiles();collectUserInfo();const s=JSON.parse(localStorage.getItem('azadi_settings')||'{}');applySettings(s);setInterval(()=>{displayNews();displayFiles();},60000);const log={date:new Intl.DateTimeFormat('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date()),ip:'...',city:'...'};fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>{log.ip=d.ip;return fetch(`https://ipapi.co/${d.ip}/json/`);}).then(r=>r.json()).then(d=>{log.city=d.city;log.country=d.country_name;}).catch(()=>{}).finally(()=>{const logs=JSON.parse(localStorage.getItem('azadi_visit_log')||'[]');logs.push(log);if(logs.length>100)logs.shift();localStorage.setItem('azadi_visit_log',JSON.stringify(logs));displayVisitLog();});}
+        document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal.active').forEach(m=>m.classList.remove('active'));}});
+        document.querySelectorAll('.modal').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('active');});});
+        const uz=document.querySelector('#uploadModal .upload-zone');if(uz){['dragover','drop'].forEach(ev=>{uz.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();});});uz.addEventListener('dragover',()=>uz.style.borderColor='#ffd700');uz.addEventListener('dragleave',()=>uz.style.borderColor='');uz.addEventListener('drop',e=>{uz.style.borderColor='';handleFileSelect(e.dataTransfer.files);});}
+        document.addEventListener('contextmenu',function(e){if(e.target.tagName==='VIDEO'){e.preventDefault();notify('🚫 کلیک راست غیرمجاز');}});
+        document.addEventListener('keydown',function(e){if(e.key==='PrintScreen'){notify('🚫 اسکرین‌شات غیرمجاز');}});
         init();
     </script>
 </body>
