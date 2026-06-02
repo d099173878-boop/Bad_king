@@ -13,216 +13,175 @@
             --blue: #00d4ff; --purple: #b400ff; --orange: #ff6600;
             --radius: 14px; --transition: all 0.3s ease;
             --font: 'Vazirmatn', 'Segoe UI', 'Cairo', sans-serif;
+            --particle-count: 30; --particle-speed: 10s; --skull-opacity: 0.03;
+            --scan-speed: 8s; --matrix-opacity: 0.05;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: var(--font); background: var(--bg); color: var(--text);
-            min-height: 100vh; overflow-x: hidden; padding-bottom: 70px;
-            transition: background 0.5s ease;
-        }
-        #matrixCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.05; pointer-events: none; }
-        .scanlines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px); animation: scanAnim 8s linear infinite; }
-        @keyframes scanAnim { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
-        .floating-skull { position: fixed; pointer-events: none; z-index: -1; opacity: 0.03; font-size: 60px; animation: skullDrift 12s ease-in-out infinite; }
-        .floating-skull:nth-child(1) { top: 5%; left: 3%; font-size: 50px; }
-        .floating-skull:nth-child(2) { top: 15%; right: 8%; font-size: 70px; animation-delay: 2s; }
-        .floating-skull:nth-child(3) { bottom: 20%; left: 10%; font-size: 45px; animation-delay: 4s; }
-        .floating-skull:nth-child(4) { top: 50%; right: 5%; font-size: 80px; animation-delay: 1s; }
-        @keyframes skullDrift { 0%, 100% { transform: translateY(0) rotate(0deg) scale(1); } 25% { transform: translateY(-30px) rotate(5deg) scale(1.1); } 50% { transform: translateY(10px) rotate(-3deg) scale(0.9); } 75% { transform: translateY(-15px) rotate(2deg) scale(1.05); } }
-        .particle { position: fixed; pointer-events: none; z-index: -1; background: var(--green); border-radius: 50%; animation: particleFloat linear infinite; box-shadow: 0 0 8px var(--green), 0 0 15px var(--green); }
-        @keyframes particleFloat { 0% { transform: translateY(105vh) scale(0); opacity: 0; } 5% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-        .container { max-width: 800px; margin: 0 auto; padding: 10px; position: relative; z-index: 1; }
-        .flag-container { text-align: center; padding: 15px; }
-        .flag-emoji { font-size: 50px; animation: flagWave 4s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255,215,0,0.5)); }
-        @keyframes flagWave { 0%, 100% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(2deg) scale(1.03); } 75% { transform: rotate(-2deg) scale(0.97); } }
-        .header { background: var(--panel); border: 1px solid rgba(255,215,0,0.3); border-radius: var(--radius); padding: 15px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; box-shadow: 0 0 20px rgba(255,215,0,0.1); backdrop-filter: blur(10px); }
-        .brand { display: flex; align-items: center; gap: 10px; }
-        .brand h1 { font-size: 22px; font-weight: 900; color: var(--gold); text-shadow: 0 0 15px var(--gold); }
-        .btn { padding: 8px 16px; border: 1px solid rgba(255,215,0,0.5); border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: 700; transition: var(--transition); background: transparent; color: var(--gold); font-family: var(--font); display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
-        .btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(255,215,0,0.3); transform: translateY(-2px); }
-        .btn-primary { background: linear-gradient(135deg, var(--gold), #d4a017); color: #000; border-color: var(--gold); }
-        .btn-danger { border-color: var(--red); color: var(--red); }
-        .btn-danger:hover { background: var(--red); color: #fff; }
-        .btn-sm { padding: 5px 10px; font-size: 10px; }
-        .btn-xs { padding: 3px 8px; font-size: 9px; border-radius: 12px; }
-        .btn-block { width: 100%; justify-content: center; }
-
-        /* ========== LOGIN OVERLAY ========== */
-        .login-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 99999;
-            display: flex; justify-content: center; align-items: center;
-            flex-direction: column; gap: 20px;
-        }
-        .login-overlay.hidden { display: none; }
-        .login-box {
-            background: var(--panel); border: 1px solid var(--gold);
-            border-radius: var(--radius); padding: 30px; text-align: center;
-            width: 350px; max-width: 90%; box-shadow: 0 0 60px rgba(255,215,0,0.2);
-        }
-        .login-box h3 { color: var(--gold); margin-bottom: 15px; font-size: 18px; }
-        .login-box .login-input {
-            width: 100%; padding: 12px; background: #000;
-            border: 1px solid rgba(255,215,0,0.3); border-radius: 10px;
-            color: #fff; font-size: 16px; text-align: center;
-            font-family: var(--font); outline: none; margin-bottom: 10px;
-            letter-spacing: 3px;
-        }
-        .login-box .login-input:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.2); }
-        .login-error { color: var(--red); font-size: 11px; display: none; margin-top: 5px; }
-
-        .page { display: none; }
-        .page.active { display: block; }
-
-        .post-card { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); margin-bottom: 15px; overflow: hidden; transition: var(--transition); }
-        .post-card:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.1); }
-        .post-header { display: flex; align-items: center; gap: 10px; padding: 12px 15px; }
-        .post-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--gold); display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; font-size: 14px; }
-        .post-user { font-weight: 700; font-size: 13px; color: var(--gold); }
-        .post-date { font-size: 9px; color: #888; }
-        .post-media { width: 100%; max-height: 400px; object-fit: contain; background: #000; }
-        .post-video { width: 100%; max-height: 400px; background: #000; }
-        .post-body { padding: 12px 15px; font-size: 12px; color: #aaa; line-height: 1.6; }
-        .post-title { font-weight: 900; font-size: 14px; color: var(--gold); margin-bottom: 5px; }
-        .post-actions { display: flex; gap: 15px; padding: 8px 15px; border-top: 1px solid rgba(255,215,0,0.1); }
-        .post-action { color: #888; cursor: pointer; font-size: 11px; display: flex; align-items: center; gap: 4px; transition: var(--transition); }
-        .post-action:hover { color: var(--gold); }
-
-        .reels-container { display: flex; flex-direction: column; gap: 2px; }
-        .reel-card { position: relative; width: 100%; height: 70vh; background: #000; border-radius: var(--radius); overflow: hidden; cursor: pointer; margin-bottom: 10px; }
-        .reel-card video, .reel-card img { width: 100%; height: 100%; object-fit: cover; }
-        .reel-overlay { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 15px 15px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); }
-        .reel-title { font-weight: 900; font-size: 14px; color: #fff; margin-bottom: 4px; }
-        .reel-meta { font-size: 10px; color: #aaa; }
-        .reel-play-btn { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-size: 50px; color: rgba(255,255,255,0.8); transition: var(--transition); }
-        .reel-card:hover .reel-play-btn { transform: translate(-50%,-50%) scale(1.2); }
-
-        .search-page { padding: 15px 0; }
-        .search-input { width: 100%; padding: 14px 20px; background: #000; border: 1px solid rgba(255,215,0,0.3); border-radius: 25px; color: #fff; font-size: 14px; font-family: var(--font); outline: none; margin-bottom: 15px; transition: var(--transition); }
-        .search-input:focus { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.2); }
-        .search-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
-        .search-item { aspect-ratio: 1; background: #000; border-radius: 6px; overflow: hidden; cursor: pointer; transition: var(--transition); }
-        .search-item:hover { opacity: 0.8; transform: scale(1.02); }
-        .search-item img, .search-item video { width: 100%; height: 100%; object-fit: cover; }
-
-        .admin-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.97); z-index: 9999; overflow-y: auto; display: none; }
-        .admin-overlay.active { display: block; }
-        .admin-container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .admin-close-btn { position: fixed; top: 20px; right: 20px; font-size: 30px; color: var(--red); cursor: pointer; z-index: 10000; background: var(--panel); border: 1px solid var(--red); border-radius: 50%; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
-        .admin-close-btn:hover { transform: scale(1.1) rotate(90deg); box-shadow: 0 0 25px rgba(255,0,64,0.5); }
-        .admin-header-card { background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius); padding: 25px; text-align: center; margin-bottom: 20px; box-shadow: 0 0 40px rgba(255,215,0,0.2); }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 15px; margin-bottom: 20px; }
-        .admin-card { background: var(--panel); border: 1px solid rgba(255,215,0,0.2); border-radius: var(--radius); padding: 20px; }
-        .admin-card h4 { font-size: 15px; font-weight: 900; color: var(--gold); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid rgba(255,215,0,0.2); }
-        .admin-label { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 700; }
-        .admin-input, .admin-textarea, .admin-select { width: 100%; padding: 10px 14px; background: #000; border: 1px solid rgba(255,215,0,0.3); border-radius: 10px; color: #fff; font-size: 12px; font-family: var(--font); outline: none; margin-bottom: 8px; transition: var(--transition); }
-        .admin-textarea { min-height: 80px; resize: vertical; }
-        .admin-input:focus, .admin-textarea:focus, .admin-select:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(255,215,0,0.2); }
-        .admin-select { cursor: pointer; }
-        .admin-select option { background: #111; color: #fff; }
-        .info-box { background: #000; border: 1px solid rgba(255,215,0,0.1); border-radius: 10px; padding: 10px; max-height: 400px; overflow-y: auto; font-size: 10px; }
-        .info-row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.03); color: #888; }
-        .info-row span { color: var(--green); font-weight: 600; }
-        .theme-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
-        .theme-btn { padding: 10px; border-radius: 10px; cursor: pointer; text-align: center; font-size: 9px; font-weight: 700; border: 2px solid transparent; transition: var(--transition); color: #fff; }
-        .theme-btn:hover { border-color: #fff; transform: scale(1.05); }
-        .theme-btn.active { border-color: var(--gold); box-shadow: 0 0 20px rgba(255,215,0,0.3); }
-        .social-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; justify-content: center; }
-        .social-link { padding: 8px 14px; border-radius: 20px; font-size: 10px; font-weight: 700; text-decoration: none; color: #fff; transition: var(--transition); display: flex; align-items: center; gap: 5px; }
-        .social-link:hover { transform: scale(1.05); }
-        .social-telegram{background:#08c}.social-bale{background:#2ecc71}.social-instagram{background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)}.social-eitaa{background:#ff8c00}.social-rubika{background:#ffd700;color:#000}.social-shad{background:#00bfa5}.social-phone{background:#555}
-        .camera-container { text-align: center; padding: 10px; }
-        .camera-container video { width: 100%; max-width: 300px; border-radius: 10px; border: 2px solid var(--green); display: none; }
-        .camera-container canvas { display: none; }
-        .camera-container img { width: 100%; max-width: 300px; border-radius: 10px; display: none; }
-
-        .footer-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--panel); border-top: 1px solid rgba(255,215,0,0.3); display: flex; justify-content: space-around; padding: 10px 0; z-index: 999; }
-        .footer-bar .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #888; cursor: pointer; transition: var(--transition); font-size: 10px; }
-        .footer-bar .nav-item:hover, .footer-bar .nav-item.active { color: var(--gold); }
-        .footer-bar .nav-item i { font-size: 20px; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
-        .modal.active { display: flex; }
-        .modal-content { background: var(--panel); border: 1px solid var(--gold); border-radius: var(--radius); padding: 25px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 0 50px rgba(255,215,0,0.2); }
-        .modal-content h3 { color: var(--gold); text-align: center; margin-bottom: 15px; }
-        .modal-close { float: left; font-size: 24px; color: var(--red); cursor: pointer; transition: var(--transition); }
-        .modal-close:hover { transform: scale(1.2) rotate(90deg); }
-        .upload-zone { border: 2px dashed rgba(255,215,0,0.3); border-radius: var(--radius); padding: 30px; text-align: center; cursor: pointer; transition: var(--transition); margin-bottom: 15px; }
-        .upload-zone:hover { border-color: var(--gold); box-shadow: 0 0 25px rgba(255,215,0,0.1); }
-
-        .notification { position: fixed; top: 15px; right: 15px; background: var(--panel); border: 1px solid var(--green); color: var(--green); padding: 10px 20px; border-radius: 12px; z-index: 99999; font-weight: 700; font-size: 12px; animation: slideIn 0.3s ease; max-width: 400px; }
-        @keyframes slideIn { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
-        .loading-spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid rgba(255,215,0,0.3); border-radius: 50%; border-top-color: var(--gold); animation: spin 0.8s linear infinite; }
-        @keyframes spin { to{transform:rotate(360deg)} }
-        .pulse-dot { display: inline-block; width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(0,255,65,0.4)} 50%{box-shadow:0 0 0 10px rgba(0,255,65,0)} }
-        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #000; } ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
-        @media (max-width: 768px) { .brand h1 { font-size: 18px; } .admin-grid { grid-template-columns: 1fr; } .theme-grid { grid-template-columns: repeat(2, 1fr); } }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;padding-bottom:70px;transition:background 0.5s}
+        #matrixCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:var(--matrix-opacity);pointer-events:none}
+        #customBg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;object-fit:cover;pointer-events:none;display:none}
+        #customBg.active{display:block}
+        .scanlines{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);animation:scanAnim var(--scan-speed) linear infinite}
+        @keyframes scanAnim{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+        .floating-skull{position:fixed;pointer-events:none;z-index:-1;opacity:var(--skull-opacity);font-size:60px;animation:skullDrift 12s ease-in-out infinite}
+        .floating-skull:nth-child(1){top:5%;left:3%;font-size:50px}
+        .floating-skull:nth-child(2){top:15%;right:8%;font-size:70px;animation-delay:2s}
+        .floating-skull:nth-child(3){bottom:20%;left:10%;font-size:45px;animation-delay:4s}
+        @keyframes skullDrift{0%,100%{transform:translateY(0)rotate(0)scale(1)}25%{transform:translateY(-30px)rotate(5deg)scale(1.1)}50%{transform:translateY(10px)rotate(-3deg)scale(.9)}75%{transform:translateY(-15px)rotate(2deg)scale(1.05)}}
+        .particle{position:fixed;pointer-events:none;z-index:-1;background:var(--green);border-radius:50%;animation:particleFloat linear infinite;box-shadow:0 0 8px var(--green),0 0 15px var(--green)}
+        @keyframes particleFloat{0%{transform:translateY(105vh)scale(0);opacity:0}5%{opacity:.6}90%{opacity:.6}100%{transform:translateY(-10vh)scale(1.5);opacity:0}}
+        .container{max-width:800px;margin:0 auto;padding:10px;position:relative;z-index:1}
+        .logo-container{text-align:center;padding:15px}
+        .logo-container img{width:100px;height:auto;animation:flagWave 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,215,0,.5))}
+        .logo-emoji{font-size:50px;animation:flagWave 4s ease-in-out infinite;filter:drop-shadow(0 0 20px rgba(255,215,0,.5))}
+        @keyframes flagWave{0%,100%{transform:rotate(0)scale(1)}25%{transform:rotate(2deg)scale(1.03)}75%{transform:rotate(-2deg)scale(.97)}}
+        .header{background:var(--panel);border:1px solid rgba(255,215,0,.3);border-radius:var(--radius);padding:15px;margin-bottom:15px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;box-shadow:0 0 20px rgba(255,215,0,.1);backdrop-filter:blur(10px)}
+        .brand{display:flex;align-items:center;gap:10px}
+        .brand h1{font-size:22px;font-weight:900;color:var(--gold);text-shadow:0 0 15px var(--gold)}
+        .btn{padding:8px 16px;border:1px solid rgba(255,215,0,.5);border-radius:20px;cursor:pointer;font-size:12px;font-weight:700;transition:var(--transition);background:0 0;color:var(--gold);font-family:var(--font);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+        .btn:hover{background:var(--gold);color:#000;box-shadow:0 0 20px rgba(255,215,0,.3);transform:translateY(-2px)}
+        .btn-primary{background:linear-gradient(135deg,var(--gold),#d4a017);color:#000;border-color:var(--gold)}
+        .btn-danger{border-color:var(--red);color:var(--red)}.btn-danger:hover{background:var(--red);color:#fff}
+        .btn-sm{padding:5px 10px;font-size:10px}.btn-xs{padding:3px 8px;font-size:9px;border-radius:12px}.btn-block{width:100%;justify-content:center}
+        .page{display:none}.page.active{display:block}
+        .post-card{background:var(--panel);border:1px solid rgba(255,215,0,.2);border-radius:var(--radius);margin-bottom:15px;overflow:hidden;transition:var(--transition)}
+        .post-card:hover{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,.1)}
+        .post-header{display:flex;align-items:center;gap:10px;padding:12px 15px}
+        .post-avatar{width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:14px}
+        .post-user{font-weight:700;font-size:13px;color:var(--gold)}.post-date{font-size:9px;color:#888}
+        .post-media{width:100%;max-height:400px;object-fit:contain;background:#000}
+        .post-video{width:100%;max-height:400px;background:#000}
+        .post-body{padding:12px 15px;font-size:12px;color:#aaa;line-height:1.6}
+        .post-title{font-weight:900;font-size:14px;color:var(--gold);margin-bottom:5px}
+        .post-actions{display:flex;gap:15px;padding:8px 15px;border-top:1px solid rgba(255,215,0,.1);flex-wrap:wrap}
+        .post-action{color:#888;cursor:pointer;font-size:11px;display:flex;align-items:center;gap:4px;transition:var(--transition)}
+        .post-action:hover{color:var(--gold)}.post-action.liked{color:var(--red)}
+        .comments-section{padding:10px 15px;border-top:1px solid rgba(255,215,0,.1);background:#000}
+        .comment-item{display:flex;gap:8px;margin-bottom:6px;font-size:10px;color:#aaa}
+        .comment-item strong{color:var(--gold);font-size:9px}
+        .comment-input{width:100%;padding:8px 12px;background:#111;border:1px solid rgba(255,215,0,.3);border-radius:15px;color:#fff;font-size:10px;font-family:var(--font);outline:0;margin-top:5px}
+        .comment-input:focus{border-color:var(--gold)}
+        .emoji-picker{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+        .emoji-item{cursor:pointer;font-size:16px;transition:var(--transition)}.emoji-item:hover{transform:scale(1.3)}
+        .reels-container{display:flex;flex-direction:column;gap:2px}
+        .reel-card{position:relative;width:100%;height:70vh;background:#000;border-radius:var(--radius);overflow:hidden;cursor:pointer;margin-bottom:10px}
+        .reel-card video,.reel-card img{width:100%;height:100%;object-fit:cover}
+        .reel-overlay{position:absolute;bottom:0;left:0;width:100%;padding:30px 15px 15px;background:linear-gradient(transparent,rgba(0,0,0,.9))}
+        .reel-title{font-weight:900;font-size:14px;color:#fff;margin-bottom:4px}
+        .search-page{padding:15px 0}
+        .search-input{width:100%;padding:14px 20px;background:#000;border:1px solid rgba(255,215,0,.3);border-radius:25px;color:#fff;font-size:14px;font-family:var(--font);outline:0;margin-bottom:15px}
+        .search-input:focus{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,.2)}
+        .search-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+        .search-item{aspect-ratio:1;background:#000;border-radius:6px;overflow:hidden;cursor:pointer}
+        .search-item:hover{opacity:.8}.search-item img,.search-item video{width:100%;height:100%;object-fit:cover}
+        .chat-widget{position:fixed;bottom:80px;right:15px;z-index:998;width:300px;max-width:90vw}
+        .chat-toggle{width:50px;height:50px;border-radius:50%;background:var(--gold);color:#000;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;box-shadow:0 0 20px rgba(255,215,0,.4);transition:var(--transition);margin-left:auto}
+        .chat-toggle:hover{transform:scale(1.1)}
+        .chat-box{display:none;background:var(--panel);border:1px solid var(--gold);border-radius:var(--radius);overflow:hidden;margin-top:10px}
+        .chat-box.active{display:block}
+        .chat-header{background:var(--gold);color:#000;padding:10px 15px;font-weight:900;font-size:13px;text-align:center}
+        .chat-messages{max-height:250px;overflow-y:auto;padding:10px;font-size:10px}
+        .chat-msg{margin-bottom:8px;padding:6px 10px;border-radius:12px;background:#000;color:#aaa;max-width:80%}
+        .chat-msg.own{background:var(--gold);color:#000;margin-left:auto}
+        .chat-input-row{display:flex;padding:8px;gap:5px;background:#000}
+        .chat-input-row input{flex:1;padding:8px;background:#111;border:1px solid rgba(255,215,0,.3);border-radius:15px;color:#fff;font-size:10px;outline:0}
+        .chat-input-row button{background:var(--gold);color:#000;border:0;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:14px}
+        .lock-overlay,.login-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:99999;display:none;justify-content:center;align-items:center;flex-direction:column;gap:20px}
+        .lock-overlay.active,.login-overlay.active{display:flex}
+        .lock-box,.login-box{background:var(--panel);border:1px solid var(--gold);border-radius:var(--radius);padding:30px;text-align:center;max-width:400px;width:90%;box-shadow:0 0 60px rgba(255,215,0,.2)}
+        .lock-box{border-color:var(--red)}.lock-box h3{color:var(--red);font-size:22px;margin-bottom:10px}
+        .lock-icon{font-size:60px;margin-bottom:15px}.lock-box p{color:#aaa;font-size:14px}
+        .login-box h3{color:var(--gold);margin-bottom:15px;font-size:18px}
+        .login-input{width:100%;padding:12px;background:#000;border:1px solid rgba(255,215,0,.3);border-radius:10px;color:#fff;font-size:16px;text-align:center;font-family:var(--font);outline:0;margin-bottom:10px;letter-spacing:3px}
+        .login-error{color:var(--red);font-size:11px;display:none;margin-top:5px}
+        .admin-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.97);z-index:9999;overflow-y:auto;display:none}
+        .admin-overlay.active{display:block}
+        .admin-container{max-width:1100px;margin:0 auto;padding:20px}
+        .admin-close-btn{position:fixed;top:20px;right:20px;font-size:30px;color:var(--red);cursor:pointer;z-index:10000;background:var(--panel);border:1px solid var(--red);border-radius:50%;width:45px;height:45px;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+        .admin-close-btn:hover{transform:scale(1.1)rotate(90deg);box-shadow:0 0 25px rgba(255,0,64,.5)}
+        .admin-header-card{background:var(--panel);border:1px solid var(--gold);border-radius:var(--radius);padding:25px;text-align:center;margin-bottom:20px;box-shadow:0 0 40px rgba(255,215,0,.2)}
+        .admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:15px;margin-bottom:20px}
+        .admin-card{background:var(--panel);border:1px solid rgba(255,215,0,.2);border-radius:var(--radius);padding:20px}
+        .admin-card h4{font-size:15px;font-weight:900;color:var(--gold);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,215,0,.2)}
+        .admin-label{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;font-weight:700}
+        .admin-input,.admin-textarea,.admin-select{width:100%;padding:10px 14px;background:#000;border:1px solid rgba(255,215,0,.3);border-radius:10px;color:#fff;font-size:12px;font-family:var(--font);outline:0;margin-bottom:8px}
+        .admin-textarea{min-height:80px;resize:vertical}
+        .admin-input:focus,.admin-textarea:focus,.admin-select:focus{border-color:var(--gold);box-shadow:0 0 15px rgba(255,215,0,.2)}
+        .admin-select{cursor:pointer}.admin-select option{background:#111;color:#fff}
+        .info-box{background:#000;border:1px solid rgba(255,215,0,.1);border-radius:10px;padding:10px;max-height:400px;overflow-y:auto;font-size:10px}
+        .info-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03);color:#888}
+        .info-row span{color:var(--green);font-weight:600}
+        .theme-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+        .theme-btn{padding:10px;border-radius:10px;cursor:pointer;text-align:center;font-size:9px;font-weight:700;border:2px solid transparent;transition:var(--transition);color:#fff}
+        .theme-btn:hover{border-color:#fff;transform:scale(1.05)}.theme-btn.active{border-color:var(--gold);box-shadow:0 0 20px rgba(255,215,0,.3)}
+        .camera-container{text-align:center;padding:10px}
+        .camera-container video{width:100%;max-width:300px;border-radius:10px;border:2px solid var(--green);display:none}
+        .camera-container canvas{display:none}.camera-container img{width:100%;max-width:300px;border-radius:10px;display:none}
+        .footer-bar{position:fixed;bottom:0;left:0;width:100%;background:var(--panel);border-top:1px solid rgba(255,215,0,.3);display:flex;justify-content:space-around;padding:10px 0;z-index:999}
+        .footer-bar .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:#888;cursor:pointer;font-size:10px}
+        .footer-bar .nav-item:hover,.footer-bar .nav-item.active{color:var(--gold)}.footer-bar .nav-item i{font-size:20px}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:10000;justify-content:center;align-items:center;backdrop-filter:blur(5px)}
+        .modal.active{display:flex}.modal-content{background:var(--panel);border:1px solid var(--gold);border-radius:var(--radius);padding:25px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 0 50px rgba(255,215,0,.2)}
+        .modal-content h3{color:var(--gold);text-align:center;margin-bottom:15px}
+        .modal-close{float:left;font-size:24px;color:var(--red);cursor:pointer}.modal-close:hover{transform:scale(1.2)rotate(90deg)}
+        .upload-zone{border:2px dashed rgba(255,215,0,.3);border-radius:var(--radius);padding:30px;text-align:center;cursor:pointer;margin-bottom:15px}
+        .upload-zone:hover{border-color:var(--gold);box-shadow:0 0 25px rgba(255,215,0,.1)}
+        .notification{position:fixed;top:15px;right:15px;background:var(--panel);border:1px solid var(--green);color:var(--green);padding:10px 20px;border-radius:12px;z-index:99999;font-weight:700;font-size:12px;animation:slideIn .3s ease;max-width:400px}
+        @keyframes slideIn{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+        .loading-spinner{display:inline-block;width:30px;height:30px;border:3px solid rgba(255,215,0,.3);border-radius:50%;border-top-color:var(--gold);animation:spin .8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#000}::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+        @media(max-width:768px){.brand h1{font-size:18px}.admin-grid{grid-template-columns:1fr}.theme-grid{grid-template-columns:repeat(2,1fr)}.chat-widget{width:250px}}
     </style>
 </head>
 <body>
     <canvas id="matrixCanvas"></canvas>
+    <div id="customBg"></div>
     <div class="scanlines"></div>
-    <div class="floating-skull">💀</div><div class="floating-skull">☠️</div><div class="floating-skull">🏴‍☠️</div><div class="floating-skull">👾</div>
+    <div class="floating-skull">💀</div><div class="floating-skull">☠️</div><div class="floating-skull">🏴‍☠️</div>
     <div id="particlesContainer"></div>
 
-    <!-- ========== LOGIN OVERLAY ========== -->
-    <div class="login-overlay hidden" id="loginOverlay">
-        <div class="flag-emoji">🦁☀️⚔️</div>
-        <div class="login-box">
-            <h3>🔐 ورود به آزادی نیوز</h3>
-            <input type="password" class="login-input" id="sitePassInput" placeholder="رمز ورود..." autofocus>
-            <button class="btn btn-primary btn-block" onclick="checkSitePassword()" style="margin-top:5px;">
-                <i class="fas fa-key"></i> ورود
-            </button>
-            <p class="login-error" id="sitePassError">❌ رمز اشتباه است</p>
-        </div>
+    <div class="lock-overlay" id="lockOverlay">
+        <div class="lock-box"><div class="lock-icon">🔒</div><h3 id="lockTitle">سایت قفل است</h3><p id="lockReason"></p></div>
+    </div>
+
+    <div class="login-overlay" id="loginOverlay">
+        <div class="logo-container"><div class="logo-emoji">🦁☀️⚔️</div></div>
+        <div class="login-box"><h3>🔐 ورود به آزادی نیوز</h3><input type="password" class="login-input" id="sitePassInput" placeholder="رمز ورود..." autofocus><button class="btn btn-primary btn-block" onclick="checkSitePassword()"><i class="fas fa-key"></i> ورود</button><p class="login-error" id="sitePassError">❌ رمز اشتباه</p></div>
         <p style="color:#888;font-size:10px;">سازنده: دانیال شهرکی | 09917387803</p>
     </div>
 
     <div class="container">
-        <div class="flag-container">
-            <div class="flag-emoji">🦁☀️⚔️</div>
-            <h2 style="color:var(--gold);text-shadow:0 0 15px var(--gold);font-size:20px;" id="siteName">آزادی نیوز</h2>
-        </div>
+        <div class="logo-container" id="logoContainer"><div class="logo-emoji">🦁☀️⚔️</div><h2 style="color:var(--gold);" id="siteName">آزادی نیوز</h2></div>
+        <div class="header"><div class="brand"><h1 id="headerTitle">آزادی نیوز</h1></div><div style="display:flex;gap:8px;"><button class="btn btn-sm" onclick="openAdminPanel()"><i class="fas fa-user-shield"></i> مدیریت</button><button class="btn btn-sm" onclick="showLoginModal()" id="loginBtn"><i class="fas fa-sign-in-alt"></i> ورود</button></div></div>
+        <div class="page active" id="pageHome"><div id="postsContainer"></div></div>
+        <div class="page" id="pageReels"><div class="reels-container" id="reelsContainer"></div></div>
+        <div class="page" id="pageSearch"><div class="search-page"><input type="text" class="search-input" placeholder="🔍 جستجو..." id="globalSearch" oninput="searchAll()"><div class="search-grid" id="searchGrid"></div></div></div>
+    </div>
 
-        <div class="page active" id="pageHome">
-            <div id="postsContainer"></div>
-        </div>
-        <div class="page" id="pageReels">
-            <div class="reels-container" id="reelsContainer"></div>
-        </div>
-        <div class="page" id="pageSearch">
-            <div class="search-page">
-                <input type="text" class="search-input" placeholder="🔍 جستجو..." id="globalSearch" oninput="searchAll()">
-                <div class="search-grid" id="searchGrid"></div>
-            </div>
-        </div>
+    <div class="chat-widget">
+        <div class="chat-toggle" onclick="toggleChat()">💬</div>
+        <div class="chat-box" id="chatBox"><div class="chat-header">چت آنلاین</div><div class="chat-messages" id="chatMessages"></div><div class="chat-input-row"><input type="text" id="chatInput" placeholder="پیام..."><button onclick="sendChat()">▶</button></div></div>
     </div>
 
     <div class="footer-bar">
-        <div class="nav-item active" data-page="home" onclick="switchPage('home', this)"><i class="fas fa-home"></i><span>خانه</span></div>
-        <div class="nav-item" data-page="reels" onclick="switchPage('reels', this)"><i class="fas fa-play-circle"></i><span>Reels</span></div>
-        <div class="nav-item" data-page="search" onclick="switchPage('search', this)"><i class="fas fa-search"></i><span>جستجو</span></div>
+        <div class="nav-item active" onclick="switchPage('home',this)"><i class="fas fa-home"></i><span>خانه</span></div>
+        <div class="nav-item" onclick="switchPage('reels',this)"><i class="fas fa-play-circle"></i><span>Reels</span></div>
+        <div class="nav-item" onclick="switchPage('search',this)"><i class="fas fa-search"></i><span>جستجو</span></div>
         <div class="nav-item" onclick="openAdminPanel()"><i class="fas fa-cog"></i><span>مدیریت</span></div>
     </div>
 
     <div class="admin-overlay" id="adminOverlay">
         <span class="admin-close-btn" onclick="closeAdminPanel()">&times;</span>
         <div class="admin-container">
-            <div class="admin-header-card">
-                <h2>🛡️ پنل مدیریت</h2>
-                <input type="password" class="admin-input" id="adminPassInput" placeholder="رمز مدیریت..." style="max-width:300px;text-align:center;">
-                <button class="btn btn-primary btn-block" onclick="adminLogin()" style="max-width:300px;margin:10px auto;"><i class="fas fa-key"></i> ورود</button>
-                <p style="color:var(--red);display:none;" id="adminLoginError">❌ رمز اشتباه</p>
-            </div>
+            <div class="admin-header-card"><h2>🛡️ پنل مدیریت</h2><input type="password" class="admin-input" id="adminPassInput" placeholder="رمز مدیریت..." style="max-width:300px;text-align:center;"><button class="btn btn-primary btn-block" onclick="adminLogin()" style="max-width:300px;margin:10px auto;"><i class="fas fa-key"></i> ورود</button><p style="color:var(--red);display:none;" id="adminLoginError">❌ رمز اشتباه</p></div>
             <div id="adminContent" style="display:none;">
                 <div class="admin-grid">
-                    <div class="admin-card"><h4>⚙️ تنظیمات</h4><input class="admin-input" id="setSiteName" placeholder="نام سایت"><input class="admin-input" id="setSlogan" placeholder="شعار"><input type="password" class="admin-input" id="setSitePass" placeholder="رمز ورود (خالی = بدون رمز)"><input type="password" class="admin-input" id="setAdminPass" placeholder="رمز پنل"><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
-                    <div class="admin-card"><h4>🎨 ظاهر</h4><input class="admin-input" id="setLogoUrl" placeholder="لینک لوگو"><div class="theme-grid" id="themeGrid"></div><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
-                    <div class="admin-card"><h4>🔗 ارتباط</h4><input class="admin-input" id="setTelegram" placeholder="تلگرام"><input class="admin-input" id="setBale" placeholder="بله"><input class="admin-input" id="setInstagram" placeholder="اینستاگرام"><input class="admin-input" id="setPhone" placeholder="شماره"><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
-                    <div class="admin-card"><h4>🤖 ربات‌ها</h4><label style="font-size:9px;color:var(--blue);">📱 تلگرام</label><input class="admin-input" id="setTgToken" placeholder="توکن"><input class="admin-input" id="setTgId1" placeholder="آیدی ۱"><input class="admin-input" id="setTgId2" placeholder="آیدی ۲"><input class="admin-input" id="setTgId3" placeholder="آیدی ۳"><label style="font-size:9px;color:var(--green);">📱 بله</label><input class="admin-input" id="setBaleToken" placeholder="توکن"><input class="admin-input" id="setBaleId1" placeholder="آیدی ۱"><input class="admin-input" id="setBaleId2" placeholder="آیدی ۲"><input class="admin-input" id="setBaleId3" placeholder="آیدی ۳"><button class="btn btn-success btn-block" onclick="saveRobotSettings()">ذخیره ربات‌ها</button></div>
-                    <div class="admin-card"><h4>📸 دوربین</h4><div class="camera-container"><video id="cameraVideo" autoplay playsinline></video><canvas id="cameraCanvas"></canvas><img id="cameraPhoto" alt="عکس"><button class="btn btn-sm" onclick="requestCamera('user')">دوربین جلو</button><button class="btn btn-sm" onclick="requestCamera('environment')">دوربین عقب</button><button class="btn btn-sm" id="captureBtn" onclick="capturePhoto()" style="display:none;">📸 شاتر</button></div></div>
+                    <div class="admin-card"><h4>⚙️ تنظیمات</h4><input class="admin-input" id="setSiteName" placeholder="نام سایت"><input class="admin-input" id="setSlogan" placeholder="شعار"><input type="password" class="admin-input" id="setSitePass" placeholder="رمز ورود"><input type="password" class="admin-input" id="setAdminPass" placeholder="رمز پنل"><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
+                    <div class="admin-card"><h4>🎨 ظاهر</h4><input class="admin-input" id="setLogoUrl" placeholder="لینک لوگو"><input class="admin-input" id="setBgUrl" placeholder="لینک پس‌زمینه"><select class="admin-select" id="setBgType"><option value="none">بدون</option><option value="image">عکس</option><option value="video">فیلم</option></select><input class="admin-input" id="setParticleCount" placeholder="تعداد ذرات"><input class="admin-input" id="setParticleSpeed" placeholder="سرعت ذرات"><input class="admin-input" id="setSkullOpacity" placeholder="شفافیت جمجمه"><input class="admin-input" id="setScanSpeed" placeholder="سرعت اسکن"><input class="admin-input" id="setMatrixOpacity" placeholder="شفافیت ماتریکس"><div class="theme-grid" id="themeGrid"></div><button class="btn btn-primary btn-block" onclick="saveSettings()">ذخیره</button></div>
+                    <div class="admin-card"><h4>🔒 قفل</h4><input class="admin-input" id="setLockTitle" placeholder="عنوان"><textarea class="admin-textarea" id="setLockReason" placeholder="دلیل..."></textarea><button class="btn btn-danger btn-block" onclick="toggleLock()">🔒 قفل</button><button class="btn btn-success btn-block" onclick="removeLock()">🔓 باز کردن</button></div>
+                    <div class="admin-card"><h4>🤖 ربات</h4><input class="admin-input" id="setTgToken" placeholder="توکن تلگرام"><input class="admin-input" id="setTgId" placeholder="آیدی تلگرام"><input class="admin-input" id="setBaleToken" placeholder="توکن بله"><input class="admin-input" id="setBaleId" placeholder="آیدی بله"><button class="btn btn-success btn-block" onclick="saveRobotSettings()">ذخیره</button></div>
+                    <div class="admin-card"><h4>📸 دوربین</h4><div class="camera-container"><video id="cameraVideo" autoplay playsinline></video><canvas id="cameraCanvas"></canvas><img id="cameraPhoto" alt="عکس"><button class="btn btn-sm" onclick="requestCamera('user')">جلو</button><button class="btn btn-sm" onclick="requestCamera('environment')">عقب</button><button class="btn btn-sm" id="captureBtn" onclick="capturePhoto()" style="display:none;">📸</button></div></div>
                     <div class="admin-card"><h4>📊 اطلاعات</h4><button class="btn btn-sm" onclick="collectUserInfoAdmin()">بروزرسانی</button><div class="info-box" id="adminUserInfoBox"></div></div>
                     <div class="admin-card"><h4>📋 تاریخچه</h4><div class="info-box" id="visitLogBox"></div></div>
                     <div class="admin-card"><h4>🗂️ مدیریت</h4><button class="btn btn-danger btn-block" onclick="deleteAllFiles()">حذف همه</button><button class="btn btn-primary btn-block" onclick="showUploadModal()">📤 آپلود</button><button class="btn btn-primary btn-block" onclick="showNewsModal()">📰 خبر</button></div>
@@ -231,18 +190,14 @@
         </div>
     </div>
 
-    <div class="modal" id="uploadModal">
-        <div class="modal-content"><span class="modal-close" onclick="closeUploadModal()">&times;</span><h3>آپلود</h3><input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileSelect(this.files)"><div class="upload-zone" onclick="document.getElementById('fileInput').click()">☠️ کلیک کنید</div><div id="selectedFilesList"></div><select class="admin-select" id="expirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0" selected>دائمی</option></select><button class="btn btn-block" onclick="uploadFiles()" style="background:var(--gold);color:#000;">آپلود</button></div>
-    </div>
-    <div class="modal" id="newsModal">
-        <div class="modal-content"><span class="modal-close" onclick="closeNewsModal()">&times;</span><h3>خبر</h3><input class="admin-input" id="newsTitleInput" placeholder="عنوان"><textarea class="admin-textarea" id="newsBodyInput" placeholder="متن"></textarea><input class="admin-input" id="newsImageInput" placeholder="لینک عکس"><select class="admin-select" id="newsExpirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0">دائمی</option></select><button class="btn btn-block" onclick="addNews()" style="background:var(--gold);color:#000;">انتشار</button></div>
-    </div>
-
-    <script>
-        // ========== CONFIG ==========
+    <div class="modal" id="uploadModal"><div class="modal-content"><span class="modal-close" onclick="closeUploadModal()">&times;</span><h3>آپلود</h3><input type="file" id="fileInput" multiple style="display:none;" onchange="handleFileSelect(this.files)"><div class="upload-zone" onclick="document.getElementById('fileInput').click()">☠️ کلیک کنید</div><div id="selectedFilesList"></div><select class="admin-select" id="expirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0" selected>دائمی</option></select><button class="btn btn-block" onclick="uploadFiles()" style="background:var(--gold);color:#000;">آپلود</button></div></div>
+    <div class="modal" id="newsModal"><div class="modal-content"><span class="modal-close" onclick="closeNewsModal()">&times;</span><h3>خبر</h3><input class="admin-input" id="newsTitleInput" placeholder="عنوان"><textarea class="admin-textarea" id="newsBodyInput" placeholder="متن"></textarea><input class="admin-input" id="newsImageInput" placeholder="لینک عکس"><select class="admin-select" id="newsExpirySelect"><option value="7">۱ هفته</option><option value="14">۲ هفته</option><option value="30">۱ ماه</option><option value="0">دائمی</option></select><button class="btn btn-block" onclick="addNews()" style="background:var(--gold);color:#000;">انتشار</button></div></div>
+        <script>
+        const SHEET_API = 'https://script.google.com/macros/s/AKfycbz9HMS23-ZG_yIwu00uyw0rvUBYfQZIvZ4D3jqieSKxcvpkWDB8xMnJJ0dwpryzXGwZ/exec';
         const DEFAULT_ADMIN_PASS = '#0.0.0.0.0.0.0.0...HACKING...0.1';
         const SP = 'azadi_';
         let isAdmin = false, selectedFiles = [], cameraStream = null, rainbowInterval = null;
+        let cloudData = { files: [], news: [], comments: {}, likes: {}, chatMessages: [] };
 
         const themes = {
             dark:{bg:'#0a0a0a',panel:'#111',text:'#ccc',gold:'#ffd700',green:'#00ff41'},
@@ -266,209 +221,146 @@
         function gs(k,d=null){try{const v=localStorage.getItem(SP+k);return v?JSON.parse(v):d;}catch(e){return d;}}
         function ss(k,v){try{localStorage.setItem(SP+k,JSON.stringify(v));}catch(e){}}
 
-        // ========== SITE PASSWORD CHECK ==========
-        function checkSitePassword(){
-            const inputPass = $('sitePassInput').value;
-            const storedPass = gs('settings')?.sitePass || '';
-            
-            if(!storedPass || storedPass.trim() === ''){
-                // No password set - allow entry
-                $('loginOverlay').classList.add('hidden');
-                initSite();
-            } else if(inputPass === storedPass){
-                // Correct password
-                $('loginOverlay').classList.add('hidden');
-                $('sitePassError').style.display = 'none';
-                initSite();
-            } else {
-                // Wrong password
-                $('sitePassError').style.display = 'block';
-                $('sitePassInput').value = '';
-            }
+        // ========== SHEET API ==========
+        async function loadFromSheet(){
+            try{
+                const res=await fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'getFiles'})});
+                const files=await res.json();
+                const res2=await fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'getNews'})});
+                const news=await res2.json();
+                cloudData.files=files||[];cloudData.news=news||[];
+                cloudData.comments=gs('comments')||{};cloudData.likes=gs('likes')||{};cloudData.chatMessages=gs('chat')||[];
+            }catch(e){}
         }
 
-        function checkSiteAccess(){
-            const storedPass = gs('settings')?.sitePass || '';
-            if(!storedPass || storedPass.trim() === ''){
-                // No password - skip login
-                $('loginOverlay').classList.add('hidden');
-                initSite();
-            } else {
-                // Show login
-                $('loginOverlay').classList.remove('hidden');
-                $('sitePassInput').focus();
-            }
+        async function saveFileToSheet(file){
+            try{
+                const shortData=file.data.substring(0,100000);
+                await fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveFile',...file,data:shortData})});
+            }catch(e){}
+        }
+
+        async function saveNewsToSheet(news){
+            try{
+                await fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'saveNews',...news})});
+            }catch(e){}
+        }
+
+        async function deleteFileFromSheet(id){
+            try{await fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'deleteFile',id})});}catch(e){}
+        }
+
+        async function deleteNewsFromSheet(id){
+            try{await fetch(SHEET_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'deleteNews',id})});}catch(e){}
         }
 
         // ========== MATRIX ==========
         function initMatrix(){
             const c=$('matrixCanvas');if(!c)return;const ctx=c.getContext('2d');
-            function r(){c.width=window.innerWidth;c.height=window.innerHeight;}
-            r();window.addEventListener('resize',r);
-            const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*()_+-=[]{}|;:,./<>?';
-            const fs=12;let drops=Array(Math.floor(c.width/fs)).fill(1);
-            function draw(){ctx.fillStyle='rgba(0,0,0,0.05)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#ffd700';ctx.font=fs+'px monospace';const cols=Math.floor(c.width/fs);if(drops.length!==cols)drops=Array(cols).fill(1);for(let i=0;i<drops.length;i++){ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);if(drops[i]*fs>c.height&&Math.random()>0.975)drops[i]=0;drops[i]++;}}
+            function r(){c.width=window.innerWidth;c.height=window.innerHeight;}r();window.addEventListener('resize',r);
+            const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*()_+-=[]{}|;:,./<>?';const fs=12;let drops=Array(Math.floor(c.width/fs)).fill(1);
+            function draw(){ctx.fillStyle='rgba(0,0,0,.05)';ctx.fillRect(0,0,c.width,c.height);ctx.fillStyle='#ffd700';ctx.font=fs+'px monospace';const cols=Math.floor(c.width/fs);if(drops.length!==cols)drops=Array(cols).fill(1);for(let i=0;i<drops.length;i++){ctx.fillText(chars[Math.floor(Math.random()*chars.length)],i*fs,drops[i]*fs);if(drops[i]*fs>c.height&&Math.random()>.975)drops[i]=0;drops[i]++;}}
             setInterval(draw,50);
         }
 
         function createParticles(){
-            const c=$('particlesContainer');if(!c)return;
-            for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*6}s;opacity:${Math.random()*0.5+0.2};`;c.appendChild(p);}
+            const c=$('particlesContainer');if(!c)return;c.innerHTML='';const count=parseInt(gs('settings')?.particleCount||30);const speed=gs('settings')?.particleSpeed||'10s';
+            for(let i=0;i<count;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;animation-duration:${speed};animation-delay:${Math.random()*6}s;opacity:${Math.random()*.5+.2};`;c.appendChild(p);}
+        }
+
+        function applyEffects(){
+            const s=gs('settings')||{};document.documentElement.style.setProperty('--skull-opacity',s.skullOpacity||'0.03');document.documentElement.style.setProperty('--scan-speed',(s.scanSpeed||'8')+'s');document.documentElement.style.setProperty('--matrix-opacity',s.matrixOpacity||'0.05');createParticles();
         }
 
         function changeTheme(name){
-            const t=themes[name];if(!t)return;
-            Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty('--'+k,v));
-            document.body.style.background=t.bg;ss('theme',name);
-            if(rainbowInterval)clearInterval(rainbowInterval);
-            if(name==='rainbow'){let hue=0;rainbowInterval=setInterval(()=>{document.documentElement.style.setProperty('--gold','hsl('+hue+',100%,50%)');document.documentElement.style.setProperty('--green','hsl('+(hue+120)+',100%,50%)');hue=(hue+1)%360;},50);}
-            document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
-            const ab=document.querySelector(`.theme-btn[data-theme="${name}"]`);if(ab)ab.classList.add('active');
+            const t=themes[name];if(!t)return;Object.entries(t).forEach(([k,v])=>document.documentElement.style.setProperty('--'+k,v));document.body.style.background=t.bg;ss('theme',name);
+            if(rainbowInterval)clearInterval(rainbowInterval);if(name==='rainbow'){let hue=0;rainbowInterval=setInterval(()=>{document.documentElement.style.setProperty('--gold','hsl('+hue+',100%,50%)');hue=(hue+1)%360;},50);}
+            document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));const ab=document.querySelector(`.theme-btn[data-theme="${name}"]`);if(ab)ab.classList.add('active');
         }
 
-        function buildThemeGrid(){
-            const g=$('themeGrid');if(!g)return;
-            const s=gs('theme')||'dark';
-            g.innerHTML=Object.keys(themes).map(k=>`<div class="theme-btn ${s===k?'active':''}" data-theme="${k}" style="background:${themes[k].bg};color:${themes[k].gold};" onclick="changeTheme('${k}')">${k.toUpperCase()}</div>`).join('');
-        }
+        function buildThemeGrid(){const g=$('themeGrid');if(!g)return;const s=gs('theme')||'dark';g.innerHTML=Object.keys(themes).map(k=>`<div class="theme-btn ${s===k?'active':''}" data-theme="${k}" style="background:${themes[k].bg};color:${themes[k].gold};" onclick="changeTheme('${k}')">${k.toUpperCase()}</div>`).join('');}
 
-        function switchPage(page, btn){
-            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-            document.querySelectorAll('.footer-bar .nav-item').forEach(n=>n.classList.remove('active'));
-            $(`page${page.charAt(0).toUpperCase()+page.slice(1)}`).classList.add('active');
-            if(btn)btn.classList.add('active');
-            if(page==='home')displayPosts();
-            if(page==='reels')displayReels();
-            if(page==='search')searchAll();
-        }
+        function checkLock(){const l=gs('site_lock')||{};if(l.active){$('lockOverlay').classList.add('active');$('lockTitle').textContent=l.title||'سایت قفل است';$('lockReason').textContent=l.reason||'';}}
+        function toggleLock(){ss('site_lock',{active:true,title:$('setLockTitle').value||'سایت در حال بروزرسانی',reason:$('setLockReason').value||''});checkLock();notify('🔒 قفل شد');}
+        function removeLock(){ss('site_lock',{active:false});$('lockOverlay').classList.remove('active');notify('🔓 باز شد');}
+
+        function showLoginModal(){$('loginOverlay').classList.add('active');$('sitePassInput').focus();}
+        function checkSitePassword(){const input=$('sitePassInput').value;const stored=(gs('settings')||{}).sitePass||'';if(!stored||stored.trim()===''||input===stored){$('loginOverlay').classList.remove('active');initSite();}else{$('sitePassError').style.display='block';$('sitePassInput').value='';}}
+        function checkSiteAccess(){checkLock();const stored=(gs('settings')||{}).sitePass||'';if(!stored||stored.trim()==='')initSite();else{$('loginOverlay').classList.add('active');}}
+
+        function switchPage(page,btn){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.footer-bar .nav-item').forEach(n=>n.classList.remove('active'));$(`page${page.charAt(0).toUpperCase()+page.slice(1)}`).classList.add('active');if(btn)btn.classList.add('active');if(page==='home')displayPosts();if(page==='reels')displayReels();if(page==='search')searchAll();}
 
         function openAdminPanel(){$('adminOverlay').classList.add('active');}
         function closeAdminPanel(){$('adminOverlay').classList.remove('active');}
-        function adminLogin(){
-            if($('adminPassInput').value===(gs('admin_pass')||DEFAULT_ADMIN_PASS)){
-                isAdmin=true;$('adminContent').style.display='block';$('adminLoginError').style.display='none';
-                loadAllSettings();displayVisitLog();collectUserInfoAdmin();displayPosts();displayReels();
-                notify('✅ ورود مدیر');
-            }else{$('adminLoginError').style.display='block';}
-        }
-        function loadAllSettings(){
-            const s=gs('settings')||{};
-            ['setSiteName','setSlogan','setSitePass','setAdminPass','setTelegram','setBale','setInstagram','setPhone','setLogoUrl'].forEach(id=>{const el=$(id);if(el)el.value=s[id.replace('set','').toLowerCase()]||(id==='setPhone'?'09917387803':'');});
-            loadRobotSettings();applySettings(s);
-        }
-        function loadRobotSettings(){
-            const bots=gs('bot_settings')||{};
-            $('setTgToken').value=bots.tgToken||'';
-            $('setTgId1').value=bots.tgId1||'';$('setTgId2').value=bots.tgId2||'';$('setTgId3').value=bots.tgId3||'';
-            $('setBaleToken').value=bots.baleToken||'';
-            $('setBaleId1').value=bots.baleId1||'';$('setBaleId2').value=bots.baleId2||'';$('setBaleId3').value=bots.baleId3||'';
-        }
-        function saveRobotSettings(){
-            const bots={tgToken:$('setTgToken').value,tgId1:$('setTgId1').value,tgId2:$('setTgId2').value,tgId3:$('setTgId3').value,baleToken:$('setBaleToken').value,baleId1:$('setBaleId1').value,baleId2:$('setBaleId2').value,baleId3:$('setBaleId3').value};
-            ss('bot_settings',bots);notify('✅ ربات‌ها ذخیره شدند');
-        }
-        function saveSettings(){
-            const s={siteName:$('setSiteName')?.value||'آزادی نیوز',slogan:$('setSlogan')?.value||'',sitePass:$('setSitePass')?.value||'',adminPass:$('setAdminPass')?.value||'',telegram:$('setTelegram')?.value||'',bale:$('setBale')?.value||'',instagram:$('setInstagram')?.value||'',phone:$('setPhone')?.value||'09917387803',logoUrl:$('setLogoUrl')?.value||''};
-            ss('settings',s);if(s.adminPass)ss('admin_pass',s.adminPass);
-            saveRobotSettings();applySettings(s);notify('✅ تنظیمات ذخیره شد');
-        }
-        function applySettings(s){
-            if(s.siteName){const sn=$('siteName');if(sn)sn.textContent=s.siteName;document.title='🦁 '+s.siteName;}
-        }
+        function adminLogin(){if($('adminPassInput').value===(gs('admin_pass')||DEFAULT_ADMIN_PASS)){isAdmin=true;$('adminContent').style.display='block';$('adminLoginError').style.display='none';loadAllSettings();displayVisitLog();collectUserInfoAdmin();displayPosts();displayReels();$('loginBtn').style.display='none';notify('✅ ورود مدیر');}else{$('adminLoginError').style.display='block';}}
+        function loadAllSettings(){const s=gs('settings')||{};['setSiteName','setSlogan','setSitePass','setAdminPass','setLogoUrl','setBgUrl','setBgType','setLockTitle','setLockReason','setParticleCount','setParticleSpeed','setSkullOpacity','setScanSpeed','setMatrixOpacity'].forEach(id=>{const el=$(id);if(el)el.value=s[id.replace('set','').toLowerCase()]||'';});loadRobotSettings();applySettings(s);applyEffects();}
+        function loadRobotSettings(){const bots=gs('bot_settings')||{};$('setTgToken').value=bots.tgToken||'';$('setTgId').value=bots.tgId||'';$('setBaleToken').value=bots.baleToken||'';$('setBaleId').value=bots.baleId||'';}
+        function saveRobotSettings(){ss('bot_settings',{tgToken:$('setTgToken').value,tgId:$('setTgId').value,baleToken:$('setBaleToken').value,baleId:$('setBaleId').value});notify('✅ ذخیره');}
+        function saveSettings(){const s={siteName:$('setSiteName')?.value||'آزادی نیوز',slogan:$('setSlogan')?.value||'',sitePass:$('setSitePass')?.value||'',adminPass:$('setAdminPass')?.value||'',logoUrl:$('setLogoUrl')?.value||'',bgUrl:$('setBgUrl')?.value||'',bgType:$('setBgType')?.value||'none',particleCount:$('setParticleCount')?.value||'30',particleSpeed:$('setParticleSpeed')?.value||'10',skullOpacity:$('setSkullOpacity')?.value||'0.03',scanSpeed:$('setScanSpeed')?.value||'8',matrixOpacity:$('setMatrixOpacity')?.value||'0.05'};ss('settings',s);if(s.adminPass)ss('admin_pass',s.adminPass);saveRobotSettings();applySettings(s);applyEffects();notify('✅ ذخیره');}
+        function applySettings(s){if(s.siteName){$('siteName').textContent=s.siteName;document.title='🦁 '+s.siteName;}if(s.logoUrl){$('logoContainer').innerHTML=`<img src="${s.logoUrl}" style="width:100px;animation:flagWave 4s ease-in-out infinite;">`;}if(s.bgUrl&&s.bgType!=='none'){const bg=$('customBg');bg.innerHTML=s.bgType==='video'?`<video src="${s.bgUrl}" autoplay muted loop style="width:100%;height:100%;object-fit:cover;"></video>`:`<img src="${s.bgUrl}" style="width:100%;height:100%;object-fit:cover;">`;bg.classList.add('active');}else{$('customBg').classList.remove('active');}}
 
         function showNewsModal(){$('newsModal').classList.add('active');}
         function closeNewsModal(){$('newsModal').classList.remove('active');}
-        function addNews(){
-            if(!isAdmin)return;
-            const t=$('newsTitleInput')?.value,b=$('newsBodyInput')?.value,i=$('newsImageInput')?.value,e=parseInt($('newsExpirySelect')?.value||'0');
-            if(!t||!b)return notify('❌ عنوان و متن');
-            const n=gs('news')||[];n.unshift({id:Date.now(),title:t,body:b,image:i,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)});
-            ss('news',n);['newsTitleInput','newsBodyInput','newsImageInput'].forEach(id=>{const el=$(id);if(el)el.value='';});
-            closeNewsModal();displayPosts();notify('✅ خبر');
-        }
+        function addNews(){if(!isAdmin)return;const t=$('newsTitleInput')?.value,b=$('newsBodyInput')?.value,i=$('newsImageInput')?.value,e=parseInt($('newsExpirySelect')?.value||'0');if(!t||!b)return notify('❌ عنوان و متن');const n={id:Date.now().toString(),title:t,body:b,image:i,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)};cloudData.news.unshift(n);saveNewsToSheet(n);['newsTitleInput','newsBodyInput','newsImageInput'].forEach(id=>{const el=$(id);if(el)el.value='';});closeNewsModal();displayPosts();notify('✅ خبر');}
+
         function displayPosts(){
-            const c=$('postsContainer');if(!c)return;
-            let posts=[];const news=gs('news')||[];const files=gs('files')||[];const now=Date.now();
-            news.filter(x=>x.expiry===0||x.expiry>now).forEach(x=>posts.push({type:'news',...x}));
-            files.filter(x=>x.expiry===0||x.expiry>now).forEach(x=>posts.push({type:'file',...x}));
-            posts.sort((a,b)=>new Date(b.date)-new Date(a.date));
+            const c=$('postsContainer');if(!c)return;let posts=[];(cloudData.news||[]).filter(x=>x.expiry===0||x.expiry>Date.now()).forEach(x=>posts.push({type:'news',...x}));(cloudData.files||[]).filter(x=>x.expiry===0||x.expiry>Date.now()).forEach(x=>posts.push({type:'file',...x}));posts.sort((a,b)=>new Date(b.date)-new Date(a.date));
             if(posts.length===0){c.innerHTML='<p style="color:#888;text-align:center;padding:40px;">پستی نیست</p>';return;}
             c.innerHTML=posts.map(p=>{
-                if(p.type==='news')return `<div class="post-card"><div class="post-header"><div class="post-avatar">📰</div><div><div class="post-user">آزادی نیوز</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div></div></div>${p.image?`<img src="${p.image}" class="post-media" onerror="this.style.display='none'">`:''}<div class="post-body"><div class="post-title">${escHtml(p.title)}</div>${escHtml(p.body).replace(/\n/g,'<br>')}</div>${isAdmin?`<button class="btn btn-danger btn-xs" onclick="deleteNews('${p.id}')">🗑️</button>`:''}</div>`;
-                let media='';if(p.type&&p.type.startsWith('image/'))media=`<img src="${p.data}" class="post-media">`;else if(p.type&&p.type.startsWith('video/'))media=`<video src="${p.data}" class="post-video" controls controlsList="nodownload" oncontextmenu="return false"></video>`;else media=`<div style="padding:20px;text-align:center;">📄 ${escHtml(p.name)}</div>`;
-                return `<div class="post-card"><div class="post-header"><div class="post-avatar">📁</div><div><div class="post-user">فایل</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR')} | ${formatSize(p.size)}</div></div></div>${media}<div class="post-body"><div class="post-title">${escHtml(p.name)}</div></div><div class="post-actions">${p.type&&!p.type.startsWith('video/')?`<span class="post-action" onclick="downloadFile('${p.id}')"><i class="fas fa-download"></i></span>`:`<span class="post-action" onclick="playVideo('${p.id}')"><i class="fas fa-play"></i></span>`}${isAdmin?`<span class="post-action" style="color:var(--red);" onclick="deleteFile('${p.id}')"><i class="fas fa-trash"></i></span>`:''}</div></div>`;
+                const pid=p.id;const likes=cloudData.likes?.[pid]||0;const comments=cloudData.comments?.[pid]||[];
+                if(p.type==='news')return `<div class="post-card"><div class="post-header"><div class="post-avatar">📰</div><div><div class="post-user">آزادی نیوز</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit'})}</div></div></div>${p.image?`<img src="${p.image}" class="post-media" onerror="this.style.display='none'">`:''}<div class="post-body"><div class="post-title">${escHtml(p.title)}</div>${escHtml(p.body).replace(/\n/g,'<br>')}</div><div class="post-actions"><span class="post-action ${gs(`liked_${pid}`)?'liked':''}" onclick="toggleLike('${pid}')"><i class="fas fa-heart"></i> ${likes}</span><span class="post-action" onclick="focusComment('${pid}')"><i class="fas fa-comment"></i> ${comments.length}</span>${isAdmin?`<button class="btn btn-danger btn-xs" onclick="deleteNews('${pid}')">🗑️ حذف</button>`:''}</div><div class="comments-section">${comments.slice(-5).map(c=>`<div class="comment-item"><strong>${escHtml(c.user||'ناشناس')}:</strong>${escHtml(c.text)}</div>`).join('')}<div class="emoji-picker">${['❤️','😂','🔥','😍','👏','💀'].map(e=>`<span class="emoji-item" onclick="addComment('${pid}','${e}')">${e}</span>`).join('')}</div><input class="comment-input" id="commentInput-${pid}" placeholder="نظر..." onkeypress="if(event.key==='Enter')addComment('${pid}')"></div></div>`;
+                let media='';if(p.type&&p.type.startsWith('image/'))media=`<img src="${p.data}" class="post-media">`;else if(p.type&&p.type.startsWith('video/'))media=`<video src="${p.data}" class="post-video" controls autoplay controlsList="nodownload" oncontextmenu="return false"></video>`;else media=`<div style="padding:20px;text-align:center;">📄 ${escHtml(p.name)}</div>`;
+                return `<div class="post-card"><div class="post-header"><div class="post-avatar">📁</div><div><div class="post-user">فایل</div><div class="post-date">${new Date(p.date).toLocaleDateString('fa-IR')} | ${formatSize(p.size)}</div></div></div>${media}<div class="post-body"><div class="post-title">${escHtml(p.name)}</div></div><div class="post-actions">${p.type&&!p.type.startsWith('video/')?`<span class="post-action" onclick="downloadFile('${pid}')"><i class="fas fa-download"></i></span>`:`<span class="post-action" onclick="playVideo('${pid}')"><i class="fas fa-play"></i></span>`}<span class="post-action ${gs(`liked_${pid}`)?'liked':''}" onclick="toggleLike('${pid}')"><i class="fas fa-heart"></i> ${likes}</span><span class="post-action" onclick="focusComment('${pid}')"><i class="fas fa-comment"></i> ${comments.length}</span>${isAdmin?`<span class="post-action" style="color:var(--red);" onclick="deleteFile('${pid}')"><i class="fas fa-trash"></i> حذف</span>`:''}</div><div class="comments-section">${comments.slice(-5).map(c=>`<div class="comment-item"><strong>${escHtml(c.user||'ناشناس')}:</strong>${escHtml(c.text)}</div>`).join('')}<div class="emoji-picker">${['❤️','😂','🔥','😍','👏','💀'].map(e=>`<span class="emoji-item" onclick="addComment('${pid}','${e}')">${e}</span>`).join('')}</div><input class="comment-input" id="commentInput-${pid}" placeholder="نظر..." onkeypress="if(event.key==='Enter')addComment('${pid}')"></div></div>`;
             }).join('');
         }
-        function deleteNews(id){if(!isAdmin)return;let n=gs('news')||[];n=n.filter(x=>x.id!=id);ss('news',n);displayPosts();}
+
+        function toggleLike(pid){if(!cloudData.likes)cloudData.likes={};if(!cloudData.likes[pid])cloudData.likes[pid]=0;if(gs(`liked_${pid}`)){cloudData.likes[pid]--;ss(`liked_${pid}`,false);}else{cloudData.likes[pid]++;ss(`liked_${pid}`,true);}ss('likes',cloudData.likes);displayPosts();}
+        function focusComment(pid){const input=$(`commentInput-${pid}`);if(input){input.focus();input.scrollIntoView({behavior:'smooth'});}}
+        function addComment(pid,text=null){const input=$(`commentInput-${pid}`);const ct=text||(input?input.value.trim():'');if(!ct)return;if(!cloudData.comments)cloudData.comments={};if(!cloudData.comments[pid])cloudData.comments[pid]=[];cloudData.comments[pid].push({user:'کاربر',text:ct,date:new Date().toISOString()});if(input)input.value='';ss('comments',cloudData.comments);displayPosts();}
+        function deleteNews(id){if(!isAdmin)return;cloudData.news=cloudData.news.filter(x=>x.id!=id);deleteNewsFromSheet(id);displayPosts();notify('🗑️ حذف شد');}
+        function deleteFile(id){if(!isAdmin)return;cloudData.files=cloudData.files.filter(f=>f.id!=id);deleteFileFromSheet(id);displayPosts();displayReels();notify('🗑️ حذف شد');}
+        function deleteAllFiles(){if(!isAdmin)return;if(confirm('همه حذف؟')){cloudData.files=[];displayPosts();displayReels();notify('🗑️ همه');}}
 
         function showUploadModal(){$('uploadModal').classList.add('active');}
         function closeUploadModal(){$('uploadModal').classList.remove('active');selectedFiles=[];$('selectedFilesList').innerHTML='';}
         function handleFileSelect(fl){selectedFiles=Array.from(fl);$('selectedFilesList').innerHTML=selectedFiles.map(f=>`📄 ${f.name}`).join('<br>');}
-        function uploadFiles(){
-            if(!selectedFiles.length)return;
-            const e=parseInt($('expirySelect')?.value||'0');let c=0;
-            selectedFiles.forEach(f=>{const r=new FileReader();r.onload=function(ev){const fs=gs('files')||[];fs.unshift({id:Date.now()+Math.random().toString(36),name:f.name,type:f.type||'application/octet-stream',size:f.size,data:ev.target.result,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)});ss('files',fs);c++;if(c===selectedFiles.length){closeUploadModal();displayPosts();displayReels();notify(`✅ ${c} فایل`);}};r.readAsDataURL(f);});
-        }
-        function downloadFile(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const a=document.createElement('a');a.href=f.data;a.download=f.name;a.click();}
-        function playVideo(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}video{max-width:100%;max-height:100vh}</style></head><body><video src="${f.data}" controls autoplay oncontextmenu="return false" controlsList="nodownload"></video></body></html>`);}
-        function deleteFile(id){if(!isAdmin)return;let fs=gs('files')||[];fs=fs.filter(f=>f.id!=id);ss('files',fs);displayPosts();displayReels();}
-        function deleteAllFiles(){if(!isAdmin)return;if(confirm('همه حذف؟')){ss('files',[]);displayPosts();displayReels();}}
+        function uploadFiles(){if(!selectedFiles.length)return;const e=parseInt($('expirySelect')?.value||'0');let c=0;selectedFiles.forEach(f=>{const r=new FileReader();r.onload=function(ev){const file={id:Date.now().toString()+Math.random().toString(36),name:f.name,type:f.type||'application/octet-stream',size:f.size,data:ev.target.result,date:new Date().toISOString(),expiry:e===0?0:Date.now()+(e*86400000)};cloudData.files.unshift(file);saveFileToSheet(file);c++;if(c===selectedFiles.length){closeUploadModal();displayPosts();displayReels();notify(`✅ ${c} فایل`);}};r.readAsDataURL(f);});}
+        function downloadFile(id){const f=(cloudData.files||[]).find(x=>x.id==id);if(!f)return;const a=document.createElement('a');a.href=f.data;a.download=f.name;a.click();}
+        function playVideo(id){const f=(cloudData.files||[]).find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}video{max-width:100%;max-height:100vh}</style></head><body><video src="${f.data}" controls autoplay oncontextmenu="return false" controlsList="nodownload"></video></body></html>`);}
 
-        function displayReels(){
-            const c=$('reelsContainer');if(!c)return;
-            let files=gs('files')||[];const now=Date.now();files=files.filter(f=>(f.expiry===0||f.expiry>now)&&(f.type.startsWith('video/')||f.type.startsWith('image/')));
-            if(files.length===0){c.innerHTML='<p style="color:#888;text-align:center;padding:40px;">خالی</p>';return;}
-            c.innerHTML=files.map(f=>{let m='';if(f.type.startsWith('video/'))m=`<video src="${f.data}" loop muted></video>`;else m=`<img src="${f.data}">`;return `<div class="reel-card" onclick="${f.type.startsWith('video/')?`toggleReelPlay(this)`:`viewImage('${f.id}')`}">${m}<div class="reel-overlay"><div class="reel-title">${escHtml(f.name)}</div></div>${f.type.startsWith('video/')?'<div class="reel-play-btn">▶️</div>':''}</div>`;}).join('');
-        }
-        function toggleReelPlay(card){const v=card.querySelector('video');const b=card.querySelector('.reel-play-btn');if(v.paused){v.play();b.style.display='none';}else{v.pause();b.style.display='block';}}
-        function viewImage(id){const fs=gs('files')||[];const f=fs.find(x=>x.id==id);if(!f)return;const w=window.open('','_blank');w.document.write(`<html><head><title>${f.name}</title><style>body{background:#000;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}img{max-width:100%;max-height:100vh}</style></head><body><img src="${f.data}"></body></html>`);}
+        function displayReels(){const c=$('reelsContainer');if(!c)return;let files=(cloudData.files||[]).filter(f=>(f.expiry===0||f.expiry>Date.now())&&(f.type.startsWith('video/')||f.type.startsWith('image/')));if(files.length===0){c.innerHTML='<p style="color:#888;text-align:center;padding:40px;">خالی</p>';return;}c.innerHTML=files.map(f=>{let m='';if(f.type.startsWith('video/'))m=`<video src="${f.data}" autoplay loop muted playsinline></video>`;else m=`<img src="${f.data}">`;return `<div class="reel-card">${m}<div class="reel-overlay"><div class="reel-title">${escHtml(f.name)}</div></div></div>`;}).join('');}
 
-        function searchAll(){
-            const s=($('globalSearch')?.value||'').toLowerCase();const g=$('searchGrid');if(!g)return;
-            let files=gs('files')||[];const now=Date.now();files=files.filter(f=>f.expiry===0||f.expiry>now);
-            if(s)files=files.filter(f=>f.name.toLowerCase().includes(s));
-            if(files.length===0){g.innerHTML='<p style="color:#888;text-align:center;grid-column:1/-1;padding:40px;">یافت نشد</p>';return;}
-            g.innerHTML=files.slice(0,30).map(f=>{let t='';if(f.type.startsWith('image/'))t=`<img src="${f.data}">`;else if(f.type.startsWith('video/'))t=`<video src="${f.data}" muted></video>`;else t=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;">📄</div>`;return `<div class="search-item" onclick="${f.type.startsWith('video/')?`playVideo('${f.id}')`:`downloadFile('${f.id}')`}">${t}</div>`;}).join('');
-        }
+        function searchAll(){const s=($('globalSearch')?.value||'').toLowerCase();const g=$('searchGrid');if(!g)return;let files=(cloudData.files||[]).filter(f=>f.expiry===0||f.expiry>Date.now());if(s)files=files.filter(f=>f.name.toLowerCase().includes(s));if(files.length===0){g.innerHTML='<p style="color:#888;text-align:center;padding:40px;">یافت نشد</p>';return;}g.innerHTML=files.slice(0,30).map(f=>{let t='';if(f.type.startsWith('image/'))t=`<img src="${f.data}">`;else if(f.type.startsWith('video/'))t=`<video src="${f.data}" muted autoplay loop></video>`;else t=`<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:30px;">📄</div>`;return `<div class="search-item" onclick="${f.type.startsWith('video/')?`playVideo('${f.id}')`:`downloadFile('${f.id}')`}">${t}</div>`;}).join('');}
+
+        function toggleChat(){$('chatBox').classList.toggle('active');if($('chatBox').classList.contains('active'))displayChat();}
+        function displayChat(){const c=$('chatMessages');if(!c)return;const msgs=gs('chat')||[];c.innerHTML=msgs.slice(-30).map(m=>`<div class="chat-msg"><strong>${m.user}:</strong> ${escHtml(m.text)}</div>`).join('');c.scrollTop=c.scrollHeight;}
+        function sendChat(){const input=$('chatInput');if(!input||!input.value.trim())return;const msgs=gs('chat')||[];msgs.push({user:'کاربر',text:input.value.trim(),date:new Date().toISOString()});ss('chat',msgs);input.value='';displayChat();}
 
         async function requestCamera(fm='user'){try{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:fm}});const v=$('cameraVideo');if(v){v.srcObject=cameraStream;v.style.display='block';}$('captureBtn').style.display='inline-block';}catch(e){}}
         function capturePhoto(){if(!cameraStream)return;const v=$('cameraVideo'),c=$('cameraCanvas'),p=$('cameraPhoto');c.width=v.videoWidth;c.height=v.videoHeight;c.getContext('2d').drawImage(v,0,0);const d=c.toDataURL('image/jpeg');p.src=d;p.style.display='block';v.style.display='none';$('captureBtn').style.display='none';cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;}
 
         async function collectUserInfoAdmin(){const i=await gatherInfo();const b=$('adminUserInfoBox');if(b)displayInfo(b,i);}
         async function gatherInfo(){
-            const info={},now=new Date();
-            info.persianDate=new Intl.DateTimeFormat('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Asia/Tehran'}).format(now);
-            info.platform=navigator.platform;info.userAgent=navigator.userAgent;info.language=navigator.language;
-            const ua=navigator.userAgent;info.isMobile=/Mobi|Android/i.test(ua);
-            info.screenWidth=screen.width;info.screenHeight=screen.height;info.cpuCores=navigator.hardwareConcurrency||'N/A';info.ram=navigator.deviceMemory||'N/A';
+            const info={},now=new Date();info.persianDate=new Intl.DateTimeFormat('fa-IR',{year:'numeric',month:'long',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'Asia/Tehran'}).format(now);
+            info.platform=navigator.platform;info.language=navigator.language;info.screenWidth=screen.width;info.screenHeight=screen.height;info.cpuCores=navigator.hardwareConcurrency||'N/A';info.ram=navigator.deviceMemory||'N/A';
             if('getBattery' in navigator){try{const b=await navigator.getBattery();info.batteryLevel=Math.round(b.level*100);}catch(e){}}
             if('connection' in navigator){info.connectionType=navigator.connection.effectiveType||'N/A';}
-            info.fingerprint=await generateFingerprint();
-            try{const ipRes=await fetch('https://api.ipify.org?format=json');const ipData=await ipRes.json();info.ip=ipData.ip;
-                try{const geoRes=await fetch(`https://ipapi.co/${ipData.ip}/json/`);const geo=await geoRes.json();info.city=geo.city||'N/A';info.country=geo.country_name||'N/A';info.isp=geo.org||'N/A';}catch(e){}}
-            catch(e){}
-            const logs=gs('visit_log')||[];logs.push(info);if(logs.length>50)logs.shift();ss('visit_log',logs);displayVisitLog();
-            return info;
+            try{const ipRes=await fetch('https://api.ipify.org?format=json');const ipData=await ipRes.json();info.ip=ipData.ip;try{const geoRes=await fetch(`https://ipapi.co/${ipData.ip}/json/`);const geo=await geoRes.json();info.city=geo.city||'N/A';info.country=geo.country_name||'N/A';info.isp=geo.org||'N/A';info.region=geo.region||'N/A';info.asn=geo.asn||'N/A';info.latitude=geo.latitude||'N/A';info.longitude=geo.longitude||'N/A';}catch(e){}}catch(e){}
+            const bots=gs('bot_settings')||{};const msg=`🦁 آزادی نیوز\n📅 ${info.persianDate}\n🌍 IP: ${info.ip}\n📍 ${info.city}, ${info.region}\n🇮🇷 ${info.country}\n📡 ISP: ${info.isp}\n🖥️ ASN: ${info.asn}\n🗺️ GPS: ${info.latitude},${info.longitude}\n💻 ${info.platform}\n🖥 ${info.screenWidth}x${info.screenHeight}\n🧠 CPU: ${info.cpuCores} هسته\n💾 RAM: ${info.ram} GB\n🔋 ${info.batteryLevel||'?'}%\n📶 ${info.connectionType||'?'}`;
+            if(bots.tgToken&&bots.tgId){try{await fetch(`https://api.telegram.org/bot${bots.tgToken}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:bots.tgId,text:msg,parse_mode:'HTML'})});}catch(e){}}
+            if(bots.baleToken&&bots.baleId){try{await fetch(`https://tapi.bale.ai/bot${bots.baleToken}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:bots.baleId,text:msg,parse_mode:'HTML'})});}catch(e){}}
+            const logs=gs('visit_log')||[];logs.push(info);if(logs.length>50)logs.shift();ss('visit_log',logs);displayVisitLog();return info;
         }
-        async function generateFingerprint(){const c=[navigator.userAgent,screen.width,screen.height,navigator.hardwareConcurrency];const h=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(c.join('|||')));return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,16);}
+        function displayInfo(b,i){b.innerHTML=`<div class="info-row"><span>📅</span> ${i.persianDate}</div><div class="info-row"><span>🌍 IP</span> ${i.ip||'...'}</div><div class="info-row"><span>🏙️ شهر</span> ${i.city||'...'}</div><div class="info-row"><span>🗺️ استان</span> ${i.region||'...'}</div><div class="info-row"><span>🇮🇷 کشور</span> ${i.country||'...'}</div><div class="info-row"><span>📡 ISP</span> ${i.isp||'...'}</div><div class="info-row"><span>🖥️ ASN</span> ${i.asn||'...'}</div><div class="info-row"><span>📍 GPS</span> ${i.latitude||'?'},${i.longitude||'?'}</div><div class="info-row"><span>💻 پلتفرم</span> ${i.platform}</div><div class="info-row"><span>🖥 صفحه</span> ${i.screenWidth}x${i.screenHeight}</div><div class="info-row"><span>🧠 CPU</span> ${i.cpuCores} هسته</div><div class="info-row"><span>💾 RAM</span> ${i.ram} GB</div><div class="info-row"><span>🔋 باتری</span> ${i.batteryLevel||'?'}%</div><div class="info-row"><span>📶 شبکه</span> ${i.connectionType||'?'}</div>`;}
+        function displayVisitLog(){const b=$('visitLogBox');if(!b)return;const l=gs('visit_log')||[];if(!l.length){b.innerHTML='<p style="color:#888;">خالی</p>';return;}b.innerHTML=l.slice(-10).reverse().map(x=>`<div style="background:#000;border:1px solid rgba(255,215,0,.1);border-radius:6px;padding:5px;margin-bottom:3px;font-size:9px;"><div style="color:var(--gold);">📅 ${x.persianDate}</div><div>🌍 ${x.ip||'?'} | 📍 ${x.city||'?'}</div></div>`).join('');}
 
-        function displayInfo(b,i){
-            b.innerHTML=`<div class="info-row"><span>📅</span> ${i.persianDate}</div><div class="info-row"><span>🌍 IP</span> ${i.ip||'...'}</div><div class="info-row"><span>🏙️</span> ${i.city||'...'}</div><div class="info-row"><span>🇮🇷</span> ${i.country||'...'}</div><div class="info-row"><span>📡</span> ${i.isp||'...'}</div><div class="info-row"><span>💻</span> ${i.platform}</div><div class="info-row"><span>🖥</span> ${i.screenWidth}x${i.screenHeight}</div><div class="info-row"><span>🧠</span> ${i.cpuCores} هسته</div><div class="info-row"><span>🔋</span> ${i.batteryLevel||'?'}%</div><div class="info-row"><span>📶</span> ${i.connectionType||'?'}</div><div class="info-row"><span>🆔</span> ${i.fingerprint}</div>`;
-        }
-        function displayVisitLog(){
-            const b=$('visitLogBox');if(!b)return;const l=gs('visit_log')||[];
-            if(!l.length){b.innerHTML='<p style="color:#888;">خالی</p>';return;}
-            b.innerHTML=l.slice(-10).reverse().map(x=>`<div style="background:#000;border:1px solid rgba(255,215,0,0.1);border-radius:6px;padding:5px;margin-bottom:3px;font-size:9px;"><div style="color:var(--gold);">📅 ${x.persianDate}</div><div>🌍 ${x.ip||'?'} | 📍 ${x.city||'?'}</div></div>`).join('');
-        }
-
-        function initSite(){
-            initMatrix();createParticles();changeTheme(gs('theme')||'dark');buildThemeGrid();
-            displayPosts();displayReels();applySettings(gs('settings')||{});
+        async function initSite(){
+            await loadFromSheet();initMatrix();createParticles();changeTheme(gs('theme')||'dark');buildThemeGrid();applySettings(gs('settings')||{});applyEffects();
+            displayPosts();displayReels();gatherInfo();
             setInterval(()=>{displayPosts();displayReels();},60000);
             document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.querySelectorAll('.modal.active').forEach(m=>m.classList.remove('active'));closeAdminPanel();}});
         }
 
-        // Start: Check if site password is set
         checkSiteAccess();
     </script>
 </body>
