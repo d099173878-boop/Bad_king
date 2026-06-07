@@ -301,14 +301,16 @@
             title: 'BAD KING',
             
             // لینک‌های شبکه‌های اجتماعی
-            // هر چقدر خواستی میتونی کم یا زیاد کنی
+            // active: true  → نشون بده ✅
+            // active: false → مخفی کن ❌
+            // هر وقت خواستی فقط true/false رو عوض کن
             links: [
-                { name: 'تلگرام', url: 'https://t.me/yourid', icon: '✈️' },
-                { name: 'اینستاگرام', url: 'https://instagram.com/yourid', icon: '📷' },
-                { name: 'بله', url: 'https://bale.ai/yourid', icon: '🅱️' },
-                { name: 'ایتا', url: 'https://eitaa.com/yourid', icon: '📡' },
-                { name: 'یوتیوب', url: 'https://youtube.com/@yourid', icon: '▶️' },
-                { name: 'شماره تماس', url: 'tel:09000000000', icon: '📞' }
+                { name: 'تلگرام',     url: 'https://t.me/yourid',         icon: '✈️', active: true  },
+                { name: 'اینستاگرام', url: 'https://instagram.com/yourid', icon: '📷', active: true  },
+                { name: 'بله',        url: 'https://bale.ai/yourid',       icon: '🅱️', active: true  },
+                { name: 'ایتا',       url: 'https://eitaa.com/yourid',     icon: '📡', active: false },
+                { name: 'یوتیوب',     url: 'https://youtube.com/@yourid',  icon: '▶️', active: true  },
+                { name: 'شماره تماس', url: 'tel:09000000000',              icon: '📞', active: false }
             ]
         };
 
@@ -322,19 +324,22 @@
         // تنظیم عنوان
         document.getElementById('pageTitle').textContent = CONFIG.title;
         
-        // ساخت دکمه‌های لینک
+        // ساخت دکمه‌های لینک (فقط اونایی که active = true هستن)
         const linksContainer = document.getElementById('linksContainer');
         
         CONFIG.links.forEach(link => {
-            const a = document.createElement('a');
-            a.href = link.url;
-            a.target = '_blank';
-            a.className = 'floating-link';
-            a.innerHTML = `
-                <span class="link-icon">${link.icon}</span>
-                ${link.name}
-            `;
-            linksContainer.appendChild(a);
+            // فقط لینک‌های فعال رو نشون بده
+            if (link.active === true) {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.className = 'floating-link';
+                a.innerHTML = `
+                    <span class="link-icon">${link.icon}</span>
+                    ${link.name}
+                `;
+                linksContainer.appendChild(a);
+            }
         });
 
         // ==========================================
