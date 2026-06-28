@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bad King | بد کینگ</title>
+    <title>در حال انتقال</title>
     <style>
         * {
             margin: 0;
@@ -12,397 +12,252 @@
         }
 
         body {
-            font-family: 'Courier New', 'Tahoma', monospace;
-            background-color: #000000;
-            color: #00ff41;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-        }
-
-        canvas#matrixCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0.25;
-        }
-
-        .main-container {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 450px;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .profile-wrapper {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .profile-pic {
-            width: 140px;
-            height: 140px;
-            border-radius: 15px;
-            object-fit: cover;
-            border: 3px solid #00ff41;
-            box-shadow: 
-                0 0 20px #00ff41,
-                0 0 40px #00ff4166,
-                0 0 80px #00ff4133,
-                inset 0 0 20px #00ff4111;
-            animation: glitchPulse 2s infinite;
-            transition: all 0.3s ease;
-        }
-
-        .profile-wrapper:hover .profile-pic {
-            transform: scale(1.08);
-            box-shadow: 
-                0 0 30px #00ff41,
-                0 0 60px #00ff41,
-                0 0 100px #00ff41;
-            border-color: #00ff88;
-        }
-
-        .profile-wrapper::before,
-        .profile-wrapper::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 15px;
-            background: inherit;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .profile-wrapper:hover::before {
-            opacity: 0.4;
-            background: #00ff41;
-            animation: glitchShift 0.3s infinite;
-        }
-
-        .profile-wrapper:hover::after {
-            opacity: 0.4;
-            background: #ff0040;
-            animation: glitchShift 0.3s infinite reverse;
-        }
-
-        @keyframes glitchPulse {
-            0%, 100% { box-shadow: 0 0 20px #00ff41, 0 0 40px #00ff4166, 0 0 80px #00ff4133; }
-            50% { box-shadow: 0 0 30px #00ff41, 0 0 60px #00ff41, 0 0 100px #00ff4155; }
-        }
-
-        @keyframes glitchShift {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-3px, 2px); }
-            40% { transform: translate(3px, -1px); }
-            60% { transform: translate(-1px, -3px); }
-            80% { transform: translate(2px, 1px); }
-        }
-
-        .title {
-            font-size: 26px;
-            font-weight: bold;
-            color: #00ff41;
-            text-shadow: 0 0 15px #00ff41, 0 0 30px #00ff4188;
-            margin-bottom: 8px;
-            text-align: center;
-            letter-spacing: 3px;
-            font-family: 'Courier New', monospace;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: #00ff4188;
-            margin-bottom: 25px;
-            text-align: center;
-            letter-spacing: 6px;
-        }
-
-        .links-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-bottom: 30px;
-        }
-
-        .floating-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            padding: 16px 20px;
-            background: rgba(0, 20, 5, 0.7);
-            backdrop-filter: blur(15px);
-            border: 1px solid #00ff4133;
-            border-radius: 8px;
-            color: #00ff41;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            animation: linkFloat 3s ease-in-out infinite;
-            text-shadow: 0 0 8px #00ff4166;
-            position: relative;
+            background: #0a0a0a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
+            position: relative;
         }
 
-        .floating-link:nth-child(1) { animation-delay: 0s; }
-        .floating-link:nth-child(2) { animation-delay: 0.3s; }
-        .floating-link:nth-child(3) { animation-delay: 0.6s; }
-        .floating-link:nth-child(4) { animation-delay: 0.9s; }
-        .floating-link:nth-child(5) { animation-delay: 1.2s; }
-        .floating-link:nth-child(6) { animation-delay: 1.5s; }
-
-        @keyframes linkFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+        /* افکت پس‌زمینه با گرادیانت و نور */
+        .bg-effect {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(255, 70, 70, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255, 70, 70, 0.03) 0%, transparent 50%),
+                #0a0a0a;
+            z-index: 0;
+            animation: bgPulse 6s ease-in-out infinite;
         }
 
-        .floating-link:hover {
-            background: rgba(0, 255, 65, 0.15);
-            border-color: #00ff41;
-            box-shadow: 
-                0 0 20px #00ff4155,
-                0 0 40px #00ff4122,
-                inset 0 0 20px #00ff4111;
-            transform: translateY(-8px) scale(1.03);
-            color: #00ff88;
-            animation: none;
-        }
-
-        .floating-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00ff41, transparent);
-            transition: left 0.5s ease;
-        }
-
-        .floating-link:hover::before {
-            left: 100%;
-        }
-
-        .link-icon {
-            font-size: 20px;
-            filter: drop-shadow(0 0 5px #00ff41);
-        }
-
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #00ff4133, #00ff4188, #00ff4133, transparent);
-            margin: 10px 0 25px 0;
-        }
-
-        .credit {
-            font-size: 13px;
-            color: #00ff4166;
-            letter-spacing: 4px;
-            text-align: center;
-            margin-top: 15px;
-            text-shadow: 0 0 10px #00ff4122;
-            animation: creditFlicker 4s infinite;
-        }
-
-        .credit span {
-            color: #00ff41;
-            font-weight: bold;
-            text-shadow: 0 0 15px #00ff41;
-        }
-
-        @keyframes creditFlicker {
-            0%, 100% { opacity: 0.7; }
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.6; }
             50% { opacity: 1; }
         }
 
-        @media (max-width: 500px) {
-            .main-container {
-                padding: 15px;
+        .container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2.5rem 3rem;
+            max-width: 90%;
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* لوگوی شما - با placeholder */
+        .logo-wrapper {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 40px rgba(255, 70, 70, 0.05);
+            transition: all 0.3s ease;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { box-shadow: 0 0 40px rgba(255, 70, 70, 0.05); }
+            50% { box-shadow: 0 0 60px rgba(255, 70, 70, 0.12); }
+        }
+
+        .logo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* جایگزین برای لوگو - اگر تصویر لود نشد */
+        .logo-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a, #2a1a1a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ff4444;
+            letter-spacing: 2px;
+        }
+
+        .title {
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+
+        .title span {
+            color: #ff4444;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.8rem;
+            font-weight: 300;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+
+        /* نوار پیشرفت با تم قرمز */
+        .progress-section {
+            width: 100%;
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff4444, #ff6b6b, #ff4444);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            animation: progressAnim 3s ease-in-out forwards, shimmer 1.2s linear infinite;
+        }
+
+        @keyframes progressAnim {
+            0% { width: 0%; }
+            25% { width: 30%; }
+            60% { width: 68%; }
+            85% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.1);
+            letter-spacing: 1px;
+        }
+
+        .progress-text .percent {
+            color: rgba(255, 68, 68, 0.4);
+            font-weight: 600;
+        }
+
+        /* دکمه‌ی کوچک (فقط برای زیبایی) */
+        .hint {
+            margin-top: 20px;
+            color: rgba(255, 255, 255, 0.03);
+            font-size: 0.5rem;
+            letter-spacing: 4px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1.5rem;
             }
-            .profile-wrapper {
-                width: 110px;
-                height: 110px;
-            }
-            .profile-pic {
-                width: 110px;
-                height: 110px;
+            .logo-wrapper {
+                width: 80px;
+                height: 80px;
             }
             .title {
-                font-size: 22px;
+                font-size: 1.3rem;
             }
-            .floating-link {
-                padding: 14px 16px;
-                font-size: 14px;
+            .progress-section {
+                max-width: 200px;
             }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="matrixCanvas"></canvas>
+    <div class="bg-effect"></div>
 
-    <div class="main-container">
-
-        <div class="profile-wrapper">
+    <div class="container">
+        <div class="logo-wrapper">
             <img 
-                class="profile-pic" 
-                src="" 
-                alt="Profile"
-                id="profilePic"
+                src="https://cdn.imgurl.ir/uploads/d89292_ChatGPT_Image_Jun_21_2026_09_44_35_PM.png" 
+                alt="لوگو"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
             >
+            <div class="logo-placeholder" style="display:none;">
+                <span>●</span>
+            </div>
         </div>
 
-        <div class="title" id="pageTitle">BAD KING</div>
-        <div class="subtitle">&lt; ROOT ACCESS &gt;</div>
+        <h1 class="title">
+            در حال انتقال به <span>BAD KING</span>
+        </h1>
+        <p class="subtitle">لطفاً چند لحظه صبر کنید</p>
 
-        <div class="divider"></div>
-
-        <div class="links-container" id="linksContainer">
-            <!-- لینک‌ها با جاوااسکریپت ساخته می‌شن -->
+        <div class="progress-section">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span>در حال آماده‌سازی</span>
+                <span class="percent" id="progressText">۰%</span>
+            </div>
         </div>
 
-        <div class="divider"></div>
-
-        <div class="credit">
-            سازنده: <span>بد کینگ</span> 👑
-        </div>
-
+        <div class="hint">✦ ✦ ✦</div>
     </div>
 
     <script>
-        // ==========================================
-        // ⚙️ اینجا رو تغییر بده - بخش تنظیمات خودت
-        // ==========================================
-        const CONFIG = {
-            // لینک عکس پروفایلت رو اینجا بذار
-            profilePic: 'https://i.ibb.co/Y4PzN5K/default-avatar.jpg',
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        let startTime = Date.now();
+        const duration = 3000;
+
+        function updateProgress() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / duration) * 100, 100);
+            progressText.textContent = Math.floor(progress) + '%';
             
-            // اسمی که بالای صفحه نشون میده
-            title: 'BAD KING',
-            
-            // لینک‌های شبکه‌های اجتماعی
-            // active: true  → نشون بده ✅
-            // active: false → مخفی کن ❌
-            // هر وقت خواستی فقط true/false رو عوض کن
-            links: [
-                { name: 'تلگرام',     url: 'https://t.me/yourid',         icon: '✈️', active: true  },
-                { name: 'اینستاگرام', url: 'https://instagram.com/yourid', icon: '📷', active: true  },
-                { name: 'بله',        url: 'https://bale.ai/yourid',       icon: '🅱️', active: true  },
-                { name: 'ایتا',       url: 'https://eitaa.com/yourid',     icon: '📡', active: false },
-                { name: 'یوتیوب',     url: 'https://youtube.com/@yourid',  icon: '▶️', active: true  },
-                { name: 'شماره تماس', url: 'tel:09000000000',              icon: '📞', active: false }
-            ]
-        };
-
-        // ==========================================
-        // 🚀 اجرای خودکار - به بقیه کد دست نزن
-        // ==========================================
-        
-        // تنظیم عکس پروفایل
-        document.getElementById('profilePic').src = CONFIG.profilePic;
-        
-        // تنظیم عنوان
-        document.getElementById('pageTitle').textContent = CONFIG.title;
-        
-        // ساخت دکمه‌های لینک (فقط اونایی که active = true هستن)
-        const linksContainer = document.getElementById('linksContainer');
-        
-        CONFIG.links.forEach(link => {
-            // فقط لینک‌های فعال رو نشون بده
-            if (link.active === true) {
-                const a = document.createElement('a');
-                a.href = link.url;
-                a.target = '_blank';
-                a.className = 'floating-link';
-                a.innerHTML = `
-                    <span class="link-icon">${link.icon}</span>
-                    ${link.name}
-                `;
-                linksContainer.appendChild(a);
-            }
-        });
-
-        // ==========================================
-        // 🎮 افکت Matrix - به این قسمت دست نزن
-        // ==========================================
-        const canvas = document.getElementById('matrixCanvas');
-        const ctx = canvas.getContext('2d');
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+-=[]{}|;:,.<>?/\\!~`بدکینگ';
-        const charArray = chars.split('');
-        const fontSize = 14;
-        const columns = canvas.width / fontSize;
-        const drops = [];
-
-        for (let i = 0; i < columns; i++) {
-            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
-        }
-
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#00ff41';
-            ctx.font = fontSize + 'px monospace';
-
-            for (let i = 0; i < drops.length; i++) {
-                const text = charArray[Math.floor(Math.random() * charArray.length)];
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
-
-                if (Math.random() > 0.95) {
-                    ctx.fillStyle = '#00ff88';
-                    ctx.font = 'bold ' + fontSize + 'px monospace';
-                } else {
-                    ctx.fillStyle = '#00ff41';
-                    ctx.font = fontSize + 'px monospace';
-                }
-
-                ctx.fillText(text, x, y);
-
-                if (y > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
-
-                drops[i]++;
+            if (progress < 100) {
+                requestAnimationFrame(updateProgress);
             }
         }
+        updateProgress();
 
-        setInterval(drawMatrix, 45);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
-        console.log('%c بد کینگ %c حاضر به خدمت 🐉', 
-            'color: #00ff41; font-size: 20px; font-weight: bold;', 
-            'color: #fff;');
-        console.log('%c ساخته شده توسط بد کینگ 👑', 'color: #00ff41; font-size: 14px;');
+        // انتقال با افکت
+        setTimeout(() => {
+            const container = document.querySelector('.container');
+            container.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+            container.style.opacity = '0';
+            container.style.transform = 'scale(0.92)';
+            
+            // محو کردن پس‌زمینه
+            document.querySelector('.bg-effect').style.transition = 'opacity 0.6s ease';
+            document.querySelector('.bg-effect').style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = "https://d099173878-boop.github.io/bad-king-page/";
+            }, 600);
+        }, 3000);
     </script>
-
 </body>
 </html>
