@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>در حال انتقال</title>
+    <title>BAD_KING | در حال انتقال...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,252 +13,410 @@
         }
 
         body {
+            font-family: 'Vazirmatn', 'Tahoma', sans-serif;
+            background: #0a0a0f;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: #0a0a0a;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            justify-content: center;
             overflow: hidden;
             position: relative;
+            color: #fff;
         }
 
-        /* افکت پس‌زمینه با گرادیانت و نور */
-        .bg-effect {
+        /* گرادیانت پس‌زمینه مشابه سایت */
+        body::before {
+            content: '';
             position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
+            inset: 0;
             background: 
-                radial-gradient(circle at 30% 40%, rgba(255, 70, 70, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(255, 70, 70, 0.03) 0%, transparent 50%),
-                #0a0a0a;
+                radial-gradient(circle at 20% 30%, rgba(0, 255, 200, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 200, 0.03) 0%, transparent 60%);
+            pointer-events: none;
             z-index: 0;
-            animation: bgPulse 6s ease-in-out infinite;
         }
 
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.6; }
-            50% { opacity: 1; }
+        /* ذرات شناور */
+        .particles {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ffc8;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #00ffc8, 0 0 12px #00ffc8;
+            animation: float linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh); opacity: 0; }
         }
 
         .container {
             position: relative;
-            z-index: 1;
+            z-index: 5;
             text-align: center;
-            padding: 2.5rem 3rem;
-            max-width: 90%;
-            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 60px 50px;
+            max-width: 600px;
+            width: 90%;
+            background: linear-gradient(145deg, rgba(15, 15, 25, 0.9), rgba(10, 10, 15, 0.95));
+            border: 1px solid rgba(0, 255, 200, 0.2);
+            border-radius: 24px;
+            box-shadow: 
+                0 0 40px rgba(0, 255, 200, 0.1),
+                0 0 80px rgba(168, 85, 247, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.8s ease-out;
         }
-
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px) scale(0.97); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* لوگوی شما - با placeholder */
-        .logo-wrapper {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
+        /* لوگو دایره‌ای با حلقه نئون */
+        .logo-wrap {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 30px;
+        }
+        .logo-ring {
+            position: absolute;
+            inset: 0;
             border-radius: 50%;
+            background: conic-gradient(from 0deg, #00ffc8, #a855f7, #00ffc8);
+            padding: 3px;
+            animation: rotate 4s linear infinite;
+        }
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+        .logo-inner {
+            position: absolute;
+            inset: 3px;
+            border-radius: 50%;
+            background: #0a0a0f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 40px rgba(255, 70, 70, 0.05);
-            transition: all 0.3s ease;
-            animation: logoGlow 3s ease-in-out infinite;
         }
-
-        @keyframes logoGlow {
-            0%, 100% { box-shadow: 0 0 40px rgba(255, 70, 70, 0.05); }
-            50% { box-shadow: 0 0 60px rgba(255, 70, 70, 0.12); }
-        }
-
-        .logo-wrapper img {
+        .logo-inner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            border-radius: 50%;
+        }
+        /* فال‌بک اگه عکس لود نشد */
+        .logo-fallback {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffc8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
         }
 
-        /* جایگزین برای لوگو - اگر تصویر لود نشد */
-        .logo-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1a1a1a, #2a1a1a);
+        /* نیم دایره‌های تزئینی */
+        .ring-decoration {
+            position: absolute;
+            inset: -15px;
+            border: 1px dashed rgba(0, 255, 200, 0.3);
+            border-radius: 50%;
+            animation: rotate 15s linear infinite reverse;
+        }
+        .ring-decoration::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: #00ffc8;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ffc8, 0 0 20px #00ffc8;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #00ffc8 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+
+        .username {
+            font-size: 1.3rem;
+            color: #00ffc8;
+            font-weight: 700;
+            margin-bottom: 25px;
+            direction: ltr;
+            text-shadow: 0 0 15px rgba(0, 255, 200, 0.6);
+            letter-spacing: 2px;
+        }
+        .username::before,
+        .username::after {
+            content: '◆';
+            margin: 0 12px;
+            font-size: 0.7em;
+            opacity: 0.7;
+        }
+
+        /* پیام اصلی */
+        .message {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        .message .highlight {
+            color: #00ffc8;
+            font-weight: 700;
+            direction: ltr;
+            display: inline-block;
+            text-shadow: 0 0 10px rgba(0, 255, 200, 0.5);
+        }
+
+        /* بج‌های کوچک مشابه سایت */
+        .badges {
             display: flex;
             justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ff4444;
-            letter-spacing: 2px;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
         }
-
-        .title {
-            color: #fff;
-            font-size: 1.6rem;
-            font-weight: 600;
+        .badge {
+            padding: 8px 16px;
+            border: 1px solid rgba(0, 255, 200, 0.3);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: #00ffc8;
+            background: rgba(0, 255, 200, 0.05);
+            direction: ltr;
             letter-spacing: 1px;
-            margin-bottom: 2px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .badge.purple {
+            border-color: rgba(168, 85, 247, 0.4);
+            color: #c084fc;
+            background: rgba(168, 85, 247, 0.08);
         }
 
-        .title span {
-            color: #ff4444;
+        /* شمارش معکوس بزرگ */
+        .countdown-box {
+            margin: 30px 0;
         }
-
-        .subtitle {
-            color: rgba(255, 255, 255, 0.2);
-            font-size: 0.8rem;
-            font-weight: 300;
-            margin-bottom: 25px;
+        .countdown-label {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 10px;
             letter-spacing: 2px;
         }
-
-        /* نوار پیشرفت با تم قرمز */
-        .progress-section {
-            width: 100%;
-            max-width: 280px;
-            margin: 0 auto;
+        .countdown {
+            font-size: 5.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffc8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            filter: drop-shadow(0 0 25px rgba(0, 255, 200, 0.5));
+            animation: pulse 1s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
         }
 
+        /* نوار پیشرفت */
         .progress-bar {
             width: 100%;
-            height: 2px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             overflow: hidden;
-            position: relative;
+            margin: 25px 0;
+            border: 1px solid rgba(0, 255, 200, 0.15);
         }
-
         .progress-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #ff4444, #ff6b6b, #ff4444);
-            background-size: 200% 100%;
+            background: linear-gradient(90deg, #00ffc8, #a855f7);
             border-radius: 10px;
-            animation: progressAnim 3s ease-in-out forwards, shimmer 1.2s linear infinite;
+            box-shadow: 0 0 15px rgba(0, 255, 200, 0.8);
+            transition: width 1s linear;
         }
 
-        @keyframes progressAnim {
-            0% { width: 0%; }
-            25% { width: 30%; }
-            60% { width: 68%; }
-            85% { width: 85%; }
-            100% { width: 100%; }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        .progress-text {
+        /* دکمه‌ها مشابه سایت */
+        .buttons {
             display: flex;
-            justify-content: space-between;
-            margin-top: 8px;
-            font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.1);
-            letter-spacing: 1px;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
         }
-
-        .progress-text .percent {
-            color: rgba(255, 68, 68, 0.4);
+        .btn {
+            padding: 12px 26px;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
             font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .btn-ghost:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(0, 255, 200, 0.4);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #00ffc8, #a855f7);
+            color: #0a0a0f;
+            box-shadow: 0 0 25px rgba(0, 255, 200, 0.4);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 0 35px rgba(0, 255, 200, 0.7);
+            transform: translateY(-2px);
         }
 
-        /* دکمه‌ی کوچک (فقط برای زیبایی) */
-        .hint {
-            margin-top: 20px;
-            color: rgba(255, 255, 255, 0.03);
-            font-size: 0.5rem;
-            letter-spacing: 4px;
+        /* خط تزئینی بالا و پایین */
+        .top-line {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00ffc8, transparent);
+            box-shadow: 0 0 10px #00ffc8;
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 2rem 1.5rem;
-            }
-            .logo-wrapper {
-                width: 80px;
-                height: 80px;
-            }
-            .title {
-                font-size: 1.3rem;
-            }
-            .progress-section {
-                max-width: 200px;
-            }
+            .container { padding: 40px 25px; }
+            h1 { font-size: 1.4rem; }
+            .username { font-size: 1.1rem; }
+            .countdown { font-size: 4rem; }
+            .logo-wrap { width: 110px; height: 110px; }
         }
     </style>
 </head>
 <body>
-
-    <div class="bg-effect"></div>
+    <!-- ذرات شناور -->
+    <div class="particles" id="particles"></div>
 
     <div class="container">
-        <div class="logo-wrapper">
-            <img 
-                src="https://cdn.imgurl.ir/uploads/d89292_ChatGPT_Image_Jun_21_2026_09_44_35_PM.png" 
-                alt="لوگو"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-            >
-            <div class="logo-placeholder" style="display:none;">
-                <span>●</span>
+        <div class="top-line"></div>
+
+        <!-- لوگو -->
+        <div class="logo-wrap">
+            <div class="ring-decoration"></div>
+            <div class="logo-ring">
+                <div class="logo-inner">
+                    <!-- اگه لوگو داری، آدرسش رو اینجا بذار -->
+                    <img src="https://badking.ir/logo.png" alt="BAD_KING" 
+                         onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'logo-fallback\'>BK</div>';">
+                </div>
             </div>
         </div>
 
-        <h1 class="title">
-            در حال انتقال به <span>BAD KING</span>
-        </h1>
-        <p class="subtitle">لطفاً چند لحظه صبر کنید</p>
+        <h1>وب جدید ما رونمایی شد!</h1>
+        <div class="username">BAD_KING</div>
 
-        <div class="progress-section">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text">
-                <span>در حال آماده‌سازی</span>
-                <span class="percent" id="progressText">۰%</span>
-            </div>
+        <p class="message">
+            در حال انتقال به سایت جدید<br>
+            <span class="highlight">badking.ir</span>
+        </p>
+
+        <!-- بج‌ها -->
+        <div class="badges">
+            <span class="badge">✦ AI EXPERT</span>
+            <span class="badge purple">✦ CREATIVE MIND</span>
+            <span class="badge">✦ SYSTEM: ONLINE</span>
         </div>
 
-        <div class="hint">✦ ✦ ✦</div>
+        <!-- شمارش معکوس -->
+        <div class="countdown-box">
+            <div class="countdown-label">// انتقال خودکار در</div>
+            <div class="countdown" id="countdown">3</div>
+        </div>
+
+        <!-- نوار پیشرفت -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <!-- دکمه‌ها -->
+        <div class="buttons">
+            <a href="https://badking.ir" class="btn btn-primary">
+                🚀 ورود به سایت جدید
+            </a>
+        </div>
     </div>
 
     <script>
-        const progressFill = document.getElementById('progressFill');
-        const progressText = document.getElementById('progressText');
-        let startTime = Date.now();
-        const duration = 3000;
+        // ===== شمارش معکوس =====
+        let seconds = 3;
+        const countdownEl = document.getElementById('countdown');
+        const progressEl = document.getElementById('progress');
 
-        function updateProgress() {
-            const elapsed = Date.now() - startTime;
-            const progress = Math.min((elapsed / duration) * 100, 100);
-            progressText.textContent = Math.floor(progress) + '%';
-            
-            if (progress < 100) {
-                requestAnimationFrame(updateProgress);
+        setTimeout(() => progressEl.style.width = '33%', 100);
+
+        const timer = setInterval(() => {
+            seconds--;
+            if (seconds > 0) {
+                countdownEl.textContent = seconds;
+                progressEl.style.width = ((3 - seconds) / 3 * 100) + '%';
+            } else {
+                countdownEl.textContent = '0';
+                progressEl.style.width = '100%';
+                clearInterval(timer);
             }
-        }
-        updateProgress();
+        }, 1000);
 
-        // انتقال با افکت
+        // انتقال بعد از 3 ثانیه
         setTimeout(() => {
-            const container = document.querySelector('.container');
-            container.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-            container.style.opacity = '0';
-            container.style.transform = 'scale(0.92)';
-            
-            // محو کردن پس‌زمینه
-            document.querySelector('.bg-effect').style.transition = 'opacity 0.6s ease';
-            document.querySelector('.bg-effect').style.opacity = '0';
-            
-            setTimeout(() => {
-                window.location.href = "https://d099173878-boop.github.io/bad-king-page/";
-            }, 600);
+            window.location.href = 'https://badking.ir';
         }, 3000);
+
+        // ===== ذرات شناور =====
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            p.style.animationDelay = Math.random() * 5 + 's';
+            p.style.opacity = Math.random() * 0.5 + 0.3;
+            if (Math.random() > 0.7) {
+                p.style.background = '#a855f7';
+                p.style.boxShadow = '0 0 6px #a855f7, 0 0 12px #a855f7';
+            }
+            particlesContainer.appendChild(p);
+        }
     </script>
 </body>
 </html>
